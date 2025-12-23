@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
@@ -17,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"github","dark":"github-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","social":{"GitHub":"https://github.com/rekjorekjo || fab fa-github"},"padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"github","dark":"github-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"language":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
 
     <meta name="description" content="ISCTF 2025 [TOC] 说明 由于本人web和病毒分析纯ai做法，没有实际价值，不在wp中赘述 Reverse比赛体量太大，重心没放在reverse上，个人仅做了两个题。  ELF  这个elf有点奇怪呢    12└─# file mainmain: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically lin">
 <meta property="og:type" content="article">
@@ -35,7 +36,7 @@
 <meta property="og:image" content="http://example.com/images/image-20251208234214270.png">
 <meta property="article:published_time" content="2025-12-23T05:11:43.000Z">
 <meta property="article:modified_time" content="2025-12-23T06:16:53.370Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="Rekjo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/image-20251213161624559.png">
 
@@ -105,6 +106,7 @@
       <p class="site-title">Hexo</p>
       <i class="logo-line"></i>
     </a>
+      <img class="custom-logo-image" src="/images/headimage.jpg" alt="Hexo">
   </div>
 
   <div class="site-nav-right">
@@ -141,15 +143,15 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ISCTF-2025"><span class="nav-number">1.</span> <span class="nav-text">ISCTF 2025</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reverse"><span class="nav-number">1.1.</span> <span class="nav-text">Reverse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Crypto"><span class="nav-number">1.2.</span> <span class="nav-text">Crypto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#misc"><span class="nav-number">1.3.</span> <span class="nav-text">misc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSINT"><span class="nav-number">1.4.</span> <span class="nav-text">OSINT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SIGNIN"><span class="nav-number">1.5.</span> <span class="nav-text">SIGNIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94"><span class="nav-number">1.6.</span> <span class="nav-text">应急响应</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ISCTF-2025"><span class="nav-text">ISCTF 2025</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reverse"><span class="nav-text">Reverse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Crypto"><span class="nav-text">Crypto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#misc"><span class="nav-text">misc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSINT"><span class="nav-text">OSINT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SIGNIN"><span class="nav-text">SIGNIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94"><span class="nav-text">应急响应</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="John Doe"
+    <img class="site-author-image" itemprop="image" alt="Rekjo"
       src="/images/headimage.jpg">
-  <p class="site-author-name" itemprop="name">John Doe</p>
+  <p class="site-author-name" itemprop="name">Rekjo</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap animated">
@@ -162,6 +164,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rekjorekjo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rekjorekjo" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
         </div>
       </div>
@@ -188,7 +195,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/headimage.jpg">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="Rekjo">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -755,6 +762,23 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Rekjo
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="http://example.com/2025/12/23/ISCTF2025-wp/" title="ISCTF2025_wp">http://example.com/2025/12/23/ISCTF2025-wp/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
 
         
 
@@ -796,7 +820,8 @@
 <script>
     var now = new Date();
     function createtime() {
-        var grt= new Date("22/12/2025 00:00:00");
+        // 关键修复：将日期格式改为 ISO 8601 (年-月-日)
+        var grt = new Date("2025-12-22 00:00:00");
         now.setTime(now.getTime()+250);
         days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
         hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
@@ -807,7 +832,7 @@
         document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
         document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
     }
-setInterval("createtime()",250);
+    setInterval("createtime()",250);
 </script>
 </div>
 
