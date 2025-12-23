@@ -1289,7 +1289,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #704fba;
+    background: #c7b0ff;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -2882,5 +2882,5 @@ img {
   opacity: 1; /* 设置 table-container 不透明 */
 }
 .footer {
-  color: #41f268;
+  color: #5bfcec;
 }
