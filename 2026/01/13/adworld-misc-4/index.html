@@ -1,0 +1,430 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>adworld_misc_4 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="adworld_misc_4 [TOC] SteganographyKeyword 格式为QCTF{xxxxxxx}  工具题 livz&#x2F;cloacked-pixel: LSB steganography and detection 注意是python2环境噢。 1python2 lsb.py extract 2ec5f2fe4139477781bb61070b8470a6.png 1.txt l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="adworld_misc_4">
+<meta property="og:url" content="http://example.com/2026/01/13/adworld-misc-4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="adworld_misc_4 [TOC] SteganographyKeyword 格式为QCTF{xxxxxxx}  工具题 livz&#x2F;cloacked-pixel: LSB steganography and detection 注意是python2环境噢。 1python2 lsb.py extract 2ec5f2fe4139477781bb61070b8470a6.png 1.txt l">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-01-13T08:29:52.000Z">
+<meta property="article:modified_time" content="2026-02-06T01:49:50.993Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "adworld_misc_4",
+  "url": "http://example.com/2026/01/13/adworld-misc-4/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-01-13T08:29:52.000Z",
+  "dateModified": "2026-02-06T01:49:50.993Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/01/13/adworld-misc-4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'adworld_misc_4',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">adworld_misc_4</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">adworld_misc_4</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-01-13T08:29:52.000Z" title="Created 2026-01-13 16:29:52">2026-01-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-06T01:49:50.993Z" title="Updated 2026-02-06 09:49:50">2026-02-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Practice/">Practice</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>10mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="adworld-misc-4"><a href="#adworld-misc-4" class="headerlink" title="adworld_misc_4"></a>adworld_misc_4</h1><hr>
+<p>[TOC]</p>
+<h2 id="Steganography"><a href="#Steganography" class="headerlink" title="Steganography"></a>Steganography</h2><h3 id="Keyword"><a href="#Keyword" class="headerlink" title="Keyword"></a>Keyword</h3><blockquote>
+<p>格式为QCTF{xxxxxxx}</p>
+</blockquote>
+<p>工具题</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/livz/cloacked-pixel">livz/cloacked-pixel: LSB steganography and detection</a></p>
+<p>注意是python2环境噢。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 lsb.py extract 2ec5f2fe4139477781bb61070b8470a6.png 1.txt lovekfc</span><br></pre></td></tr></table></figure>
+<p>得到1.txt</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PVSF&#123;vVckHejqBOVX9C1c13GFfkHJrjIQeMwf&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Keyword Cipher</strong>密码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decode_nihilist_cipher</span>():</span><br><span class="line">    txt = <span class="string">&#x27;PVSF&#123;vVckHejqBOVX9C1c13GFfkHJrjIQeMwf&#125;&#x27;</span></span><br><span class="line">    table = <span class="string">&#x27;LOVEKFCABDGHIJMNPQRSTUWXY&#x27;</span></span><br><span class="line">    flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> txt:</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> string.ascii_lowercase:</span><br><span class="line">            <span class="comment"># 在table的小写版本中查找索引</span></span><br><span class="line">            index = table.lower().index(i)</span><br><span class="line">            <span class="comment"># 使用相同索引的ASCII小写字母替换</span></span><br><span class="line">            flag += string.ascii_lowercase[index]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">in</span> string.ascii_uppercase:</span><br><span class="line">            <span class="comment"># 在table的大写版本中查找索引</span></span><br><span class="line">            index = table.upper().index(i)</span><br><span class="line">            <span class="comment"># 使用相同索引的ASCII大写字母替换</span></span><br><span class="line">            flag += string.ascii_uppercase[index]</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 非字母字符直接保留</span></span><br><span class="line">        flag += i</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> flag</span><br><span class="line"></span><br><span class="line">result = decode_nihilist_cipher()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;result&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><code>QCTF{cCgeLdnrIBCX9G1g13KFfeLNsnMRdOwf}</code></p>
+<h3 id="picture2"><a href="#picture2" class="headerlink" title="picture2"></a>picture2</h3><p>质量一般</p>
+<p>pngcheck直接报错，根本不是png</p>
+<p>HxD看一下发现是jpg，改了</p>
+<p>binwalk分离出一个小的zlib数据，base64解码看到了PK，于是to hex再保存，改一下文件头即可，需要密码</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Python 2.7]</span><br><span class="line">&gt;&gt;&gt; ▆▆▆</span><br><span class="line"></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;pyshell#0&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">    ▆▆▆</span><br><span class="line">ZeroDivisionError: ▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆ &lt;- password ;)</span><br><span class="line">&gt;&gt;&gt; </span><br></pre></td></tr></table></figure>
+<p>注意到文件的注释，密码是<strong>integer division or modulo by zero</strong></p>
+<p>解密得到code</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">begin 644 key.txt</span><br><span class="line">G0TE30TY[,C,X.$%&amp;,C@Y,T5&quot;.#5%0C%&quot;-#,Y04)&amp;1C8Q-S,Q.49]</span><br><span class="line">`</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>随波逐流一把梭，是UUEncode。</p>
+<p>可得<code>CISCN{2388AF2893EB85EB1B439ABFF617319F}</code></p>
+<h3 id="test-pyc"><a href="#test-pyc" class="headerlink" title="test.pyc"></a>test.pyc</h3><blockquote>
+<p>flag格式为flag{}</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uncompyle6 e4453dcdab2b4e50a83b7aef231e8650.pyc &gt; e4453dcdab2b4e50a83b7aef231e8650.py</span><br></pre></td></tr></table></figure>
+<p>反编译得到</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># uncompyle6 version 3.9.3</span></span><br><span class="line"><span class="comment"># Python bytecode version base 2.7 (62211)</span></span><br><span class="line"><span class="comment"># Decompiled from: Python 3.12.7 | packaged by conda-forge | (main, Oct  4 2024, 16:05:46) [GCC 13.3.0]</span></span><br><span class="line"><span class="comment"># Embedded file name: test.py</span></span><br><span class="line"><span class="comment"># Compiled at: 2016-10-19 09:08:27</span></span><br><span class="line"></span><br><span class="line">-- Stacks of completed symbols:</span><br><span class="line">START ::= |- stmts . </span><br><span class="line"><span class="keyword">and</span> ::= expr . JUMP_IF_FALSE_OR_POP expr COME_FROM</span><br><span class="line"><span class="keyword">and</span> ::= expr . jmp_false expr \e_come_from_opt</span><br><span class="line"><span class="keyword">and</span> ::= expr . jmp_false expr come_from_opt</span><br><span class="line"><span class="keyword">assert</span> ::= assert_expr . jmp_true LOAD_ASSERT RAISE_VARARGS_1</span><br><span class="line">assert2 ::= assert_expr . jmp_true LOAD_ASSERT expr CALL_FUNCTION_1 RAISE_VARARGS_1</span><br><span class="line">assert_expr ::= expr . </span><br><span class="line">assert_expr_and ::= assert_expr . jmp_false expr</span><br><span class="line">assert_expr_or ::= assert_expr . jmp_true expr</span><br><span class="line">assign ::= expr . DUP_TOP designList</span><br><span class="line">assign ::= expr . store</span><br><span class="line">assign2 ::= expr . expr ROT_TWO store store</span><br><span class="line">assign3 ::= expr . expr expr ROT_THREE ROT_TWO store store store</span><br><span class="line">aug_assign1 ::= expr . expr inplace_op ROT_FOUR STORE_SLICE+<span class="number">3</span></span><br><span class="line">aug_assign1 ::= expr . expr inplace_op ROT_THREE STORE_SLICE+<span class="number">1</span></span><br><span class="line">aug_assign1 ::= expr . expr inplace_op ROT_THREE STORE_SLICE+<span class="number">2</span></span><br><span class="line">aug_assign1 ::= expr . expr inplace_op ROT_THREE STORE_SUBSCR</span><br><span class="line">aug_assign1 ::= expr . expr inplace_op ROT_TWO STORE_SLICE+<span class="number">0</span></span><br><span class="line">aug_assign1 ::= expr . expr inplace_op store</span><br><span class="line">aug_assign2 ::= expr . DUP_TOP LOAD_ATTR expr inplace_op ROT_TWO STORE_ATTR</span><br><span class="line">bin_op ::= expr . expr binary_operator</span><br><span class="line">buildclass ::= LOAD_CONST . expr mkfunc CALL_FUNCTION_0 BUILD_CLASS</span><br><span class="line">call ::= expr . CALL_FUNCTION_0</span><br><span class="line">call_stmt ::= expr . POP_TOP</span><br><span class="line">classdefdeco1 ::= expr . classdefdeco1 CALL_FUNCTION_1</span><br><span class="line">classdefdeco1 ::= expr . classdefdeco2 CALL_FUNCTION_1</span><br><span class="line">compare_chained ::= expr . compared_chained_middle ROT_TWO POP_TOP \e__come_froms</span><br><span class="line">compare_chained ::= expr . compared_chained_middle ROT_TWO POP_TOP _come_froms</span><br><span class="line">compare_single ::= expr . expr COMPARE_OP</span><br><span class="line">delete ::= expr . DELETE_ATTR</span><br><span class="line">delete_subscript ::= expr . expr DELETE_SUBSCR</span><br><span class="line">expr ::= LOAD_CONST . </span><br><span class="line">expr_jitop ::= expr . JUMP_IF_TRUE_OR_POP</span><br><span class="line">expr_jt ::= expr . jmp_true</span><br><span class="line">if_exp ::= expr . jmp_false expr JUMP_ABSOLUTE expr</span><br><span class="line">if_exp ::= expr . jmp_false expr JUMP_FORWARD expr COME_FROM</span><br><span class="line">if_exp_lambda ::= expr . jmp_false expr return_if_lambda return_stmt_lambda LAMBDA_MARKER</span><br><span class="line">if_exp_not ::= expr . jmp_true expr _jump expr COME_FROM</span><br><span class="line">if_exp_not_lambda ::= expr . jmp_true expr return_if_lambda return_stmt_lambda LAMBDA_MARKER</span><br><span class="line">if_exp_true ::= expr . JUMP_FORWARD expr COME_FROM</span><br><span class="line"><span class="keyword">import</span> ::= LOAD_CONST . LOAD_CONST alias</span><br><span class="line">import_from ::= LOAD_CONST . LOAD_CONST IMPORT_NAME importlist POP_TOP</span><br><span class="line">import_from_star ::= LOAD_CONST . LOAD_CONST IMPORT_NAME IMPORT_STAR</span><br><span class="line">importmultiple ::= LOAD_CONST . LOAD_CONST alias imports_cont</span><br><span class="line">mkfuncdeco ::= expr . mkfuncdeco CALL_FUNCTION_1</span><br><span class="line">mkfuncdeco ::= expr . mkfuncdeco0 CALL_FUNCTION_1</span><br><span class="line">print_items_nl_stmt ::= expr . PRINT_ITEM \e_print_items_opt PRINT_NEWLINE_CONT</span><br><span class="line">print_items_nl_stmt ::= expr . PRINT_ITEM print_items_opt PRINT_NEWLINE_CONT</span><br><span class="line">print_items_stmt ::= expr . PRINT_ITEM \e_print_items_opt</span><br><span class="line">print_items_stmt ::= expr . PRINT_ITEM print_items_opt</span><br><span class="line">print_nl_to ::= expr . PRINT_NEWLINE_TO</span><br><span class="line">print_to ::= expr . print_to_items POP_TOP</span><br><span class="line">print_to_nl ::= expr . print_to_items PRINT_NEWLINE_TO</span><br><span class="line">raise_stmt1 ::= expr . RAISE_VARARGS_1</span><br><span class="line">raise_stmt2 ::= expr . expr RAISE_VARARGS_2</span><br><span class="line">raise_stmt3 ::= expr . expr expr RAISE_VARARGS_3</span><br><span class="line">ret_and ::= expr . JUMP_IF_FALSE_OR_POP return_expr_or_cond COME_FROM</span><br><span class="line">ret_or ::= expr . JUMP_IF_TRUE_OR_POP return_expr_or_cond COME_FROM</span><br><span class="line"><span class="keyword">return</span> ::= return_expr . RETURN_VALUE</span><br><span class="line">return_expr ::= expr . </span><br><span class="line">return_expr_lambda ::= return_expr . RETURN_VALUE_LAMBDA</span><br><span class="line">return_expr_lambda ::= return_expr . RETURN_VALUE_LAMBDA LAMBDA_MARKER</span><br><span class="line">slice0 ::= expr . DUP_TOP SLICE+<span class="number">0</span></span><br><span class="line">slice0 ::= expr . SLICE+<span class="number">0</span></span><br><span class="line">slice1 ::= expr . expr DUP_TOPX_2 SLICE+<span class="number">1</span></span><br><span class="line">slice1 ::= expr . expr SLICE+<span class="number">1</span></span><br><span class="line">slice2 ::= expr . expr DUP_TOPX_2 SLICE+<span class="number">2</span></span><br><span class="line">slice2 ::= expr . expr SLICE+<span class="number">2</span></span><br><span class="line">slice3 ::= expr . expr expr DUP_TOPX_3 SLICE+<span class="number">3</span></span><br><span class="line">slice3 ::= expr . expr expr SLICE+<span class="number">3</span></span><br><span class="line">subscript ::= expr . expr BINARY_SUBSCR</span><br><span class="line">subscript2 ::= expr . expr DUP_TOPX_2 BINARY_SUBSCR</span><br><span class="line">testfalse ::= expr . jmp_false</span><br><span class="line">testtrue ::= expr . jmp_true</span><br><span class="line">unary_convert ::= expr . UNARY_CONVERT</span><br><span class="line">unary_not ::= expr . UNARY_NOT</span><br><span class="line">unary_op ::= expr . unary_operator</span><br><span class="line"><span class="keyword">with</span> ::= expr . SETUP_WITH POP_TOP \e_suite_stmts_opt POP_BLOCK LOAD_CONST COME_FROM_WITH WITH_CLEANUP END_FINALLY</span><br><span class="line"><span class="keyword">with</span> ::= expr . SETUP_WITH POP_TOP suite_stmts_opt POP_BLOCK LOAD_CONST COME_FROM_WITH WITH_CLEANUP END_FINALLY</span><br><span class="line">with_as ::= expr . SETUP_WITH store \e_suite_stmts_opt POP_BLOCK LOAD_CONST COME_FROM_WITH WITH_CLEANUP END_FINALLY</span><br><span class="line">with_as ::= expr . SETUP_WITH store suite_stmts_opt POP_BLOCK LOAD_CONST COME_FROM_WITH WITH_CLEANUP END_FINALLY</span><br><span class="line"><span class="keyword">yield</span> ::= expr . YIELD_VALUE</span><br><span class="line">Instruction context:</span><br><span class="line">-&gt; </span><br><span class="line"> L.   <span class="number">1</span>         <span class="number">0</span>  LOAD_CONST               <span class="string">&#x27;=cWbihGfyMzNllzZ&#x27;</span></span><br><span class="line">                   <span class="number">3</span>  NOP              </span><br><span class="line">                   <span class="number">4</span>  NOP              </span><br><span class="line">                   <span class="number">5</span>  NOP              </span><br><span class="line">                   <span class="number">6</span>  LOAD_CONST               <span class="string">&#x27;0cjZzMW&#x27;</span></span><br><span class="line">                   <span class="number">9</span>  LOAD_CONST               <span class="string">&#x27;N5cTM4Y&#x27;</span></span><br><span class="line">                  <span class="number">12</span>  LOAD_CONST               <span class="string">&#x27;jYygTOy&#x27;</span></span><br><span class="line">                  <span class="number">15</span>  LOAD_CONST               <span class="string">&#x27;cmNycWNyYmM1Ujf&#x27;</span></span><br><span class="line">                  <span class="number">18</span>  BINARY_ADD       </span><br><span class="line">                  <span class="number">19</span>  STORE_NAME            <span class="number">0</span>  <span class="string">&#x27;str&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>直接拼接字符串</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=cWbihGfyMzNllzZ0cjZzMWN5cTM4YjYygTOycmNycWNyYmM1Ujf</span><br></pre></td></tr></table></figure>
+<p>很明显先reverse再base64，</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~552f25g26g2982b681795c3f74g9e732|hbmg</span><br></pre></td></tr></table></figure>
+<p>再反转，是ASCII Casear，密钥1.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">key = <span class="number">1</span></span><br><span class="line">cipher = <span class="string">&quot;gmbh|237e9g47f3c597186b2892g62g52f255&quot;</span></span><br><span class="line">plain = <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>(<span class="built_in">ord</span>(c) - key) <span class="keyword">for</span> c <span class="keyword">in</span> cipher])</span><br><span class="line">flag = <span class="string">f&quot;&#123;&#123;<span class="subst">&#123;plain&#125;</span>&#125;&#125;&quot;</span></span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+<p><code>flag{126d8f36e2b486075a1781f51f41e144}</code></p>
+<h3 id="Avatar"><a href="#Avatar" class="headerlink" title="Avatar"></a>Avatar</h3><blockquote>
+<p>一个恐怖份子上传了这张照片到社交网络。里面藏了什么信息?</p>
+</blockquote>
+<p>工具题，outguess</p>
+<p>安装方法参考<a target="_blank" rel="noopener" href="https://0xmouise.github.io/2025/09/16/OutGuess%20%E5%AE%89%E8%A3%85%E4%B8%8E%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%8C%87%E5%8D%97%EF%BC%88Kali%20Linux%20%E7%8E%AF%E5%A2%83%EF%BC%89/index.html">https://0xmouise.github.io/2025/09/16/OutGuess%20%E5%AE%89%E8%A3%85%E4%B8%8E%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%8C%87%E5%8D%97%EF%BC%88Kali%20Linux%20%E7%8E%AF%E5%A2%83%EF%BC%89/index.html</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">outguess -r 035bfaa85410429495786d8ea6ecd296.jpg -t flag.txt</span><br><span class="line"><span class="built_in">cat</span> flag.txt</span><br></pre></td></tr></table></figure>
+<p>flag是<code>We should blow up the bridge at midnight</code></p>
+<h3 id="qr-easy"><a href="#qr-easy" class="headerlink" title="qr-easy"></a>qr-easy</h3><p>直接看官wp吧，挺难的。</p>
+<p><code>SECCON{PSwIQ9d9GjKTdD8H}</code></p>
+<h3 id="message"><a href="#message" class="headerlink" title="message"></a>message</h3><p>答辩</p>
+<h3 id="give-you-flag"><a href="#give-you-flag" class="headerlink" title="give_you_flag"></a>give_you_flag</h3><blockquote>
+<p>菜狗找到了文件中的彩蛋很开心，给菜猫发了个表情包</p>
+</blockquote>
+<p>随波逐流一把梭，分帧，49.png发现二维码，截图去掉无关背景，加定位符自动解码</p>
+<p><code>flag{e7d478cf6b915f50ab1277f78502a2c5}</code></p>
+<h3 id="stegano"><a href="#stegano" class="headerlink" title="stegano"></a>stegano</h3><p>题目有问题</p>
+<h3 id="坚持60s"><a href="#坚持60s" class="headerlink" title="坚持60s"></a>坚持60s</h3><blockquote>
+<p>菜狗发现最近菜猫不爱理他，反而迷上了菜鸡</p>
+</blockquote>
+<p>有点意思，strings搜索不到，于是反编译了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar jd-gui.jar</span><br></pre></td></tr></table></figure>
+<p>在PlaneGameFrame.class下发现：</p>
+<p><strong>flag{RGFqaURhbGlfSmlud2FuQ2hpamk=}</strong></p>
+<p>base64解码可得<code>flag{DajiDali_JinwanChiji}</code></p>
+<h3 id="gif"><a href="#gif" class="headerlink" title="gif"></a>gif</h3><blockquote>
+<p>菜狗截获了一张菜鸡发给菜猫的动态图，却发现另有玄机</p>
+</blockquote>
+<p>题目还行</p>
+<p>很多jpg，黑白黑白的，一开始还以为是二维码，不过数量不够</p>
+<p>直接01就行</p>
+<p><strong>01100110011011000110000101100111011110110100011001110101010011100101111101100111011010010100011001111101</strong></p>
+<p>转Hex转ASCII即<code>flag{FuN_giF}</code></p>
+<h3 id="掀桌子"><a href="#掀桌子" class="headerlink" title="掀桌子"></a>掀桌子</h3><blockquote>
+<p>菜狗截获了一份报文如下c8e9aca0c6f2e5f3e8c4efe7a1a0d4e8e5a0e6ece1e7a0e9f3baa0e8eafae3f9e4eafae2eae4e3eaebfaebe3f5e7e9f3e4e3e8eaf9eaf3e2e4e6f2，生气地掀翻了桌子(╯°□°）╯︵ ┻━┻</p>
+</blockquote>
+<p>显然Hex太大，减去0x80即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">hex</span> = <span class="string">&quot;c8e9aca0c6f2e5f3e8c4efe7a1a0d4e8e5a0e6ece1e7a0e9f3baa0e8eafae3f9e4eafae2eae4e3eaebfaebe3f5e7e9f3e4e3e8eaf9eaf3e2e4e6f2&quot;</span></span><br><span class="line">bytes_data = <span class="built_in">bytes</span>.fromhex(<span class="built_in">hex</span>)</span><br><span class="line">decoded = <span class="built_in">bytes</span>([b ^ <span class="number">0x80</span> <span class="keyword">for</span> b <span class="keyword">in</span> bytes_data])</span><br><span class="line"><span class="built_in">print</span>(decoded)</span><br></pre></td></tr></table></figure>
+<p>得到<strong>Hi, FreshDog! The flag is: hjzcydjzbjdcjkzkcugisdchjyjsbdfr</strong>，<code>flag{hjzcydjzbjdcjkzkcugisdchjyjsbdfr}</code></p>
+<h3 id="双色块"><a href="#双色块" class="headerlink" title="双色块"></a>双色块</h3><p>意义不大，可参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_87950092/article/details/156432220">https://blog.csdn.net/2402_87950092/article/details/156432220</a></p>
+<h3 id="ewm"><a href="#ewm" class="headerlink" title="ewm"></a>ewm</h3><p>答辩中的答辩</p>
+<h3 id="crc"><a href="#crc" class="headerlink" title="crc"></a>crc</h3><p>答辩</p>
+<h3 id="Time-losing"><a href="#Time-losing" class="headerlink" title="Time_losing"></a>Time_losing</h3><p>同上</p>
+<h3 id="catnim"><a href="#catnim" class="headerlink" title="catnim"></a>catnim</h3><blockquote>
+<p>catnim</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">nim_optimal_move</span>(<span class="params">piles</span>):</span><br><span class="line">    xor_all = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> piles:</span><br><span class="line">        xor_all ^= p</span><br><span class="line">    <span class="keyword">if</span> xor_all == <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 必败态，随便取一个石子</span></span><br><span class="line">        <span class="keyword">for</span> i, p <span class="keyword">in</span> <span class="built_in">enumerate</span>(piles):</span><br><span class="line">            <span class="keyword">if</span> p &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> i, <span class="number">1</span>  <span class="comment"># 取1个</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="comment"># 必胜态</span></span><br><span class="line">    <span class="keyword">for</span> i, p <span class="keyword">in</span> <span class="built_in">enumerate</span>(piles):</span><br><span class="line">        target = p ^ xor_all</span><br><span class="line">        <span class="keyword">if</span> target &lt; p:</span><br><span class="line">            <span class="keyword">return</span> i, p - target</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    conn = remote(<span class="string">&#x27;61.147.171.105&#x27;</span>, <span class="number">56541</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(conn.recvuntil(<span class="string">&#x27;(Y/N)?&#x27;</span>).decode())</span><br><span class="line">    conn.sendline(<span class="string">&#x27;N&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            data = conn.recvuntil(<span class="string">&#x27;where:&#x27;</span>).decode()</span><br><span class="line">            <span class="built_in">print</span>(data)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 解析石子堆</span></span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27;Now pile:&#x27;</span> <span class="keyword">in</span> data:</span><br><span class="line">                piles_str = data.split(<span class="string">&#x27;Now pile:&#x27;</span>)[<span class="number">1</span>].split(<span class="string">&#x27;where:&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">                piles = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, re.findall(<span class="string">r&#x27;\d+&#x27;</span>, piles_str)))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 可能是AI行动后的输出，再收一次</span></span><br><span class="line">                data2 = conn.recvuntil(<span class="string">&#x27;where:&#x27;</span>, timeout=<span class="number">2</span>).decode()</span><br><span class="line">                <span class="built_in">print</span>(data2)</span><br><span class="line">                piles = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, re.findall(<span class="string">r&#x27;\d+&#x27;</span>, data2.split(<span class="string">&#x27;Now pile:&#x27;</span>)[<span class="number">1</span>])))</span><br><span class="line">            </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;当前石子堆: <span class="subst">&#123;piles&#125;</span>&quot;</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 计算最优走法</span></span><br><span class="line">            move = nim_optimal_move(piles)</span><br><span class="line">            <span class="keyword">if</span> move <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;无解&quot;</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">            heap_idx, take = move</span><br><span class="line">            <span class="comment"># 题目使用0-based索引</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;发送: <span class="subst">&#123;heap_idx&#125;</span> <span class="subst">&#123;take&#125;</span>&quot;</span>)</span><br><span class="line">            conn.sendline(<span class="string">f&quot;<span class="subst">&#123;heap_idx&#125;</span> <span class="subst">&#123;take&#125;</span>&quot;</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 接收响应</span></span><br><span class="line">            resp = conn.recvline(timeout=<span class="number">2</span>).decode()</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;响应: <span class="subst">&#123;resp&#125;</span>&quot;</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> resp.lower():</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;找到flag!&quot;</span>)</span><br><span class="line">                <span class="built_in">print</span>(resp)</span><br><span class="line">                <span class="comment"># 继续接收剩余输出</span></span><br><span class="line">                <span class="built_in">print</span>(conn.recvall(timeout=<span class="number">2</span>).decode())</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">                </span><br><span class="line">        <span class="keyword">except</span> EOFError:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;连接结束&quot;</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="built_in">print</span>(conn.recvall(timeout=<span class="number">2</span>).decode())</span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;错误: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    </span><br><span class="line">    conn.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p><code>cyberpeace{30719ab44cab56aeaf22a8126283e0a3}</code></p>
+<h3 id="miao"><a href="#miao" class="headerlink" title="miao~"></a>miao~</h3><blockquote>
+<p>猫猫真的很可爱捏~</p>
+</blockquote>
+<p>jpg，foremost得到音频，频谱隐写了CatCTF，疑似密钥</p>
+<p>工具题</p>
+<p><strong>DeepSound</strong></p>
+<p><a target="_blank" rel="noopener" href="https://gitcode.com/open-source-toolkit/e746d/?utm_source=tools_gitcode&amp;index=top&amp;type=card&amp;uuid_tt_dd=10_18658958940-1766417359606-988113&amp;from_id=141944208&amp;from_link=7f9d205bef721a7b0219600578f476e3">https://gitcode.com/open-source-toolkit/e746d/?utm_source=tools_gitcode&amp;index=top&amp;type=card&amp;uuid_tt_dd=10_18658958940-1766417359606-988113&amp;from_id=141944208&amp;from_link=7f9d205bef721a7b0219600578f476e3</a></p>
+<p>分离出flag.txt，得到</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~呜喵喵喵喵呜呜啊呜啊呜喵呜呜~喵啊喵啊喵啊呜喵呜~~~喵~呜喵啊喵啊喵喵喵呜呜~呜~呜喵呜呜啊啊~呜啊喵啊呜喵呜呜啊~喵~呜呜喵喵~喵喵喵呜呜呜喵~呜喵呜呜啊~呜啊啊喵啊呜喵呜呜喵~喵~呜喵呜~~喵喵喵呜啊呜啊喵呜喵呜呜啊~呜啊啊喵啊呜~啊喵~~喵~呜呜喵喵喵喵喵喵呜啊呜呜~呜喵呜呜~喵~喵啊喵啊呜~~啊啊~喵~呜呜喵喵啊喵喵喵呜呜呜呜~呜喵呜呜~呜啊~啊喵啊呜~~啊啊~喵~呜呜喵喵呜喵喵喵呜啊喵呜喵呜喵呜呜啊呜啊啊啊喵啊呜喵喵呜啊~喵~呜喵呜喵喵喵喵喵呜啊喵喵呜呜喵呜呜~喵~啊啊喵啊呜~~啊啊~喵~呜喵呜~啊喵喵喵呜呜~喵啊呜喵呜呜啊啊呜喵啊喵啊呜~呜~喵~喵~呜呜喵喵喵喵喵喵呜啊喵喵啊呜喵呜呜~呜呜呜啊喵啊呜喵呜啊喵啊</span><br></pre></td></tr></table></figure>
+<p>随波逐流一把梭，当兽音译者解码可得<code>CatCTF{d0_y0u_Hate_c4t_ba3k1ng_?_M1ao~}</code></p>
+<h2 id="Forensics"><a href="#Forensics" class="headerlink" title="Forensics"></a>Forensics</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><blockquote>
+<p>我们在Mysql数据库中存放了flag，但是黑客已经把它删除了。你能找回来flag吗？</p>
+</blockquote>
+<p>这题目有点意思但是可以秒</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep -r -a <span class="string">&quot;flag&quot;</span></span><br><span class="line"><span class="comment">#  -r 表示当前目录下递归搜索</span></span><br><span class="line"><span class="comment"># -a 表示二进制文件当作文本处理</span></span><br></pre></td></tr></table></figure>
+<p>搜索结果可见flag。flag即<code>71e55075163d5c6410c0d9eae499c977</code></p>
+<h3 id="Disk"><a href="#Disk" class="headerlink" title="Disk"></a>Disk</h3><p>这题还可</p>
+<p>需要先下载FTK挂载vmdk，在flag0.txt-flag3.txt可以发现有一个ads文件，提取一下01字符串</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0110011001101100011000010110011101</span><br><span class="line">1110110011010001000100010100110101</span><br><span class="line">1111001100010110111001011111010001</span><br><span class="line">0000110001011100110110101101111101</span><br></pre></td></tr></table></figure>
+<p><code>flag{4DS_1n_D1sk}</code></p>
+<h3 id="Cat-Jump"><a href="#Cat-Jump" class="headerlink" title="Cat_Jump"></a>Cat_Jump</h3><blockquote>
+<p>你说的对，但是Cat_Jump是由CatCTF自主研发的一款Linux小游戏。游戏发生在一个被称作「虚拟机」的幻想世界，在这里，被神选中的人将被授予「cat_jump」，导引进入系统。你将扮演一只名为「OpenCore」的神秘角色，在自由的旅行中邂逅性格各异、能力独特的出题人，和他们一起击败强敌，找回失散的Flag——同时，逐步发掘「Cat_Jump」的真相。</p>
+</blockquote>
+<p>emm，直接grep</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">grep -r -a <span class="string">&quot;CatCTF&#123;&quot;</span></span><br><span class="line">^[[O2.img:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -pbkdf2 -<span class="built_in">base64</span> -k cat_jump</span><br><span class="line">2.img:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -pbkdf2 -<span class="built_in">base64</span> -k /sys/firmware/efi/efivars/CatCTF-7c436110-ab2a-4bbb-a880-fe41995c9f82</span><br><span class="line">2.img:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_f/**</span><br><span class="line">2.img:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -k cat_jump -<span class="built_in">base64</span></span><br><span class="line">2.img:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -k cat_jump -pbkdf2 -<span class="built_in">base64</span></span><br><span class="line">^[[I^[[Ocat_jump_clean.vmdk:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -k cat_jump -<span class="built_in">base64</span></span><br><span class="line">cat_jump_clean.vmdk:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -k cat_jump -pbkdf2 -<span class="built_in">base64</span></span><br><span class="line">cat_jump_clean.vmdk:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -pbkdf2 -<span class="built_in">base64</span> -k cat_jump</span><br><span class="line">cat_jump_clean.vmdk:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_funn9&#125; | openssl aes-128-cbc -pbkdf2 -<span class="built_in">base64</span> -k /sys/firmware/efi/efivars/CatCTF-7c436110-ab2a-4bbb-a880-fe41995c9f82</span><br><span class="line">cat_jump_clean.vmdk:<span class="built_in">echo</span> CatCTF&#123;EFI_1sv3ry_f/**</span><br></pre></td></tr></table></figure>
+<p><code>CatCTF{EFI_1sv3ry_funn9}</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/01/13/adworld-misc-4/">http://example.com/2026/01/13/adworld-misc-4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/01/21/adworld-misc-5/" title="adworld_misc_5"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">adworld_misc_5</div></div><div class="info-2"><div class="info-item-1">adworld_misc_5 [TOC] Steganography4433答辩 pyHAHA难度爆炸，看wp吧 flag{H4pPy_pY_C0dlng} 传感器2题目重复 Russian-zipszip是伪加密，改掉就行 剩下的没啥意思，说是和Minecraft的地图文件有关。没兴趣 ZCTF{N4t1Ve_!} clemency炸裂。没必要花时间做，插件没更新基本上用不了（太难修改了） flag{I_love_cLEMENCy,so_I_want_to_share_it_with_you} 硬要看的话参考https://www.52pojie.cn/thread-658507-1-1.html ext3 今天是菜狗的生日，他收到了一个linux系统光盘  非预期1直接strings搜索 1strings f1fc23f5c743425d9e0073887c846d23 | grep &quot;flag&#123;&quot; 没有输出，猜测是以某种编码写在光盘里面，不妨试试base64 12strings f1fc23f5c743425d9e0073887c846d23 ...</div></div></div></a><a class="pagination-related" href="/2026/01/13/adworld-misc-3/" title="adworld_misc_3"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">adworld_misc_3</div></div><div class="info-2"><div class="info-item-1">adworld_misc_3 [TOC] SteganographyPy-Py-Py这题没啥意思 参考https://blog.csdn.net/2402_87950092/article/details/155359489 肥宅快乐题同上 4-1随波逐流一把梭，得到了画风不一样的喵_end.txt，复制字节保存为二进制文件即可（可以手动提取） 解压再解压，得到2张png。随波逐流双图盲水印，肉眼可见flag wdflag{My_c4t_Ho} 5-1file无果，不是任何文件类型，经过了xor加密。 破解xor的方法是下载特定工具 1234567891011121314151617181920212223pip install xortoolxortool -b badd3e0621ff43de8cf802545bbd3ed0The most probable key lengths: 2:  12.2% 5:  11.9% 9:   9.8%13:  22.2%20:   6.8%22:   6.2%26:  12.8%30:   4.6%39:   7.8%52:   5....</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#adworld-misc-4"><span class="toc-text">adworld_misc_4</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Steganography"><span class="toc-text">Steganography</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Keyword"><span class="toc-text">Keyword</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#picture2"><span class="toc-text">picture2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#test-pyc"><span class="toc-text">test.pyc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Avatar"><span class="toc-text">Avatar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#qr-easy"><span class="toc-text">qr-easy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#message"><span class="toc-text">message</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#give-you-flag"><span class="toc-text">give_you_flag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stegano"><span class="toc-text">stegano</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%9A%E6%8C%8160s"><span class="toc-text">坚持60s</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gif"><span class="toc-text">gif</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%80%E6%A1%8C%E5%AD%90"><span class="toc-text">掀桌子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E8%89%B2%E5%9D%97"><span class="toc-text">双色块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ewm"><span class="toc-text">ewm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#crc"><span class="toc-text">crc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Time-losing"><span class="toc-text">Time_losing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#catnim"><span class="toc-text">catnim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#miao"><span class="toc-text">miao~</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Forensics"><span class="toc-text">Forensics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql"><span class="toc-text">mysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Disk"><span class="toc-text">Disk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cat-Jump"><span class="toc-text">Cat_Jump</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/11/AbstractAlgebra-1-1/" title="AbstractAlgebra_1.1">AbstractAlgebra_1.1</a><time datetime="2026-02-11T10:46:06.000Z" title="Created 2026-02-11 18:46:06">2026-02-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/11/AbstractAlgebra-0/" title="AbstractAlgebra_0">AbstractAlgebra_0</a><time datetime="2026-02-11T09:46:12.000Z" title="Created 2026-02-11 17:46:12">2026-02-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/11/markdown-latex/" title="markdown&amp;&amp;latex">markdown&amp;&amp;latex</a><time datetime="2026-02-11T09:22:56.000Z" title="Created 2026-02-11 17:22:56">2026-02-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/06/furryCTF-2025/" title="furryCTF_2025">furryCTF_2025</a><time datetime="2026-02-06T02:09:00.000Z" title="Created 2026-02-06 10:09:00">2026-02-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/06/furryCTF-2025%E7%83%AD%E8%BA%AB%E8%B5%9B/" title="furryCTF_2025热身赛">furryCTF_2025热身赛</a><time datetime="2026-02-06T02:07:06.000Z" title="Created 2026-02-06 10:07:06">2026-02-06</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

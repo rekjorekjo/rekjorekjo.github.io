@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>adworld_misc_3 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="adworld_misc_3 [TOC] SteganographyPy-Py-Py这题没啥意思 参考https:&#x2F;&#x2F;blog.csdn.net&#x2F;2402_87950092&#x2F;article&#x2F;details&#x2F;155359489 肥宅快乐题同上 4-1随波逐流一把梭，得到了画风不一样的喵_end.txt，复制字节保存为二进制文件即可（可以手动提取） 解压再解压，得到2张png。随波逐流双图盲水印，肉眼">
+<meta property="og:type" content="article">
+<meta property="og:title" content="adworld_misc_3">
+<meta property="og:url" content="http://example.com/2026/01/13/adworld-misc-3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="adworld_misc_3 [TOC] SteganographyPy-Py-Py这题没啥意思 参考https:&#x2F;&#x2F;blog.csdn.net&#x2F;2402_87950092&#x2F;article&#x2F;details&#x2F;155359489 肥宅快乐题同上 4-1随波逐流一把梭，得到了画风不一样的喵_end.txt，复制字节保存为二进制文件即可（可以手动提取） 解压再解压，得到2张png。随波逐流双图盲水印，肉眼">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-01-12T16:42:00.000Z">
+<meta property="article:modified_time" content="2026-02-06T01:49:50.976Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "adworld_misc_3",
+  "url": "http://example.com/2026/01/13/adworld-misc-3/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-01-12T16:42:00.000Z",
+  "dateModified": "2026-02-06T01:49:50.976Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/01/13/adworld-misc-3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'adworld_misc_3',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">adworld_misc_3</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">adworld_misc_3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-01-12T16:42:00.000Z" title="Created 2026-01-13 00:42:00">2026-01-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-06T01:49:50.976Z" title="Updated 2026-02-06 09:49:50">2026-02-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Practice/">Practice</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>6mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="adworld-misc-3"><a href="#adworld-misc-3" class="headerlink" title="adworld_misc_3"></a>adworld_misc_3</h1><hr>
+<p>[TOC]</p>
+<h2 id="Steganography"><a href="#Steganography" class="headerlink" title="Steganography"></a>Steganography</h2><h3 id="Py-Py-Py"><a href="#Py-Py-Py" class="headerlink" title="Py-Py-Py"></a>Py-Py-Py</h3><p>这题没啥意思</p>
+<p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_87950092/article/details/155359489">https://blog.csdn.net/2402_87950092/article/details/155359489</a></p>
+<h3 id="肥宅快乐题"><a href="#肥宅快乐题" class="headerlink" title="肥宅快乐题"></a>肥宅快乐题</h3><p>同上</p>
+<h3 id="4-1"><a href="#4-1" class="headerlink" title="4-1"></a>4-1</h3><p>随波逐流一把梭，得到了画风不一样的喵_end.txt，复制字节保存为二进制文件即可（可以手动提取）</p>
+<p>解压再解压，得到2张png。随波逐流双图盲水印，肉眼可见flag</p>
+<p><code>wdflag{My_c4t_Ho}</code></p>
+<h3 id="5-1"><a href="#5-1" class="headerlink" title="5-1"></a>5-1</h3><p>file无果，不是任何文件类型，经过了xor加密。</p>
+<p>破解xor的方法是下载特定工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">pip install xortool</span><br><span class="line">xortool -b badd3e0621ff43de8cf802545bbd3ed0</span><br><span class="line">The most probable key lengths:</span><br><span class="line"> 2:  12.2%</span><br><span class="line"> 5:  11.9%</span><br><span class="line"> 9:   9.8%</span><br><span class="line">13:  22.2%</span><br><span class="line">20:   6.8%</span><br><span class="line">22:   6.2%</span><br><span class="line">26:  12.8%</span><br><span class="line">30:   4.6%</span><br><span class="line">39:   7.8%</span><br><span class="line">52:   5.7%</span><br><span class="line">Key-length can be 3*n</span><br><span class="line">256 possible key(s) of length 13:</span><br><span class="line">gOOD)UCKtOyOU</span><br><span class="line">fNNE(TBJuNxNT</span><br><span class="line">eMMF+WAIvM&#123;MW</span><br><span class="line">dLLG*V@HwLzLV</span><br><span class="line">cKK@-QGOpK&#125;KQ</span><br><span class="line">...</span><br><span class="line">Found 55 plaintexts with 95%+ valid characters</span><br><span class="line">See files filename-key.csv, filename-char_used-perc_valid.csv</span><br></pre></td></tr></table></figure>
+<p>-b指的是brute force强制破解。根据提示打开filename-key.csv，试一下便知gOOD)UCKtOyOU虽然看着像但是还是不对，正确的密钥是Good\tuckToYou，\t很奇怪，猜测密钥是<strong>GoodLuckToYou</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xor_file</span>(<span class="params">input_file, output_file, key</span>):</span><br><span class="line">    key_bytes = key.encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    key_length = <span class="built_in">len</span>(key_bytes)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(input_file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f_in:</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(output_file, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f_out:</span><br><span class="line">                index = <span class="number">0</span></span><br><span class="line">                <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">                    byte = f_in.read(<span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">if</span> <span class="keyword">not</span> byte:</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    </span><br><span class="line">                    <span class="comment"># 逐字节异或</span></span><br><span class="line">                    xor_byte = byte[<span class="number">0</span>] ^ key_bytes[index % key_length]</span><br><span class="line">                    f_out.write(<span class="built_in">bytes</span>([xor_byte]))</span><br><span class="line">                    </span><br><span class="line">                    index += <span class="number">1</span></span><br><span class="line">                    </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;操作成功完成！&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;密钥: <span class="subst">&#123;key&#125;</span>&quot;</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;错误: 文件 &#x27;<span class="subst">&#123;input_file&#125;</span>&#x27; 不存在&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;错误: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) != <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;用法: python xor_file.py &lt;输入文件&gt; &lt;输出文件&gt;&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;示例: python xor_file.py secret.bin decrypted.bin&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    </span><br><span class="line">    input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">    output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line">    key = <span class="string">&quot;GoodLuckToYou&quot;</span>  <span class="comment"># 指定的密钥</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;使用密钥: <span class="subst">&#123;key&#125;</span>&quot;</span>)</span><br><span class="line">    xor_file(input_file, output_file, key)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>解密后notepad打开可得flag<code>wdflag{You Are Very Smart}</code></p>
+<h3 id="latlong"><a href="#latlong" class="headerlink" title="latlong"></a>latlong</h3><p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_87950092/article/details/155359489，很详细">https://blog.csdn.net/2402_87950092/article/details/155359489，很详细</a></p>
+<p>真不会</p>
+<h3 id="challenge-how-many-Vigenere"><a href="#challenge-how-many-Vigenere" class="headerlink" title="challenge_how_many_Vigenère"></a>challenge_how_many_Vigenère</h3><p>答辩</p>
+<h3 id="Miscellaneous-300"><a href="#Miscellaneous-300" class="headerlink" title="Miscellaneous-300"></a>Miscellaneous-300</h3><p>难评，没什么价值</p>
+<h3 id="warmup"><a href="#warmup" class="headerlink" title="warmup"></a>warmup</h3><p>同样是ARCHPR明文文件攻击，不清楚为什么ARCHPR报错</p>
+<p>双图盲水印</p>
+<p>详见<a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_87950092/article/details/155359489">https://blog.csdn.net/2402_87950092/article/details/155359489</a></p>
+<h3 id="传感器1"><a href="#传感器1" class="headerlink" title="传感器1"></a>传感器1</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_87950092/article/details/155359489">https://blog.csdn.net/2402_87950092/article/details/155359489</a></p>
+<h3 id="签到题"><a href="#签到题" class="headerlink" title="签到题"></a>签到题</h3><blockquote>
+<p>SSCTF线上选举美男大赛开始了，泰迪拿着他的密码去解密了，提交花括号内内容（Z2dRQGdRMWZxaDBvaHRqcHRfc3d7Z2ZoZ3MjfQ==）</p>
+</blockquote>
+<p>看着简单，做着未必噢</p>
+<p>base64解码得到<strong>ggQ@gQ1fqh0ohtjpt_sw{gfhgs#}</strong></p>
+<p>直接栅栏密码无果，需要先凯撒解密</p>
+<p>密钥14，<strong>ssC@sC1rct0atfvbf_ei{srtse#}</strong>。随波逐流一把梭得到<strong>ssctf{ssCtf_seC10ver#@rabit}</strong></p>
+<h3 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h3><blockquote>
+<p>菜猫给了菜狗一张图，说图下面什么都没有</p>
+</blockquote>
+<p>直接打开，Ctrl+F。可得</p>
+<p><code>flag{security_through_obscurity}</code></p>
+<h3 id="如来十三掌"><a href="#如来十三掌" class="headerlink" title="如来十三掌"></a>如来十三掌</h3><blockquote>
+<p>菜狗为了打败菜猫，学了一套如来十三掌。</p>
+</blockquote>
+<p>莫名其妙给了个docx</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">夜哆悉諳多苦奢陀奢諦冥神哆盧穆皤三侄三即諸諳即冥迦冥隸數顛耶迦奢若吉怯陀諳怖奢智侄諸若奢數菩奢集遠</span><br><span class="line">俱老竟寫明奢若梵等盧皤豆蒙密離怯婆皤礙他哆提哆多缽以南哆心曰姪罰蒙呐神。舍切真怯勝呐得俱沙罰娑是怯</span><br><span class="line">遠得呐數罰輸哆遠薩得槃漫夢盧皤亦醯呐娑皤瑟輸諳尼摩罰薩冥大倒參夢侄阿心罰等奢大度地冥殿皤沙蘇輸奢恐</span><br><span class="line">豆侄得罰提哆伽諳沙楞缽三死怯摩大蘇者數一遮</span><br></pre></td></tr></table></figure>
+<p>感觉是与佛论禅之类的，随波逐流梭一下得到</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MzkuM3gvMUAwnzuvn3cgozMlMTuvqzAenJchMUAeqzWenzEmLJW9</span><br></pre></td></tr></table></figure>
+<p>继续梭，发现是ROT13（即如来十三掌）</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ZmxhZ3tiZHNjamhia3ptbmZyZGhidmNraWpuZHNrdmJramRzYWJ9</span><br></pre></td></tr></table></figure>
+<p>base64解码得到<code>flag{bdscjhbkzmnfrdhbvckijndskvbkjdsab}</code></p>
+<h3 id="打开电动车"><a href="#打开电动车" class="headerlink" title="打开电动车"></a>打开电动车</h3><p>答辩</p>
+<h3 id="miscmisc"><a href="#miscmisc" class="headerlink" title="miscmisc"></a>miscmisc</h3><p>答辩</p>
+<h3 id="奇怪的TTL字段"><a href="#奇怪的TTL字段" class="headerlink" title="奇怪的TTL字段"></a>奇怪的TTL字段</h3><p>答辩</p>
+<h3 id="隐藏的信息"><a href="#隐藏的信息" class="headerlink" title="隐藏的信息"></a>隐藏的信息</h3><blockquote>
+<p>这是一个被混淆的文件，但是我忘记了这个文件的密码。你能够帮助我还原明文吗？</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0126 062 0126 0163 0142 0103 0102 0153 0142 062 065 0154 0111 0121 0157 0113 0111 0105 0132 0163 0131 0127 0143 066 0111 0105 0154 0124 0121 060 0116 067 0124 0152 0102 0146 0115 0107 065 0154 0130 062 0116 0150 0142 0154 071 0172 0144 0104 0102 0167 0130 063 0153 0167 0144 0130 060 0113 </span><br></pre></td></tr></table></figure>
+<p>一眼八进制，随波逐流转16进制转ASCII，再一把梭得到<code>ISCC{N0_0ne_can_st0p_y0u}</code></p>
+<h3 id="Keyes-secret"><a href="#Keyes-secret" class="headerlink" title="Keyes_secret"></a>Keyes_secret</h3><p>没太大意义，可不做</p>
+<h3 id="saleae"><a href="#saleae" class="headerlink" title="saleae"></a>saleae</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_87950092/article/details/155359489">https://blog.csdn.net/2402_87950092/article/details/155359489</a></p>
+<p>旧版软件已经弃用了，这题看看就行</p>
+<h3 id="信号不好先挂了"><a href="#信号不好先挂了" class="headerlink" title="信号不好先挂了"></a>信号不好先挂了</h3><p>解压，zsteg/随波逐流发现有隐藏zip，提取</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zsteg -E <span class="string">&quot;b1,rgb,lsb,xy&quot;</span> apple.png &gt; 112.zip</span><br></pre></td></tr></table></figure>
+<p>解压得到pen.png，随波逐流双图盲水印</p>
+<p><code>unctf{9d0649505b702643}</code></p>
+<h3 id="Misc文件类型"><a href="#Misc文件类型" class="headerlink" title="Misc文件类型"></a>Misc文件类型</h3><blockquote>
+<p>最重要的还是要知道这是什么文件</p>
+</blockquote>
+<p>不难发现提示是base64</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UEsDBBQAAAAIAAldCFXqOw7cKAAAACYAAAAIAAAAZmxhZy50eHRLy0lMrzZISk02SEwxTkk0MjQ0TjY3SDU1SEsxNTM0T7JINU+zrAUAUEsBAhQAFAAAAAgACV0IVeo7DtwoAAAAJgAAAAgAJAAAAAAAAAAgAAAAAAAAAGZsYWcudHh0CgAgAAAAAAABABgAGxEfk9iq2AEbER+T2KrYAQJF+4rYqtgBUEsFBgAAAAABAAEAWgAAAE4AAAAAAA</span><br></pre></td></tr></table></figure>
+<p>base64解码转hex，保存为zip解压即可。</p>
+<p><code>flag{0bec0ad3da2113c70e50fd5617b8e7f9}</code></p>
+<h3 id="中等-QR1"><a href="#中等-QR1" class="headerlink" title="[中等] QR1"></a>[中等] QR1</h3><blockquote>
+<p>一张空白的图片？</p>
+</blockquote>
+<p>一眼二维码，可以先调整大小，设为533*533</p>
+<p>然后对比度拉到-100，再stegsolve打开，微信扫码</p>
+<p><code>flag{AHA_U_Kn0w_QR_c0d3_312468ed-ea59-4fe9-9cd2-b5e9d8b39498}</code></p>
+<h3 id="不确定-再看看"><a href="#不确定-再看看" class="headerlink" title="不确定,再看看"></a>不确定,再看看</h3><p>感觉奇奇怪怪的</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_87950092/article/details/155359489">https://blog.csdn.net/2402_87950092/article/details/155359489</a></p>
+<h2 id="流量分析"><a href="#流量分析" class="headerlink" title="流量分析"></a>流量分析</h2><h3 id="3-1"><a href="#3-1" class="headerlink" title="3-1"></a>3-1</h3><p>file一下发现是rar，解压得到文件</p>
+<p>继续file发现是流量包，strings搜索到flag.txt</p>
+<p>可以tcp contains “flag”过滤流量，追踪TCP，发现了rar，复制原始数据提取出来</p>
+<p>rar需要密码，且ARCHPR不支持，考虑从流量包里面找密码</p>
+<p>过滤key，password都没找到，但是找到了crypto</p>
+<p><strong>19aaFYsQQKr+hVX6hl2smAUQ5a767TsULEUebWSajEo=</strong>，base64解密错误</p>
+<p>在下方找到了python脚本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto <span class="keyword">import</span> Random</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">IV = <span class="string">&#x27;QWERTYUIOPASDFGH&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">encrypted</span>):</span><br><span class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</span><br><span class="line">  <span class="keyword">return</span> aes.decrypt(encrypted)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">message</span>):</span><br><span class="line">  length = <span class="number">16</span></span><br><span class="line">  count = <span class="built_in">len</span>(message)</span><br><span class="line">  padding = length - (count % length)</span><br><span class="line">  message = message + <span class="string">&#x27;\0&#x27;</span> * padding</span><br><span class="line">  aes = AES.new(IV, AES.MODE_CBC, IV)</span><br><span class="line">  <span class="keyword">return</span> aes.encrypt(message)</span><br><span class="line"><span class="built_in">str</span> = <span class="string">&#x27;this is a test&#x27;</span></span><br><span class="line">example = encrypt(<span class="built_in">str</span>)</span><br><span class="line"><span class="built_in">print</span>(decrypt(example))</span><br></pre></td></tr></table></figure>
+<p>解密：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">IV = <span class="string">b&#x27;QWERTYUIOPASDFGH&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt_aes</span>(<span class="params">enc_str</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;自动检测Base64或Hex并解密&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 尝试Base64解码</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            data = base64.b64decode(enc_str)</span><br><span class="line">            fmt = <span class="string">&quot;Base64&quot;</span></span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="comment"># 尝试Hex解码</span></span><br><span class="line">            data = <span class="built_in">bytes</span>.fromhex(enc_str)</span><br><span class="line">            fmt = <span class="string">&quot;Hex&quot;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 解密</span></span><br><span class="line">        cipher = AES.new(IV, AES.MODE_CBC, IV)</span><br><span class="line">        decrypted = cipher.decrypt(data).rstrip(<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[解码格式: <span class="subst">&#123;fmt&#125;</span>]&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> decrypted.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;解密失败: <span class="subst">&#123;e&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        inp = <span class="built_in">input</span>(<span class="string">&quot;\n输入加密字符串 (或q退出): &quot;</span>).strip()</span><br><span class="line">        <span class="keyword">if</span> inp.lower() == <span class="string">&#x27;q&#x27;</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;结果: <span class="subst">&#123;decrypt_aes(inp)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>得到<strong>passwd={No_One_Can_Decrypt_Me}</strong>，密码是<strong>No_One_Can_Decrypt_Me</strong></p>
+<p>解压得到flag：<code>WDCTF{Seclab_CTF_2017}</code></p>
+<h3 id="互相伤害"><a href="#互相伤害" class="headerlink" title="互相伤害!!!"></a>互相伤害!!!</h3><p>答辩</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/01/13/adworld-misc-3/">http://example.com/2026/01/13/adworld-misc-3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/01/13/adworld-misc-4/" title="adworld_misc_4"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">adworld_misc_4</div></div><div class="info-2"><div class="info-item-1">adworld_misc_4 [TOC] SteganographyKeyword 格式为QCTF{xxxxxxx}  工具题 livz/cloacked-pixel: LSB steganography and detection 注意是python2环境噢。 1python2 lsb.py extract 2ec5f2fe4139477781bb61070b8470a6.png 1.txt lovekfc 得到1.txt 1PVSF&#123;vVckHejqBOVX9C1c13GFfkHJrjIQeMwf&#125; Keyword Cipher密码 123456789101112131415161718192021222324252627import stringdef decode_nihilist_cipher():    txt = &#x27;PVSF&#123;vVckHejqBOVX9C1c13GFfkHJrjIQeMwf&#125;&#x27;    table = &#x27;LOVEKFCABDGHIJMNPQRSTUWXY&#x27;    flag ...</div></div></div></a><a class="pagination-related" href="/2026/01/12/adworld-misc-2/" title="adworld_misc_2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">adworld_misc_2</div></div><div class="info-2"><div class="info-item-1">adworld_misc_2 [TOC] Steganographylowlow，很明显是LSB隐写，但是是bmp，这题很有意思 解答一：https://georgeom.net/StegOnline/upload 梭哈 解答二：stegsolve是看不到二维码的，但是可以画图打开保存为png格式，此时可以看到了 扫码可得flag{139711e8e9ed545e} 至于为什么？bmp格式是极其细腻的，可能使得两种颜色之间极其接近，从而人眼难以识别出二维码，反而是经过压缩后的png，黑白明显，可以看到清晰的二维码 misc1 d4e8e1f4a0f7e1f3a0e6e1f3f4a1a0d4e8e5a0e6ece1e7a0e9f3baa0c4c4c3d4c6fbb9e1e6b3e3b9e4b3b7b7e2b6b1e4b2b6b9e2b1b1b3b3b7e6b3b3b0e3b9b3b5e6fd  明显是hex值，但是不可打印 ai分析，字符都在0x80~0xFF，所以考虑减去0x80，映射到 0x00~0x7F 123456789101112hex_str = &quot;d4e8e...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#adworld-misc-3"><span class="toc-text">adworld_misc_3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Steganography"><span class="toc-text">Steganography</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Py-Py-Py"><span class="toc-text">Py-Py-Py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%82%A5%E5%AE%85%E5%BF%AB%E4%B9%90%E9%A2%98"><span class="toc-text">肥宅快乐题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1"><span class="toc-text">4-1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1"><span class="toc-text">5-1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#latlong"><span class="toc-text">latlong</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#challenge-how-many-Vigenere"><span class="toc-text">challenge_how_many_Vigenère</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Miscellaneous-300"><span class="toc-text">Miscellaneous-300</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#warmup"><span class="toc-text">warmup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E6%84%9F%E5%99%A81"><span class="toc-text">传感器1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%BE%E5%88%B0%E9%A2%98"><span class="toc-text">签到题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pdf"><span class="toc-text">pdf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E6%9D%A5%E5%8D%81%E4%B8%89%E6%8E%8C"><span class="toc-text">如来十三掌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E7%94%B5%E5%8A%A8%E8%BD%A6"><span class="toc-text">打开电动车</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#miscmisc"><span class="toc-text">miscmisc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%87%E6%80%AA%E7%9A%84TTL%E5%AD%97%E6%AE%B5"><span class="toc-text">奇怪的TTL字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E8%97%8F%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="toc-text">隐藏的信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Keyes-secret"><span class="toc-text">Keyes_secret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#saleae"><span class="toc-text">saleae</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E4%B8%8D%E5%A5%BD%E5%85%88%E6%8C%82%E4%BA%86"><span class="toc-text">信号不好先挂了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Misc%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">Misc文件类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E7%AD%89-QR1"><span class="toc-text">[中等] QR1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E7%A1%AE%E5%AE%9A-%E5%86%8D%E7%9C%8B%E7%9C%8B"><span class="toc-text">不确定,再看看</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90"><span class="toc-text">流量分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1"><span class="toc-text">3-1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E7%9B%B8%E4%BC%A4%E5%AE%B3"><span class="toc-text">互相伤害!!!</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/11/AbstractAlgebra-1-1/" title="AbstractAlgebra_1.1">AbstractAlgebra_1.1</a><time datetime="2026-02-11T10:46:06.000Z" title="Created 2026-02-11 18:46:06">2026-02-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/11/AbstractAlgebra-0/" title="AbstractAlgebra_0">AbstractAlgebra_0</a><time datetime="2026-02-11T09:46:12.000Z" title="Created 2026-02-11 17:46:12">2026-02-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/11/markdown-latex/" title="markdown&amp;&amp;latex">markdown&amp;&amp;latex</a><time datetime="2026-02-11T09:22:56.000Z" title="Created 2026-02-11 17:22:56">2026-02-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/06/furryCTF-2025/" title="furryCTF_2025">furryCTF_2025</a><time datetime="2026-02-06T02:09:00.000Z" title="Created 2026-02-06 10:09:00">2026-02-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/06/furryCTF-2025%E7%83%AD%E8%BA%AB%E8%B5%9B/" title="furryCTF_2025热身赛">furryCTF_2025热身赛</a><time datetime="2026-02-06T02:07:06.000Z" title="Created 2026-02-06 10:07:06">2026-02-06</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

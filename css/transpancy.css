@@ -1,0 +1,52 @@
+/* ===== 主页卡片背景 - 纯色 ===== */
+#recent-posts .recent-post-item {
+  background: #edfaff !important;   /* 或 #e8f0e8（浅绿） */
+  border-radius: 12px !important;
+}
+
+/* ===== 正文背景 - 纯色 ===== */
+.layout_post > #post,
+#post {
+  background: #edfaff !important;   /* 或 #d6ebff（浅蓝） */
+}
+
+/* ===== 侧边栏卡片 - 纯色米白 ===== */
+#aside-content .card-widget {
+  background: #f0f5ea !important;
+  border-radius: 10px !important;
+}
+
+/* 侧边栏容器透明，不干扰卡片 */
+#aside-content {
+  background: transparent !important;
+}
+
+/* ===== 页脚文字统一深灰（精简版） ===== */
+#footer > *,
+#footer .footer-other,
+#footer #footer-wrap {
+  color: #2c3e50 !important;
+}
+#footer a {
+  color: #2c3e50 !important;
+}
+#footer a:hover {
+  color: #6a0dad !important;
+}
+#footer .footer-other span:last-child {
+  color: #7f8c8d !important;
+  opacity: 0.9;
+}
+
+/* ===== 侧边栏作者卡片按钮 ===== */
+#aside-content .card-info .author-info .author-button,
+#aside-content .card-widget.card-info .author-info .author-button {
+  color: #2c3e50 !important;
+  background: #f0f5ea !important;
+  border: 1px solid #d0d9c0 !important;
+}
+#aside-content .card-info .author-info .author-button:hover {
+  color: #fff !important;
+  background: #6a0dad !important;
+  border-color: #6a0dad !important;
+}
