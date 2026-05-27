@@ -1,0 +1,545 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Qt 窗口部件 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="Qt 窗口部件[TOC] 1 基础窗口部件QWidget QWidget类是所有用户界面对象的基类，即基础窗口部件。 QWidget 继承自 QObject 和 QPaintDevice。QObject 提供 Qt 对象模型、信号槽、父子对象等机制；QPaintDevice 表示该对象可以作为绘图设备，被 QPainter 绘制。  1.1 窗口与子部件 窗口是没有父部件的部件，即顶级部件（top">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt 窗口部件">
+<meta property="og:url" content="http://example.com/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Qt 窗口部件[TOC] 1 基础窗口部件QWidget QWidget类是所有用户界面对象的基类，即基础窗口部件。 QWidget 继承自 QObject 和 QPaintDevice。QObject 提供 Qt 对象模型、信号槽、父子对象等机制；QPaintDevice 表示该对象可以作为绘图设备，被 QPainter 绘制。  1.1 窗口与子部件 窗口是没有父部件的部件，即顶级部件（top">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-05-27T11:58:05.000Z">
+<meta property="article:modified_time" content="2026-05-27T12:11:25.102Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Qt 窗口部件",
+  "url": "http://example.com/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-05-27T11:58:05.000Z",
+  "dateModified": "2026-05-27T12:11:25.102Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Qt 窗口部件',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">Qt 窗口部件</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Qt 窗口部件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-05-27T11:58:05.000Z" title="Created 2026-05-27 19:58:05">2026-05-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-05-27T12:11:25.102Z" title="Updated 2026-05-27 20:11:25">2026-05-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Qt/">Qt</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>13mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Qt-窗口部件"><a href="#Qt-窗口部件" class="headerlink" title="Qt 窗口部件"></a>Qt 窗口部件</h1><p>[TOC]</p>
+<h2 id="1-基础窗口部件QWidget"><a href="#1-基础窗口部件QWidget" class="headerlink" title="1 基础窗口部件QWidget"></a>1 基础窗口部件QWidget</h2><blockquote>
+<p>QWidget类是所有用户界面对象的基类，即基础窗口部件。</p>
+<p>QWidget 继承自 <code>QObject</code> 和 <code>QPaintDevice</code>。<br>QObject 提供 Qt 对象模型、信号槽、父子对象等机制；<br>QPaintDevice 表示该对象可以作为绘图设备，被 QPainter 绘制。</p>
+</blockquote>
+<h3 id="1-1-窗口与子部件"><a href="#1-1-窗口与子部件" class="headerlink" title="1.1 窗口与子部件"></a>1.1 窗口与子部件</h3><ul>
+<li><strong>窗口</strong>是没有父部件的部件，即<code>顶级部件（top-level widget）</code>。</li>
+<li><strong>非窗口部件</strong>称为<code>子部件（child widget）</code>。</li>
+</ul>
+<p>在构造函数里面，</p>
+<ul>
+<li>如果传入 <code>父部件 parent widget</code>，通常成为该 parent 内部的子部件；</li>
+<li>如果没有 parent，通常成为顶级窗口。</li>
+</ul>
+<p>例如:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QLabel *label = <span class="keyword">new</span> <span class="built_in">QLabel</span>(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>这里this=parent，于是QLabel对象会变成this窗口里面的一个子控件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QLabel *label = <span class="keyword">new</span> QLabel;</span><br><span class="line">label-&gt;<span class="built_in">show</span>();</span><br></pre></td></tr></table></figure>
+<p>这里QLabel对象没有父对象，于是它自己就是一个独立窗口。</p>
+<h3 id="1-2-窗口类型"><a href="#1-2-窗口类型" class="headerlink" title="1.2 窗口类型"></a>1.2 窗口类型</h3><p>窗口一般都有边框和标题栏。QWidget的构造函数有两个形参:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">QWidget</span>(QWidget *parent = <span class="literal">nullptr</span>, Qt::WindowFlags f = Qt::<span class="built_in">WindowFlags</span>());</span><br></pre></td></tr></table></figure>
+<p>参数 <code>f</code> 是 <code>Qt::WindowFlags</code> 类型，是 <code>Qt::WindowType</code> 枚举值的按位或组合。</p>
+<p>注意是按位或，而不是逻辑或，举例（仅示例，非真实值）:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Qt::Dialog                <span class="number">0001</span></span><br><span class="line">Qt::FramelessWindowHint   <span class="number">0010</span></span><br><span class="line">Qt::WindowStaysOnTopHint  <span class="number">0100</span></span><br></pre></td></tr></table></figure>
+<p>那么<code>Qt::Dialog | Qt::FramelessWindowHint</code>就变成<strong>0011</strong>，表示两个属性都打开。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// =========================</span></span><br><span class="line"><span class="comment">// 常用 Qt::WindowType / WindowFlags</span></span><br><span class="line"><span class="comment">// =========================</span></span><br><span class="line"><span class="comment">// ---------- 窗口类型 ----------</span></span><br><span class="line">Qt::Window                 <span class="comment">// 普通独立窗口</span></span><br><span class="line">Qt::Dialog                 <span class="comment">// 对话框</span></span><br><span class="line">Qt::Tool                   <span class="comment">// 工具窗口</span></span><br><span class="line">Qt::Popup                  <span class="comment">// 弹出窗口</span></span><br><span class="line">Qt::ToolTip                <span class="comment">// 工具提示窗口，手动使用较少</span></span><br><span class="line">Qt::SplashScreen           <span class="comment">// 启动画面</span></span><br><span class="line">Qt::Widget                 <span class="comment">// 普通子控件（默认）</span></span><br><span class="line"><span class="comment">// ---------- 窗口外观 / 行为 ----------</span></span><br><span class="line">Qt::FramelessWindowHint    <span class="comment">// 无边框</span></span><br><span class="line">Qt::WindowStaysOnTopHint   <span class="comment">// 永远置顶</span></span><br><span class="line">Qt::CustomizeWindowHint    <span class="comment">// 自定义标题栏</span></span><br><span class="line">Qt::WindowMinimizeButtonHint <span class="comment">// 最小化按钮</span></span><br><span class="line">Qt::WindowMaximizeButtonHint <span class="comment">// 最大化按钮</span></span><br><span class="line">Qt::WindowCloseButtonHint  <span class="comment">// 关闭按钮</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3-窗口几何"><a href="#1-3-窗口几何" class="headerlink" title="1.3 窗口几何"></a>1.3 窗口几何</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// =========================</span></span><br><span class="line"><span class="comment">// Qt 窗口几何/位置常用函数（QWidget 成员函数）</span></span><br><span class="line"><span class="comment">// =========================</span></span><br><span class="line"><span class="comment">// ---------- 窗口位置 ----------</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">x</span><span class="params">()</span> <span class="type">const</span></span>;                             <span class="comment">// 左上角 x 坐标（包含边框）</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">y</span><span class="params">()</span> <span class="type">const</span></span>;                             <span class="comment">// 左上角 y 坐标（包含边框）</span></span><br><span class="line"><span class="function">QPoint <span class="title">pos</span><span class="params">()</span> <span class="type">const</span></span>;                        <span class="comment">// 左上角坐标</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">move</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span>;                   <span class="comment">// 移动窗口</span></span><br><span class="line"><span class="comment">// ---------- 内容区大小 ----------</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">width</span><span class="params">()</span> <span class="type">const</span></span>;                         <span class="comment">// 内容区宽度</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">height</span><span class="params">()</span> <span class="type">const</span></span>;                        <span class="comment">// 内容区高度</span></span><br><span class="line"><span class="function">QSize <span class="title">size</span><span class="params">()</span> <span class="type">const</span></span>;                        <span class="comment">// 内容区大小</span></span><br><span class="line"><span class="function">QRect <span class="title">rect</span><span class="params">()</span> <span class="type">const</span></span>;                        <span class="comment">// 内容区矩形</span></span><br><span class="line"><span class="function">QRect <span class="title">geometry</span><span class="params">()</span> <span class="type">const</span></span>;                    <span class="comment">// 内容区几何信息</span></span><br><span class="line"><span class="comment">// ---------- 整个窗口外框 ----------</span></span><br><span class="line"><span class="function">QRect <span class="title">frameGeometry</span><span class="params">()</span> <span class="type">const</span></span>;               <span class="comment">// 整个窗口几何（包含标题栏/边框）</span></span><br><span class="line"><span class="comment">// ---------- 修改大小 ----------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">resize</span><span class="params">(<span class="type">int</span> w, <span class="type">int</span> h)</span></span>;                 <span class="comment">// 设置内容区大小</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setGeometry</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> w, <span class="type">int</span> h)</span></span>; <span class="comment">// 同时设置位置和大小</span></span><br><span class="line"><span class="comment">// ---------- 常见 QWidget 相关 ----------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span></span>;                               <span class="comment">// 显示窗口</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">hide</span><span class="params">()</span></span>;                               <span class="comment">// 隐藏窗口</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">close</span><span class="params">()</span></span>;                              <span class="comment">// 关闭窗口</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setWindowTitle</span><span class="params">(<span class="type">const</span> QString &amp;title)</span></span>; <span class="comment">// 设置窗口标题</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setWindowIcon</span><span class="params">(<span class="type">const</span> QIcon &amp;icon)</span></span>;     <span class="comment">// 设置窗口图标</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setWindowFlags</span><span class="params">(Qt::WindowFlags type)</span></span>; <span class="comment">// 设置窗口 flags</span></span><br><span class="line"><span class="comment">// ---------- Widget 属性 ----------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setAttribute</span><span class="params">(Qt::WidgetAttribute attribute, <span class="type">bool</span> on = <span class="literal">true</span>)</span></span>; <span class="comment">// 设置 Widget 属性</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-对话框QDialog"><a href="#2-对话框QDialog" class="headerlink" title="2 对话框QDialog"></a>2 对话框QDialog</h2><h3 id="2-1-模态和非模态对话框"><a href="#2-1-模态和非模态对话框" class="headerlink" title="2.1 模态和非模态对话框"></a>2.1 模态和非模态对话框</h3><ul>
+<li><p>模态对话框 <code>modal dialog</code>：没有关闭之前，不能与同一个应用程序的其他窗口进行交互。</p>
+</li>
+<li><p>非模态对话框 <code>modeless dialog</code>：可以与它交互，也可以与同一程序中的其他窗口交互。</p>
+</li>
+</ul>
+<p>常见写法:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//modal dialog</span></span><br><span class="line">QDialog dialog;</span><br><span class="line">dialog.<span class="built_in">exec</span>();</span><br></pre></td></tr></table></figure>
+<p><code>exec()</code> 会打开模态事件循环。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//modeless dialog</span></span><br><span class="line">QDialog *dlg = <span class="keyword">new</span> <span class="built_in">QDialog</span>(<span class="keyword">this</span>);</span><br><span class="line">dlg-&gt;<span class="built_in">show</span>();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: modeless dialog必须new吗？<br>A: 不一定必须 new，但非模态对话框经常需要 new。<br>原因:<br>如果你写局部变量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::openDialog</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> <span class="function">QDialog <span class="title">dlg</span><span class="params">(<span class="keyword">this</span>)</span></span>;</span><br><span class="line"> dlg.<span class="built_in">show</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题是：函数一结束，dlg 就被销毁了，所以窗口可能一闪而过。</p>
+<p>所以非模态常写成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::openDialog</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> QDialog *dlg = <span class="keyword">new</span> <span class="built_in">QDialog</span>(<span class="keyword">this</span>);</span><br><span class="line"> dlg-&gt;<span class="built_in">show</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样函数结束后，对话框还活着。</p>
+</blockquote>
+<ul>
+<li>有一种特殊形式:<br>用 <code>setModal(true)</code> 建立 modal dialog。<br>例如:</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::onSaveClicked</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    QDialog *dlg = <span class="keyword">new</span> <span class="built_in">QDialog</span>(<span class="keyword">this</span>);</span><br><span class="line">    dlg-&gt;<span class="built_in">setWindowTitle</span>(<span class="string">&quot;正在保存...&quot;</span>);</span><br><span class="line">    dlg-&gt;<span class="built_in">setModal</span>(<span class="literal">true</span>);</span><br><span class="line">    dlg-&gt;<span class="built_in">setAttribute</span>(Qt::WA_DeleteOnClose);</span><br><span class="line">    dlg-&gt;<span class="built_in">show</span>();</span><br><span class="line">    QTimer::<span class="built_in">singleShot</span>(<span class="number">3000</span>, dlg, [dlg]() &#123; dlg-&gt;<span class="built_in">close</span>(); &#125;); <span class="comment">// 3 秒后关闭，主窗口恢复可操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对比一下:</p>
+<p>exec()<br>= 同步（阻塞）</p>
+<p>show() + setModal(true)<br>= 更接近异步</p>
+</blockquote>
+<ul>
+<li>补充介绍:setWindowModality()<br>作用是设置“模态范围”：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">QWidget::setWindowModality</span><span class="params">(Qt::WindowModality windowModality)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>常见枚举值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Qt::NonModal          <span class="comment">// 非模态</span></span><br><span class="line">Qt::WindowModal       <span class="comment">// 阻塞所属窗口链，通常包括父窗口及祖先窗口</span></span><br><span class="line">Qt::ApplicationModal  <span class="comment">// 阻塞整个应用程序的所有窗口</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-标准对话框"><a href="#2-2-标准对话框" class="headerlink" title="2.2 标准对话框"></a>2.2 标准对话框</h3><h4 id="2-2-1-QMessageBox"><a href="#2-2-1-QMessageBox" class="headerlink" title="2.2.1 QMessageBox"></a>2.2.1 QMessageBox</h4><p>这是消息对话框。<br>使用时加<code>#include &lt;QMessageBox&gt;</code><br>例如:<br>提示</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QMessageBox::<span class="built_in">information</span>(<span class="keyword">this</span>, <span class="string">&quot;提示&quot;</span>, <span class="string">&quot;保存成功&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>警告</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QMessageBox::<span class="built_in">warning</span>(<span class="keyword">this</span>, <span class="string">&quot;警告&quot;</span>, <span class="string">&quot;文件不存在&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>错误</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QMessageBox::<span class="built_in">critical</span>(<span class="keyword">this</span>, <span class="string">&quot;错误&quot;</span>, <span class="string">&quot;程序崩溃&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>询问</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QMessageBox::<span class="built_in">question</span>(<span class="keyword">this</span>, <span class="string">&quot;确认&quot;</span>, <span class="string">&quot;确定删除吗？&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-QFileDialog"><a href="#2-2-2-QFileDialog" class="headerlink" title="2.2.2 QFileDialog"></a>2.2.2 QFileDialog</h4><p>这是文件对话框。<br>使用时加<code>#include &lt;QFileDialog&gt;</code></p>
+<ul>
+<li>用于：<br>打开文件<br>保存文件<br>选择文件夹</li>
+</ul>
+<p>打开文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QString fileName = QFileDialog::<span class="built_in">getOpenFileName</span>(<span class="keyword">this</span>, <span class="string">&quot;选择文件&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;Images (*.png *.jpg)&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>保存文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QString fileName = QFileDialog::<span class="built_in">getSaveFileName</span>(<span class="keyword">this</span>, <span class="string">&quot;保存文件&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>选择目录</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QString dir = QFileDialog::<span class="built_in">getExistingDirectory</span>(<span class="keyword">this</span>, <span class="string">&quot;选择目录&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-3-QColorDialog"><a href="#2-2-3-QColorDialog" class="headerlink" title="2.2.3 QColorDialog"></a>2.2.3 QColorDialog</h4><p>这是颜色对话框。<br>使用时加<code>#include &lt;QColorDialog&gt;</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QColor color = QColorDialog::<span class="built_in">getColor</span>(Qt::white, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-4-QFontDialog"><a href="#2-2-4-QFontDialog" class="headerlink" title="2.2.4 QFontDialog"></a>2.2.4 QFontDialog</h4><p>这是字体对话框。<br>使用时加<code>#include &lt;QFontDialog&gt;</code></p>
+<p>用于：</p>
+<p>选择字体<br>字号<br>粗体</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> ok;</span><br><span class="line"></span><br><span class="line">QFont font = QFontDialog::<span class="built_in">getFont</span>(&amp;ok, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-5-QInputDialog"><a href="#2-2-5-QInputDialog" class="headerlink" title="2.2.5 QInputDialog"></a>2.2.5 QInputDialog</h4><p>这是输入对话框。<br>使用时加<code>#include &lt;QInputDialog&gt;</code></p>
+<p>输入文本</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QString text = QInputDialog::<span class="built_in">getText</span>(<span class="keyword">this</span>, <span class="string">&quot;输入&quot;</span>, <span class="string">&quot;请输入名字：&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>输入整数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> value = QInputDialog::<span class="built_in">getInt</span>(<span class="keyword">this</span>, <span class="string">&quot;输入&quot;</span>, <span class="string">&quot;请输入数字：&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>输入浮点数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> value = QInputDialog::<span class="built_in">getDouble</span>(<span class="keyword">this</span>, <span class="string">&quot;输入&quot;</span>, <span class="string">&quot;请输入数值：&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-6-QProgressDialog"><a href="#2-2-6-QProgressDialog" class="headerlink" title="2.2.6 QProgressDialog"></a>2.2.6 QProgressDialog</h4><p>这是进度对话框。<br>使用时加<code>#include &lt;QProgressDialog&gt;</code></p>
+<p>用于：</p>
+<p>下载进度<br>加载资源<br>长时间任务</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QProgressDialog <span class="title">dlg</span><span class="params">(<span class="string">&quot;正在下载...&quot;</span>, <span class="string">&quot;取消&quot;</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="keyword">this</span>)</span></span>;</span><br><span class="line">dlg.<span class="built_in">setValue</span>(<span class="number">50</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="3-QFrame类"><a href="#3-QFrame类" class="headerlink" title="3 QFrame类"></a>3 QFrame类</h2><p>QFrame类是带有边框的部件的基类。子类例如:QLabel，QAbstractScrollArea，等等。</p>
+<ul>
+<li><p>Qt 中名称带有 Abstract 的类通常表示抽象基类，一般不直接实例化，主要用于提供公共接口。</p>
+</li>
+<li><p>最核心的两个概念</p>
+</li>
+</ul>
+<ol>
+<li>FrameShape（边框形状）</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setFrameShape</span>(...)</span><br></pre></td></tr></table></figure>
+<p>常见值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QFrame::NoFrame      <span class="comment">// 无边框</span></span><br><span class="line">QFrame::Box          <span class="comment">// 方框</span></span><br><span class="line">QFrame::Panel        <span class="comment">// 面板</span></span><br><span class="line">QFrame::StyledPanel  <span class="comment">// 样式面板，通常取决于程序运行的系统，Windows/Mac OS/Linux KDE...</span></span><br><span class="line">QFrame::HLine        <span class="comment">// 横线</span></span><br><span class="line">QFrame::VLine        <span class="comment">// 竖线</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>FrameShadow（阴影效果）</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setFrameShadow</span>(...)</span><br></pre></td></tr></table></figure>
+<p>常见值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QFrame::Plain    <span class="comment">// 平面</span></span><br><span class="line">QFrame::Raised   <span class="comment">// 凸起</span></span><br><span class="line">QFrame::Sunken   <span class="comment">// 凹陷</span></span><br></pre></td></tr></table></figure>
+<p>一个完整例子</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QFrame *frame = <span class="keyword">new</span> <span class="built_in">QFrame</span>(<span class="keyword">this</span>);</span><br><span class="line">frame-&gt;<span class="built_in">setFrameShape</span>(QFrame::Box);</span><br><span class="line">frame-&gt;<span class="built_in">setFrameShadow</span>(QFrame::Raised);</span><br></pre></td></tr></table></figure>
+<h2 id="4-按钮部件"><a href="#4-按钮部件" class="headerlink" title="4 按钮部件"></a>4 按钮部件</h2><p>QAbstractButton是按钮部件的抽象基类。</p>
+<h3 id="4-1-QPushButton"><a href="#4-1-QPushButton" class="headerlink" title="4.1 QPushButton"></a>4.1 QPushButton</h3><p>这是普通按钮。</p>
+<p>例如：</p>
+<p>确定<br>取消<br>发送<br>关闭</p>
+<p>创建按钮</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QPushButton *btn = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;发送&quot;</span>, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>常用函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setText</span><span class="params">(<span class="type">const</span> QString &amp;text)</span></span>; <span class="comment">// 设置按钮文本</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setIcon</span><span class="params">(<span class="type">const</span> QIcon &amp;icon)</span></span>;   <span class="comment">// 设置按钮图标</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setEnabled</span><span class="params">(<span class="type">bool</span> enabled)</span></span>;     <span class="comment">// 设置是否可用</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">click</span><span class="params">()</span></span>;                      <span class="comment">// 以代码方式触发点击</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isDown</span><span class="params">()</span> <span class="type">const</span></span>;               <span class="comment">// 判断按钮是否处于按下状态</span></span><br></pre></td></tr></table></figure>
+<p>最核心信号</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">clicked</span><span class="params">(<span class="type">bool</span> checked = <span class="literal">false</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pressed</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">released</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-QToolButton"><a href="#4-2-QToolButton" class="headerlink" title="4.2 QToolButton"></a>4.2 QToolButton</h3><p>这是工具按钮。</p>
+<p>常用于：</p>
+<p>工具栏<br>悬浮按钮<br>图标按钮</p>
+<ul>
+<li>特点:通常只有图标，没有大按钮边框</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QToolButton *btn = <span class="keyword">new</span> <span class="built_in">QToolButton</span>(<span class="keyword">this</span>);</span><br><span class="line">btn-&gt;<span class="built_in">setIcon</span>(<span class="built_in">QIcon</span>(<span class="string">&quot;:/icons/settings.png&quot;</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-QRadioButton"><a href="#4-3-QRadioButton" class="headerlink" title="4.3 QRadioButton"></a>4.3 QRadioButton</h3><p>这是单选按钮。</p>
+<p>例如：</p>
+<p>○ 男<br>○ 女</p>
+<p>○ 浅色模式<br>○ 深色模式</p>
+<ul>
+<li>特点：同一父部件下的多个 <code>QRadioButton</code> 通常互斥，只能选一个；如果需要自定义分组，可使用 <code>QButtonGroup</code>。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QRadioButton *radio = <span class="keyword">new</span> <span class="built_in">QRadioButton</span>(<span class="string">&quot;深色模式&quot;</span>, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>常用函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setChecked</span><span class="params">(<span class="type">bool</span> checked)</span></span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isChecked</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="4-4-QCheckBox"><a href="#4-4-QCheckBox" class="headerlink" title="4.4 QCheckBox"></a>4.4 QCheckBox</h3><p>这是复选按钮。<br>例如：</p>
+<p>☑ 开机启动<br>☑ 启用动画<br>☑ 置顶显示</p>
+<ul>
+<li>特点：可以同时选多个</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QCheckBox *check = <span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;开机启动&quot;</span>, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>常用函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setChecked</span><span class="params">(<span class="type">bool</span> checked)</span></span>;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isChecked</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="4-5-补充"><a href="#4-5-补充" class="headerlink" title="4.5 补充"></a>4.5 补充</h3><p>QGroupBox 可以理解成：“带标题的控件分组框”,把一组相关控件包起来。</p>
+<p>最基本用法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QGroupBox *group = <span class="keyword">new</span> <span class="built_in">QGroupBox</span>(<span class="string">&quot;系统设置&quot;</span>, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>最重要的作用是逻辑分组，通常会配合布局。<br>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QVBoxLayout *layout = <span class="keyword">new</span> QVBoxLayout;</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;开机启动&quot;</span>));</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;自动更新&quot;</span>));</span><br><span class="line">group-&gt;<span class="built_in">setLayout</span>(layout);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一个很重要的功能<br>可勾选 GroupBox</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">group-&gt;<span class="built_in">setCheckable</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">☑ 启用高级设置</span><br></pre></td></tr></table></figure>
+<p>取消勾选时，整个组里的控件会自动禁用。</p>
+<p>常用函数:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置分组框标题</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QGroupBox::setTitle</span><span class="params">(<span class="type">const</span> QString &amp;title)</span></span>;</span><br><span class="line"><span class="comment">// 获取分组框标题</span></span><br><span class="line"><span class="function">QString <span class="title">QGroupBox::title</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置是否可勾选</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QGroupBox::setCheckable</span><span class="params">(<span class="type">bool</span> checkable)</span></span>;</span><br><span class="line"><span class="comment">// 设置是否已勾选</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QGroupBox::setChecked</span><span class="params">(<span class="type">bool</span> checked)</span></span>;</span><br><span class="line"><span class="comment">// 判断是否已勾选</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">QGroupBox::isChecked</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="5-QLineEdit"><a href="#5-QLineEdit" class="headerlink" title="5 QLineEdit"></a>5 QLineEdit</h2><p><code>QLineEdit</code> 是 Qt Widgets 中的单行文本输入控件。</p>
+<h3 id="5-1-创建"><a href="#5-1-创建" class="headerlink" title="5.1 创建"></a>5.1 创建</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QLineEdit *edit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>带初始文本：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QLineEdit *edit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(<span class="string">&quot;hello&quot;</span>, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-常用函数"><a href="#5-2-常用函数" class="headerlink" title="5.2 常用函数"></a>5.2 常用函数</h3><h4 id="5-2-1-设置文本"><a href="#5-2-1-设置文本" class="headerlink" title="5.2.1 设置文本"></a>5.2.1 设置文本</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setText</span><span class="params">(<span class="type">const</span> QString &amp;text)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-2-获取文本"><a href="#5-2-2-获取文本" class="headerlink" title="5.2.2 获取文本"></a>5.2.2 获取文本</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QString <span class="title">text</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-3-清空文本"><a href="#5-2-3-清空文本" class="headerlink" title="5.2.3 清空文本"></a>5.2.3 清空文本</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-4-占位文本"><a href="#5-2-4-占位文本" class="headerlink" title="5.2.4 占位文本"></a>5.2.4 占位文本</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setPlaceholderText</span><span class="params">(<span class="type">const</span> QString &amp;text)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edit-&gt;<span class="built_in">setPlaceholderText</span>(<span class="string">&quot;请输入 API Key&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="5-3-密码模式"><a href="#5-3-密码模式" class="headerlink" title="5.3 密码模式"></a>5.3 密码模式</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setEchoMode</span><span class="params">(EchoMode mode)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>常用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QLineEdit::Normal <span class="comment">//正常显示</span></span><br><span class="line">QLineEdit::Password <span class="comment">//显示小黑点或星号等代替输入的字符</span></span><br><span class="line">QLineEdit::NoEcho <span class="comment">//不显示任何输入</span></span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edit-&gt;<span class="built_in">setEchoMode</span>(QLineEdit::Password);</span><br></pre></td></tr></table></figure>
+<h3 id="5-4-输入限制"><a href="#5-4-输入限制" class="headerlink" title="5.4 输入限制"></a>5.4 输入限制</h3><h4 id="5-4-1-最大长度"><a href="#5-4-1-最大长度" class="headerlink" title="5.4.1 最大长度"></a>5.4.1 最大长度</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMaxLength</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="5-4-2-只读"><a href="#5-4-2-只读" class="headerlink" title="5.4.2 只读"></a>5.4.2 只读</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setReadOnly</span><span class="params">(<span class="type">bool</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="5-4-3-输入验证"><a href="#5-4-3-输入验证" class="headerlink" title="5.4.3 输入验证"></a>5.4.3 输入验证</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setValidator</span><span class="params">(<span class="type">const</span> QValidator *validator)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>常用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QIntValidator</span><br><span class="line">QDoubleValidator</span><br><span class="line">QRegularExpressionValidator</span><br></pre></td></tr></table></figure>
+<h3 id="5-5-常用信号"><a href="#5-5-常用信号" class="headerlink" title="5.5 常用信号"></a>5.5 常用信号</h3><h4 id="5-5-1-文本变化"><a href="#5-5-1-文本变化" class="headerlink" title="5.5.1 文本变化"></a>5.5.1 文本变化</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">textChanged</span><span class="params">(<span class="type">const</span> QString &amp;text)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="5-5-2-编辑完成"><a href="#5-5-2-编辑完成" class="headerlink" title="5.5.2 编辑完成"></a>5.5.2 编辑完成</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">editingFinished</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="5-5-3-按下回车"><a href="#5-5-3-按下回车" class="headerlink" title="5.5.3 按下回车"></a>5.5.3 按下回车</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">returnPressed</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="6-QAbstractSpinBox"><a href="#6-QAbstractSpinBox" class="headerlink" title="6 QAbstractSpinBox"></a>6 QAbstractSpinBox</h2><p><code>QAbstractSpinBox</code> 是 Qt 中“微调输入框”的抽象基类。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QAbstractSpinBox</span><br><span class="line"> ├─ QSpinBox</span><br><span class="line"> ├─ QDoubleSpinBox</span><br><span class="line"> └─ QDateTimeEdit</span><br></pre></td></tr></table></figure>
+<p>它提供的是一类通用能力：文本输入框 + 上下调节按钮</p>
+<h3 id="6-1-QSpinBox"><a href="#6-1-QSpinBox" class="headerlink" title="6.1 QSpinBox"></a>6.1 QSpinBox</h3><p>这是整数输入框。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QSpinBox *spin = <span class="keyword">new</span> <span class="built_in">QSpinBox</span>(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-QDoubleSpinBox"><a href="#6-2-QDoubleSpinBox" class="headerlink" title="6.2 QDoubleSpinBox"></a>6.2 QDoubleSpinBox</h3><p>这是浮点数输入框。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QDoubleSpinBox *spin = <span class="keyword">new</span> <span class="built_in">QDoubleSpinBox</span>(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="6-3-QDateTimeEdit"><a href="#6-3-QDateTimeEdit" class="headerlink" title="6.3 QDateTimeEdit"></a>6.3 QDateTimeEdit</h3><p>这是日期时间输入框。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QDateTimeEdit *edit = <span class="keyword">new</span> <span class="built_in">QDateTimeEdit</span>(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="6-4-QAbstractSpinBox-常用函数集合"><a href="#6-4-QAbstractSpinBox-常用函数集合" class="headerlink" title="6.4  QAbstractSpinBox 常用函数集合"></a>6.4  QAbstractSpinBox 常用函数集合</h3><h4 id="6-4-1-QAbstractSpinBox-本身常用函数"><a href="#6-4-1-QAbstractSpinBox-本身常用函数" class="headerlink" title="6.4.1 QAbstractSpinBox 本身常用函数"></a>6.4.1 QAbstractSpinBox 本身常用函数</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置是否只读；只读后用户不能手动修改内容</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setReadOnly</span><span class="params">(<span class="type">bool</span> r)</span></span>;</span><br><span class="line"><span class="comment">// 判断当前是否为只读状态</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isReadOnly</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置右侧按钮样式</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setButtonSymbols</span><span class="params">(QAbstractSpinBox::ButtonSymbols bs)</span></span>;</span><br><span class="line"><span class="comment">// 获取当前按钮样式</span></span><br><span class="line"><span class="function">QAbstractSpinBox::ButtonSymbols <span class="title">buttonSymbols</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置是否循环；例如最大值再增加会回到最小值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setWrapping</span><span class="params">(<span class="type">bool</span> w)</span></span>;</span><br><span class="line"><span class="comment">// 判断是否启用了循环</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">wrapping</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 数值向上调整一步</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">stepUp</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">// 数值向下调整一步</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">stepDown</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">// 选中输入框中的全部文本</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">selectAll</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">// 清除编辑框当前显示文本，具体行为受子类和验证规则影响</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="6-4-2-按钮样式枚举"><a href="#6-4-2-按钮样式枚举" class="headerlink" title="6.4.2 按钮样式枚举"></a>6.4.2 按钮样式枚举</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 显示上下箭头按钮</span></span><br><span class="line">QAbstractSpinBox::UpDownArrows;</span><br><span class="line"><span class="comment">// 显示加号 / 减号按钮</span></span><br><span class="line">QAbstractSpinBox::PlusMinus;</span><br><span class="line"><span class="comment">// 不显示按钮，只保留输入框</span></span><br><span class="line">QAbstractSpinBox::NoButtons;</span><br></pre></td></tr></table></figure>
+<h4 id="6-4-3-QSpinBox-常用函数"><a href="#6-4-3-QSpinBox-常用函数" class="headerlink" title="6.4.3 QSpinBox 常用函数"></a>6.4.3 QSpinBox 常用函数</h4><p><code>QSpinBox</code> 用于整数输入。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置整数范围</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setRange</span><span class="params">(<span class="type">int</span> minimum, <span class="type">int</span> maximum)</span></span>;</span><br><span class="line"><span class="comment">// 设置最小值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMinimum</span><span class="params">(<span class="type">int</span> minimum)</span></span>;</span><br><span class="line"><span class="comment">// 设置最大值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMaximum</span><span class="params">(<span class="type">int</span> maximum)</span></span>;</span><br><span class="line"><span class="comment">// 设置当前值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> value)</span></span>;</span><br><span class="line"><span class="comment">// 获取当前值</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">value</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置每次点击按钮时增加或减少的步长</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSingleStep</span><span class="params">(<span class="type">int</span> val)</span></span>;</span><br><span class="line"><span class="comment">// 设置前缀，例如 &quot;$100&quot;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setPrefix</span><span class="params">(<span class="type">const</span> QString &amp;prefix)</span></span>;</span><br><span class="line"><span class="comment">// 设置后缀，例如 &quot;50%&quot;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSuffix</span><span class="params">(<span class="type">const</span> QString &amp;suffix)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="6-4-4-QDoubleSpinBox-常用函数"><a href="#6-4-4-QDoubleSpinBox-常用函数" class="headerlink" title="6.4.4 QDoubleSpinBox 常用函数"></a>6.4.4 QDoubleSpinBox 常用函数</h4><p><code>QDoubleSpinBox</code> 用于浮点数输入。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置浮点数范围</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setRange</span><span class="params">(<span class="type">double</span> minimum, <span class="type">double</span> maximum)</span></span>;</span><br><span class="line"><span class="comment">// 设置最小值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMinimum</span><span class="params">(<span class="type">double</span> minimum)</span></span>;</span><br><span class="line"><span class="comment">// 设置最大值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMaximum</span><span class="params">(<span class="type">double</span> maximum)</span></span>;</span><br><span class="line"><span class="comment">// 设置当前值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">double</span> value)</span></span>;</span><br><span class="line"><span class="comment">// 获取当前值</span></span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">value</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置每次点击按钮时增加或减少的步长</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSingleStep</span><span class="params">(<span class="type">double</span> val)</span></span>;</span><br><span class="line"><span class="comment">// 设置小数位数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setDecimals</span><span class="params">(<span class="type">int</span> prec)</span></span>;</span><br><span class="line"><span class="comment">// 设置前缀，例如 &quot;$12.5&quot;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setPrefix</span><span class="params">(<span class="type">const</span> QString &amp;prefix)</span></span>;</span><br><span class="line"><span class="comment">// 设置后缀，例如 &quot;0.75x&quot;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSuffix</span><span class="params">(<span class="type">const</span> QString &amp;suffix)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="6-5-常用信号"><a href="#6-5-常用信号" class="headerlink" title="6.5 常用信号"></a>6.5 常用信号</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// QSpinBox 数值变化时触发</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">valueChanged</span><span class="params">(<span class="type">int</span> i)</span></span>;</span><br><span class="line"><span class="comment">// QDoubleSpinBox 数值变化时触发</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">valueChanged</span><span class="params">(<span class="type">double</span> d)</span></span>;</span><br><span class="line"><span class="comment">// 显示文本变化时触发</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">textChanged</span><span class="params">(<span class="type">const</span> QString &amp;text)</span></span>;</span><br><span class="line"><span class="comment">// 编辑完成时触发，通常是按下 Enter 或失去焦点</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">editingFinished</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="7-QAbstractSlider"><a href="#7-QAbstractSlider" class="headerlink" title="7 QAbstractSlider"></a>7 QAbstractSlider</h2><p><code>QAbstractSlider</code> 是 Qt 中“滑动调节类控件”的抽象基类。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QAbstractSlider</span><br><span class="line"> ├─ QSlider</span><br><span class="line"> ├─ QScrollBar</span><br><span class="line"> └─ QDial</span><br></pre></td></tr></table></figure>
+<h3 id="7-1-QSlider"><a href="#7-1-QSlider" class="headerlink" title="7.1 QSlider"></a>7.1 QSlider</h3><p>普通滑块控件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QSlider *slider = <span class="keyword">new</span> <span class="built_in">QSlider</span>(Qt::Horizontal, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>常见效果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 ─────●──────── 100</span><br></pre></td></tr></table></figure>
+<h3 id="7-2-QScrollBar"><a href="#7-2-QScrollBar" class="headerlink" title="7.2 QScrollBar"></a>7.2 QScrollBar</h3><p>滚动条控件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QScrollBar *bar = <span class="keyword">new</span> <span class="built_in">QScrollBar</span>(Qt::Vertical, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>常见效果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">▲</span><br><span class="line">│</span><br><span class="line">█</span><br><span class="line">│</span><br><span class="line">▼</span><br></pre></td></tr></table></figure>
+<h3 id="7-3-QDial"><a href="#7-3-QDial" class="headerlink" title="7.3 QDial"></a>7.3 QDial</h3><p>旋钮控件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QDial *dial = <span class="keyword">new</span> <span class="built_in">QDial</span>(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>常见效果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">◜●◝</span><br></pre></td></tr></table></figure>
+<p>类似旋钮，常用于音量、角度、仪表盘调节。</p>
+<h3 id="7-4-QAbstractSlider-常用函数"><a href="#7-4-QAbstractSlider-常用函数" class="headerlink" title="7.4 QAbstractSlider 常用函数"></a>7.4 QAbstractSlider 常用函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置最小值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMinimum</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="comment">// 设置最大值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setMaximum</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="comment">// 设置范围</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setRange</span><span class="params">(<span class="type">int</span> min, <span class="type">int</span> max)</span></span>;</span><br><span class="line"><span class="comment">// 设置当前值</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="comment">// 获取当前值</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">value</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置单步步长，例如键盘方向键每次改变多少</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSingleStep</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="comment">// 获取单步步长</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">singleStep</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置大步步长，例如 PageUp / PageDown 每次改变多少</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setPageStep</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="comment">// 获取大步步长</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">pageStep</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置方向：水平或垂直</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setOrientation</span><span class="params">(Qt::Orientation)</span></span>;</span><br><span class="line"><span class="comment">// 获取方向</span></span><br><span class="line"><span class="function">Qt::Orientation <span class="title">orientation</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置是否反向显示</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setInvertedAppearance</span><span class="params">(<span class="type">bool</span>)</span></span>;</span><br><span class="line"><span class="comment">// 设置是否反向控制</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setInvertedControls</span><span class="params">(<span class="type">bool</span>)</span></span>;</span><br><span class="line"><span class="comment">// 获取滑块当前位置</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sliderPosition</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="comment">// 设置滑块当前位置</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSliderPosition</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="comment">// 设置拖动时是否实时更新 value</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setTracking</span><span class="params">(<span class="type">bool</span> enable)</span></span>;</span><br><span class="line"><span class="comment">// 判断是否实时跟踪</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">hasTracking</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="7-5-常用方向枚举"><a href="#7-5-常用方向枚举" class="headerlink" title="7.5 常用方向枚举"></a>7.5 常用方向枚举</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 水平方向</span></span><br><span class="line">Qt::Horizontal;</span><br><span class="line"><span class="comment">// 垂直方向</span></span><br><span class="line">Qt::Vertical;</span><br></pre></td></tr></table></figure>
+<h3 id="7-6-常用信号"><a href="#7-6-常用信号" class="headerlink" title="7.6 常用信号"></a>7.6 常用信号</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当前值变化时触发</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">valueChanged</span><span class="params">(<span class="type">int</span> value)</span></span>;</span><br><span class="line"><span class="comment">// 用户按下滑块时触发</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sliderPressed</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">// 用户释放滑块时触发</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sliderReleased</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">// 滑块位置变化时触发</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sliderMoved</span><span class="params">(<span class="type">int</span> position)</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="7-7-简单示例"><a href="#7-7-简单示例" class="headerlink" title="7.7 简单示例"></a>7.7 简单示例</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QSlider *slider = <span class="keyword">new</span> <span class="built_in">QSlider</span>(Qt::Horizontal, <span class="keyword">this</span>);</span><br><span class="line">slider-&gt;<span class="built_in">setRange</span>(<span class="number">0</span>, <span class="number">100</span>);</span><br><span class="line">slider-&gt;<span class="built_in">setValue</span>(<span class="number">50</span>);</span><br><span class="line">slider-&gt;<span class="built_in">setSingleStep</span>(<span class="number">1</span>);</span><br><span class="line">slider-&gt;<span class="built_in">setPageStep</span>(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">范围：0 到 100</span><br><span class="line">初始值：50</span><br><span class="line">小步长：1</span><br><span class="line">大步长：10</span><br><span class="line">方向：水平</span><br></pre></td></tr></table></figure>
+<p>连接信号：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">connect</span>(slider, &amp;QSlider::valueChanged, <span class="keyword">this</span>, &amp;MainWindow::onValueChanged);</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/">http://example.com/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/05/08/20260508/" title="20260508"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">20260508</div></div><div class="info-2"><div class="info-item-1">20260508很久没有发过blog了。今晚是C++的期中考试，考完还剩非常意难平……想起来浏览器这个尘封数月的角落，于是决定写点什么。 [TOC] 做题感受大哥到底叫啥你倒是说清楚啊  废话是真多啊，你文件都写好了宏定义了还写这么多东西干啥啊不累吗 考生都看傻了  我还以为是啥   不是哥们，这不是CV就完了吗？ 重载的意义在哪里？？？  （写的有点慌乱…我知道是一坨…)  确实是没审好题  但是写到一半真的被你这句话误导过 以为自己的思路是对的 （笨笨rekjo喜欢先写有思路的比如=，+=，所以直到考试最后几分钟才开始写这个最重要的函数……  （几分钟写的一丁点，也是一坨…dsz别笑话了┭┮﹏┭┮） 证据考完也是非常难过……不过和朋友讨论的过程中意外发现这次考试疑似是AI出题 举证如下： 例子1常用AI的应该都懂…====是什么不用多说了吧？  例子2 明显的就是第三方的口吻。 出题的时候不会专门给自己加一个（）进行注释吧？ 例子3 《仅供参考，实际数值可能因测试图像而异》 例子4 讲真的考场上给我脑子宕机了 真的花了很久在想这是什么意思🤯 例子5 “……”经过考后研究，很...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6"><span class="toc-text">Qt 窗口部件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E7%A1%80%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6QWidget"><span class="toc-text">1 基础窗口部件QWidget</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%AA%97%E5%8F%A3%E4%B8%8E%E5%AD%90%E9%83%A8%E4%BB%B6"><span class="toc-text">1.1 窗口与子部件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%AA%97%E5%8F%A3%E7%B1%BB%E5%9E%8B"><span class="toc-text">1.2 窗口类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%AA%97%E5%8F%A3%E5%87%A0%E4%BD%95"><span class="toc-text">1.3 窗口几何</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AF%B9%E8%AF%9D%E6%A1%86QDialog"><span class="toc-text">2 对话框QDialog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%A8%A1%E6%80%81%E5%92%8C%E9%9D%9E%E6%A8%A1%E6%80%81%E5%AF%B9%E8%AF%9D%E6%A1%86"><span class="toc-text">2.1 模态和非模态对话框</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%A0%87%E5%87%86%E5%AF%B9%E8%AF%9D%E6%A1%86"><span class="toc-text">2.2 标准对话框</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-QMessageBox"><span class="toc-text">2.2.1 QMessageBox</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-QFileDialog"><span class="toc-text">2.2.2 QFileDialog</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-QColorDialog"><span class="toc-text">2.2.3 QColorDialog</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-QFontDialog"><span class="toc-text">2.2.4 QFontDialog</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-5-QInputDialog"><span class="toc-text">2.2.5 QInputDialog</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-6-QProgressDialog"><span class="toc-text">2.2.6 QProgressDialog</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-QFrame%E7%B1%BB"><span class="toc-text">3 QFrame类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8C%89%E9%92%AE%E9%83%A8%E4%BB%B6"><span class="toc-text">4 按钮部件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-QPushButton"><span class="toc-text">4.1 QPushButton</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-QToolButton"><span class="toc-text">4.2 QToolButton</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-QRadioButton"><span class="toc-text">4.3 QRadioButton</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-QCheckBox"><span class="toc-text">4.4 QCheckBox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E8%A1%A5%E5%85%85"><span class="toc-text">4.5 补充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-QLineEdit"><span class="toc-text">5 QLineEdit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%88%9B%E5%BB%BA"><span class="toc-text">5.1 创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">5.2 常用函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-1-%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC"><span class="toc-text">5.2.1 设置文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-2-%E8%8E%B7%E5%8F%96%E6%96%87%E6%9C%AC"><span class="toc-text">5.2.2 获取文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-3-%E6%B8%85%E7%A9%BA%E6%96%87%E6%9C%AC"><span class="toc-text">5.2.3 清空文本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-4-%E5%8D%A0%E4%BD%8D%E6%96%87%E6%9C%AC"><span class="toc-text">5.2.4 占位文本</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%AF%86%E7%A0%81%E6%A8%A1%E5%BC%8F"><span class="toc-text">5.3 密码模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E8%BE%93%E5%85%A5%E9%99%90%E5%88%B6"><span class="toc-text">5.4 输入限制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-1-%E6%9C%80%E5%A4%A7%E9%95%BF%E5%BA%A6"><span class="toc-text">5.4.1 最大长度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-2-%E5%8F%AA%E8%AF%BB"><span class="toc-text">5.4.2 只读</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-3-%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81"><span class="toc-text">5.4.3 输入验证</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%B8%B8%E7%94%A8%E4%BF%A1%E5%8F%B7"><span class="toc-text">5.5 常用信号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-1-%E6%96%87%E6%9C%AC%E5%8F%98%E5%8C%96"><span class="toc-text">5.5.1 文本变化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-2-%E7%BC%96%E8%BE%91%E5%AE%8C%E6%88%90"><span class="toc-text">5.5.2 编辑完成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-3-%E6%8C%89%E4%B8%8B%E5%9B%9E%E8%BD%A6"><span class="toc-text">5.5.3 按下回车</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-QAbstractSpinBox"><span class="toc-text">6 QAbstractSpinBox</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-QSpinBox"><span class="toc-text">6.1 QSpinBox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-QDoubleSpinBox"><span class="toc-text">6.2 QDoubleSpinBox</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-QDateTimeEdit"><span class="toc-text">6.3 QDateTimeEdit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-QAbstractSpinBox-%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E9%9B%86%E5%90%88"><span class="toc-text">6.4  QAbstractSpinBox 常用函数集合</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-1-QAbstractSpinBox-%E6%9C%AC%E8%BA%AB%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">6.4.1 QAbstractSpinBox 本身常用函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-2-%E6%8C%89%E9%92%AE%E6%A0%B7%E5%BC%8F%E6%9E%9A%E4%B8%BE"><span class="toc-text">6.4.2 按钮样式枚举</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-3-QSpinBox-%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">6.4.3 QSpinBox 常用函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-4-QDoubleSpinBox-%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">6.4.4 QDoubleSpinBox 常用函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E5%B8%B8%E7%94%A8%E4%BF%A1%E5%8F%B7"><span class="toc-text">6.5 常用信号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-QAbstractSlider"><span class="toc-text">7 QAbstractSlider</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-QSlider"><span class="toc-text">7.1 QSlider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-QScrollBar"><span class="toc-text">7.2 QScrollBar</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-QDial"><span class="toc-text">7.3 QDial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-QAbstractSlider-%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="toc-text">7.4 QAbstractSlider 常用函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E5%B8%B8%E7%94%A8%E6%96%B9%E5%90%91%E6%9E%9A%E4%B8%BE"><span class="toc-text">7.5 常用方向枚举</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-6-%E5%B8%B8%E7%94%A8%E4%BF%A1%E5%8F%B7"><span class="toc-text">7.6 常用信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-7-%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="toc-text">7.7 简单示例</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/" title="Qt 窗口部件">Qt 窗口部件</a><time datetime="2026-05-27T11:58:05.000Z" title="Created 2026-05-27 19:58:05">2026-05-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/08/20260508/" title="20260508">20260508</a><time datetime="2026-05-08T15:19:12.000Z" title="Created 2026-05-08 23:19:12">2026-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/20/shctf-2026/" title="shctf_2026">shctf_2026</a><time datetime="2026-03-20T04:37:06.000Z" title="Created 2026-03-20 12:37:06">2026-03-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/NewYear-CTF-2025/" title="NewYear_CTF_2025">NewYear_CTF_2025</a><time datetime="2026-03-04T13:50:07.000Z" title="Created 2026-03-04 21:50:07">2026-03-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/03/adworld-misc-10/" title="adworld_misc_10">adworld_misc_10</a><time datetime="2026-03-03T04:14:22.000Z" title="Created 2026-03-03 12:14:22">2026-03-03</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
