@@ -1,0 +1,791 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>DesktopPet用户手册 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="DesktopPet 用户手册适用版本：DesktopPet v1.0.0平台：Windows说明：本手册面向普通用户，介绍 DesktopPet 的安装、启动、桌宠操作、宠物管理、动作设置、AI 对话、联网搜索、对话日志、个性化、托盘菜单、图片处理工具、更新机制和数据目录。不同小版本界面文字可能略有差异，以实际程序为准。  1. 软件简介DesktopPet 是一款桌面宠物应用。它可以在桌面上显">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DesktopPet用户手册">
+<meta property="og:url" content="http://example.com/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="DesktopPet 用户手册适用版本：DesktopPet v1.0.0平台：Windows说明：本手册面向普通用户，介绍 DesktopPet 的安装、启动、桌宠操作、宠物管理、动作设置、AI 对话、联网搜索、对话日志、个性化、托盘菜单、图片处理工具、更新机制和数据目录。不同小版本界面文字可能略有差异，以实际程序为准。  1. 软件简介DesktopPet 是一款桌面宠物应用。它可以在桌面上显">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-05-31T12:43:25.000Z">
+<meta property="article:modified_time" content="2026-05-31T12:48:21.662Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DesktopPet用户手册",
+  "url": "http://example.com/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-05-31T12:43:25.000Z",
+  "dateModified": "2026-05-31T12:48:21.662Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'DesktopPet用户手册',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">DesktopPet用户手册</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">DesktopPet用户手册</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-05-31T12:43:25.000Z" title="Created 2026-05-31 20:43:25">2026-05-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-05-31T12:48:21.662Z" title="Updated 2026-05-31 20:48:21">2026-05-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/miscellaneous/">miscellaneous</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">6.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>19mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="DesktopPet-用户手册"><a href="#DesktopPet-用户手册" class="headerlink" title="DesktopPet 用户手册"></a>DesktopPet 用户手册</h1><p>适用版本：<strong>DesktopPet v1.0.0</strong><br>平台：<strong>Windows</strong><br>说明：本手册面向普通用户，介绍 DesktopPet 的安装、启动、桌宠操作、宠物管理、动作设置、AI 对话、联网搜索、对话日志、个性化、托盘菜单、图片处理工具、更新机制和数据目录。不同小版本界面文字可能略有差异，以实际程序为准。</p>
+<hr>
+<h2 id="1-软件简介"><a href="#1-软件简介" class="headerlink" title="1. 软件简介"></a>1. 软件简介</h2><p>DesktopPet 是一款桌面宠物应用。它可以在桌面上显示一个可拖动、可播放动作的宠物，并提供 AI 对话、联网搜索、动作配置、情绪动作、主题个性化、对话日志和更新检查等功能。</p>
+<p><strong>DesktopPet 不内置默认宠物资源。</strong>首次使用时，如果没有创建或导入宠物，桌面 player 会显示状态提示。用户需要在“宠物管理”页面中新建宠物、导入宠物，或手动恢复已有宠物资源。</p>
+<p>DesktopPet 的核心使用流程通常是：</p>
+<ol>
+<li>安装并启动 DesktopPet。</li>
+<li>在“宠物管理”中新建或导入宠物。</li>
+<li>在“动作设置”中创建、导入并配置动作。</li>
+<li>在“LLM 设置”中配置 AI 模型。</li>
+<li>根据需要开启“搜索设置”、查看“对话日志”、调整“个性化”。</li>
+</ol>
+<hr>
+<h2 id="2-安装、启动与退出"><a href="#2-安装、启动与退出" class="headerlink" title="2. 安装、启动与退出"></a>2. 安装、启动与退出</h2><h3 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h3><p>推荐使用发布页中的安装程序：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DesktopPet_Setup_vX.X.X.exe</span><br></pre></td></tr></table></figure>
+<p>运行安装程序后，按安装向导完成安装。安装程序只负责安装 DesktopPet 主程序、配套工具和必要依赖，<strong>不会内置默认宠物资源</strong>。</p>
+<h3 id="2-2-启动"><a href="#2-2-启动" class="headerlink" title="2.2 启动"></a>2.2 启动</h3><p>启动 DesktopPet 后，通常会出现两个部分：</p>
+<ol>
+<li><strong>桌面 player</strong>：显示桌宠、播放动作，或在无宠物时显示状态提示。</li>
+<li><strong>设置窗口</strong>：用于管理宠物、动作、LLM、搜索、日志、个性化和关于信息。</li>
+</ol>
+<p>是否启动时自动播放、是否启动时打开设置窗口，可以在“个性化”页面配置。</p>
+<h3 id="2-3-退出"><a href="#2-3-退出" class="headerlink" title="2.3 退出"></a>2.3 退出</h3><p>退出方式包括：</p>
+<ul>
+<li>右键桌宠 player，在菜单中选择“退出”。</li>
+<li>右键系统托盘图标，选择“退出”。</li>
+<li>关闭应用主进程。</li>
+</ul>
+<p>退出程序不会删除宠物、动作、配置或对话日志。</p>
+<hr>
+<h2 id="3-桌宠-player-基本操作"><a href="#3-桌宠-player-基本操作" class="headerlink" title="3. 桌宠 player 基本操作"></a>3. 桌宠 player 基本操作</h2><h3 id="3-1-左键点击"><a href="#3-1-左键点击" class="headerlink" title="3.1 左键点击"></a>3.1 左键点击</h3><p>左键单击桌宠 player，可以打开或关闭聊天面板。</p>
+<p>如果聊天面板已经打开，再次左键单击桌宠会隐藏聊天面板。</p>
+<h3 id="3-2-左键拖动"><a href="#3-2-左键拖动" class="headerlink" title="3.2 左键拖动"></a>3.2 左键拖动</h3><p>按住鼠标左键并移动，可以拖动桌宠位置。DesktopPet 会尽量限制桌宠不完全移出当前屏幕可用区域。</p>
+<p>如果动作开启了自动移动，用户拖动时会优先响应用户操作，避免拖动和自动移动冲突。</p>
+<h3 id="3-3-右键菜单"><a href="#3-3-右键菜单" class="headerlink" title="3.3 右键菜单"></a>3.3 右键菜单</h3><p>右键桌宠 player，会出现快捷菜单，常见选项包括：</p>
+<ul>
+<li><strong>开始</strong>：开始播放当前宠物动作。</li>
+<li><strong>暂停</strong>：暂停桌宠播放。</li>
+<li><strong>隐藏桌宠</strong>：隐藏桌宠 player。</li>
+<li><strong>打开设置</strong>：打开设置窗口。</li>
+<li><strong>退出</strong>：退出 DesktopPet。</li>
+</ul>
+<h3 id="3-4-状态提示"><a href="#3-4-状态提示" class="headerlink" title="3.4 状态提示"></a>3.4 状态提示</h3><p>当没有宠物、宠物配置缺失、动作资源不可用或当前没有可播放动作时，player 会显示状态提示面板。例如：</p>
+<ul>
+<li>尚未创建宠物</li>
+<li>当前宠物配置缺失</li>
+<li>暂无可用动作</li>
+<li>宠物已暂停</li>
+</ul>
+<p>状态提示只是当前状态说明，<strong>不会替代宠物资源</strong>。需要到“宠物管理”或“动作设置”中补齐配置。</p>
+<hr>
+<h2 id="4-系统托盘菜单"><a href="#4-系统托盘菜单" class="headerlink" title="4. 系统托盘菜单"></a>4. 系统托盘菜单</h2><p>DesktopPet 启动后会在 Windows 系统托盘区域显示图标。右键托盘图标可以打开托盘菜单。</p>
+<p>托盘菜单包含：</p>
+<ul>
+<li><strong>显示桌宠</strong>：显示已隐藏的桌宠 player。</li>
+<li><strong>隐藏桌宠</strong>：隐藏桌宠 player。</li>
+<li><strong>开始</strong>：开始播放宠物动作。</li>
+<li><strong>暂停</strong>：暂停宠物动作。</li>
+<li><strong>打开设置</strong>：打开设置窗口。</li>
+<li><strong>退出</strong>：退出程序。</li>
+</ul>
+<p>托盘菜单是正式控制入口。早期调试用的“测试情绪”菜单已经移除，情绪动作现在由 AI 回复中的 <code>emotion</code> 字段自动触发。</p>
+<hr>
+<h2 id="5-设置窗口总览"><a href="#5-设置窗口总览" class="headerlink" title="5. 设置窗口总览"></a>5. 设置窗口总览</h2><p>设置窗口左侧为导航栏，主要页面包括：</p>
+<ol>
+<li>宠物管理</li>
+<li>动作设置</li>
+<li>LLM 设置</li>
+<li>搜索设置</li>
+<li>对话日志</li>
+<li>个性化</li>
+<li>关于</li>
+</ol>
+<p>每个页面对应一个独立功能模块。通常建议先完成“宠物管理”和“动作设置”，再配置 AI 对话和搜索能力。</p>
+<hr>
+<h2 id="6-宠物管理"><a href="#6-宠物管理" class="headerlink" title="6. 宠物管理"></a>6. 宠物管理</h2><p>“宠物管理”用于创建、导入、选择、启用、禁用和删除宠物。</p>
+<h3 id="6-1-当前宠物"><a href="#6-1-当前宠物" class="headerlink" title="6.1 当前宠物"></a>6.1 当前宠物</h3><p>页面顶部会显示当前宠物状态。如果尚未选择宠物，桌面 player 会显示无宠物提示。</p>
+<h3 id="6-2-宠物列表"><a href="#6-2-宠物列表" class="headerlink" title="6.2 宠物列表"></a>6.2 宠物列表</h3><p>宠物列表显示已加入宠物库的宠物。点击列表项可以查看该宠物的详细信息。</p>
+<h3 id="6-3-新建宠物"><a href="#6-3-新建宠物" class="headerlink" title="6.3 新建宠物"></a>6.3 新建宠物</h3><p>点击“新建”可以创建一个新的宠物配置。创建时通常需要填写：</p>
+<ul>
+<li><strong>宠物 ID</strong>：用于目录名，建议只使用字母、数字、下划线或短横线。</li>
+<li>宠物名称：用于界面显示，可以使用中文。</li>
+<li>画布尺寸：动作图片的基础画布大小。</li>
+<li>显示尺寸：桌面上显示的宠物窗口大小。</li>
+</ul>
+<p>创建宠物只会生成配置，<strong>不会自动生成默认动作资源</strong>。后续需要在“动作设置”中创建或导入动作。</p>
+<h3 id="6-4-导入宠物"><a href="#6-4-导入宠物" class="headerlink" title="6.4 导入宠物"></a>6.4 导入宠物</h3><p>点击“导入”可以选择已有宠物目录。有效宠物目录应包含：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pet.json</span><br><span class="line">playlist.json</span><br></pre></td></tr></table></figure>
+<p>宠物目录规则：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pets/&lt;petId&gt;/</span><br></pre></td></tr></table></figure>
+<p><strong>petId 必须与 pet.json 中的 id 一致。</strong>如果目录名和 <code>pet.json</code> 中的 <code>id</code> 不一致，DesktopPet 可能会跳过该宠物，或显示配置缺失。</p>
+<h3 id="6-5-重新加载"><a href="#6-5-重新加载" class="headerlink" title="6.5 重新加载"></a>6.5 重新加载</h3><p>“重新加载”用于重新扫描和恢复宠物库索引。当用户手动复制宠物资源到程序数据目录后，可以点击此按钮恢复 <code>petlibrary.json</code>。</p>
+<p>恢复规则较保守：只有目录存在、包含 <code>pet.json</code> 和 <code>playlist.json</code>、配置可读取、且目录名与宠物 ID 一致的宠物才会被恢复。</p>
+<h3 id="6-6-开始与暂停"><a href="#6-6-开始与暂停" class="headerlink" title="6.6 开始与暂停"></a>6.6 开始与暂停</h3><ul>
+<li><strong>开始</strong>：让当前宠物开始播放动作。</li>
+<li><strong>暂停</strong>：停止当前播放状态，player 显示暂停状态或保持当前画面。</li>
+</ul>
+<h3 id="6-7-右键宠物列表"><a href="#6-7-右键宠物列表" class="headerlink" title="6.7 右键宠物列表"></a>6.7 右键宠物列表</h3><p>在宠物列表上右键，可以执行宠物相关操作，具体以当前版本菜单为准。常见操作包括：</p>
+<ul>
+<li>启用或禁用宠物</li>
+<li>删除宠物</li>
+<li>设置或切换当前宠物</li>
+</ul>
+<p>禁用宠物不会删除资源；删除宠物可能删除或移除相关配置，操作前应确认。</p>
+<hr>
+<h2 id="7-动作设置"><a href="#7-动作设置" class="headerlink" title="7. 动作设置"></a>7. 动作设置</h2><p>“动作设置”用于管理全局动作库，以及把动作配置到当前宠物的播放列表中。</p>
+<p>页面主要由三部分组成：</p>
+<ol>
+<li>动作库</li>
+<li>动作分类配置</li>
+<li>当前动作配置</li>
+</ol>
+<h3 id="7-1-动作库"><a href="#7-1-动作库" class="headerlink" title="7.1 动作库"></a>7.1 动作库</h3><p>动作库列出已经导入或创建的动作。动作通常对应一个 GIF 或一组图片帧。</p>
+<p>操作包括：</p>
+<ul>
+<li>新建动作</li>
+<li>导入动作</li>
+<li>右键动作添加到当前分类</li>
+<li>拖拽动作到右侧分类</li>
+<li>重命名动作 ID</li>
+<li>移除动作</li>
+<li>删除动作</li>
+</ul>
+<p>“移除动作”通常表示从动作库索引中移除，但资源文件可能仍然保留。<br>“删除动作”通常会删除动作资源并从播放列表中清理引用，属于危险操作。</p>
+<h3 id="7-2-新建动作"><a href="#7-2-新建动作" class="headerlink" title="7.2 新建动作"></a>7.2 新建动作</h3><p>点击“新建动作”可从 GIF 文件创建动作。通常需要配置：</p>
+<ul>
+<li>GIF 文件</li>
+<li>动作 ID</li>
+<li>FPS</li>
+<li>添加到分类</li>
+<li>定时触发方式</li>
+<li>情绪类型</li>
+</ul>
+<p>创建后，DesktopPet 会提取 GIF 帧并生成动作资源。</p>
+<h3 id="7-3-导入动作"><a href="#7-3-导入动作" class="headerlink" title="7.3 导入动作"></a>7.3 导入动作</h3><p>点击“导入动作”可以导入已有动作目录或动作库。导入时可选择动作文件夹，并根据检测结果导入单个动作或批量动作。</p>
+<h3 id="7-4-动作分类"><a href="#7-4-动作分类" class="headerlink" title="7.4 动作分类"></a>7.4 动作分类</h3><p>当前宠物的播放列表分为四类：</p>
+<ol>
+<li>日常动作</li>
+<li>随机动作</li>
+<li>定时动作</li>
+<li>情绪动作</li>
+</ol>
+<h4 id="日常动作"><a href="#日常动作" class="headerlink" title="日常动作"></a>日常动作</h4><p>日常动作是基础播放序列。宠物空闲时会按播放列表播放日常动作。</p>
+<h4 id="随机动作"><a href="#随机动作" class="headerlink" title="随机动作"></a>随机动作</h4><p>随机动作会在运行过程中随机触发，用于增加桌宠表现的变化。</p>
+<h4 id="定时动作"><a href="#定时动作" class="headerlink" title="定时动作"></a>定时动作</h4><p>定时动作支持两种触发方式：</p>
+<ul>
+<li>每隔一段时间触发</li>
+<li>指定时间触发</li>
+</ul>
+<p>可以用来配置定期发生的动作，例如每隔若干秒播放一次，或每天某个时间播放。</p>
+<h4 id="情绪动作"><a href="#情绪动作" class="headerlink" title="情绪动作"></a>情绪动作</h4><p>情绪动作由 AI 回复中的 <code>emotion</code> 字段触发。支持的 emotion 包括：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">happy</span><br><span class="line">sad</span><br><span class="line">angry</span><br><span class="line">surprised</span><br><span class="line">fear</span><br><span class="line">confused</span><br></pre></td></tr></table></figure>
+<p><code>neutral</code> 表示不播放情绪动作，<strong>不作为可配置动作类型</strong>。</p>
+<p>情绪动作列表会显示所有情绪动作，并按固定顺序分组：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">happy -&gt; sad -&gt; angry -&gt; surprised -&gt; fear -&gt; confused</span><br></pre></td></tr></table></figure>
+<p>同一情绪下可以配置多个动作。触发某个 emotion 时，DesktopPet 会从该 emotion 的候选动作中随机选择一个加入播放队列。如果候选动作多于一个，会尽量避免连续重复播放同一个动作。</p>
+<h3 id="7-5-把动作加入分类"><a href="#7-5-把动作加入分类" class="headerlink" title="7.5 把动作加入分类"></a>7.5 把动作加入分类</h3><p>可以通过以下方式把动作加入右侧分类：</p>
+<ul>
+<li>右键动作库中的动作，选择添加到当前分类。</li>
+<li>从动作库拖拽动作到右侧分类列表。</li>
+</ul>
+<p>情绪动作列表允许从动作库拖入动作，但不允许通过拖拽在情绪列表内部跨情绪乱序。情绪动作的排序以 emotion 分组为主，同一 emotion 内可通过“上移”“下移”调整。</p>
+<h3 id="7-6-当前动作配置"><a href="#7-6-当前动作配置" class="headerlink" title="7.6 当前动作配置"></a>7.6 当前动作配置</h3><p>选中右侧分类中的动作后，可以在“当前动作配置”中调整：</p>
+<ul>
+<li>循环：是否循环播放。</li>
+<li>次数：播放次数，0 通常表示无限循环。</li>
+<li>倍速：是否启用动画播放倍速。</li>
+<li>速度：动作播放速度。</li>
+<li>移动：播放该动作时是否移动桌宠。</li>
+<li>移动速度：移动速度倍率。</li>
+<li>方向：随机、水平、竖直。</li>
+<li>对应情绪：仅情绪动作显示，用于设置该动作属于哪个 emotion。</li>
+<li>定时触发方式：仅定时动作显示。</li>
+<li>间隔：定时动作按间隔触发时使用。</li>
+<li>时间：定时动作按指定时间触发时使用。</li>
+</ul>
+<h3 id="7-7-保存配置与保存并应用"><a href="#7-7-保存配置与保存并应用" class="headerlink" title="7.7 保存配置与保存并应用"></a>7.7 保存配置与保存并应用</h3><ul>
+<li>保存配置：把当前动作配置保存到配置文件。</li>
+<li>保存并应用：保存配置，并让当前运行中的宠物立即重新加载配置。</li>
+</ul>
+<hr>
+<h2 id="8-配套工具：DesktopPet-resize-图片处理工具"><a href="#8-配套工具：DesktopPet-resize-图片处理工具" class="headerlink" title="8. 配套工具：DesktopPet-resize 图片处理工具"></a>8. 配套工具：DesktopPet-resize 图片处理工具</h2><p>DesktopPet 安装包会附带一个配套工具：<code>DesktopPet-resize.exe</code>。它用于批量处理宠物动作图片资源，适合在导入动作前整理素材。</p>
+<p><strong>DesktopPet-resize 只负责处理图片，不会自动创建宠物，也不会自动导入动作。</strong>处理完成后，仍需要回到 DesktopPet 主程序，在“动作设置”中导入或配置动作。</p>
+<h3 id="8-1-什么时候需要使用"><a href="#8-1-什么时候需要使用" class="headerlink" title="8.1 什么时候需要使用"></a>8.1 什么时候需要使用</h3><p>在以下场景中可以使用 DesktopPet-resize：</p>
+<ul>
+<li>动作图片尺寸不统一。</li>
+<li>动作帧比当前宠物显示尺寸大或小很多。</li>
+<li>图片边缘空白过多，需要统一画布效果。</li>
+<li>动作资源体积较大，希望处理后再导入。</li>
+<li>从外部素材包整理动作图片时，需要先规范尺寸。</li>
+</ul>
+<h3 id="8-2-打开方式"><a href="#8-2-打开方式" class="headerlink" title="8.2 打开方式"></a>8.2 打开方式</h3><p>可以通过以下方式打开：</p>
+<ul>
+<li>开始菜单中的 DesktopPet 图片处理工具。</li>
+<li>安装目录中的 <code>DesktopPet-resize.exe</code>。</li>
+<li>release 包中的 <code>DesktopPet-resize.exe</code>。</li>
+</ul>
+<h3 id="8-3-界面项目"><a href="#8-3-界面项目" class="headerlink" title="8.3 界面项目"></a>8.3 界面项目</h3><p>DesktopPet-resize 主要包含这些区域：</p>
+<ul>
+<li><code>pet.json</code>：选择当前宠物的 <code>pet.json</code>，工具会尝试读取显示尺寸。</li>
+<li>动作目录：选择要处理的动作图片目录。</li>
+<li>目标尺寸：设置输出图片的宽度和高度。</li>
+<li>备份：处理前复制原动作目录，降低误操作风险。</li>
+<li>缩放方式：选择“保持比例 + 居中填充”或“直接拉伸到目标尺寸”。</li>
+<li>日志：显示处理过程、成功数量、跳过数量和失败数量。</li>
+</ul>
+<h3 id="8-4-基本使用流程"><a href="#8-4-基本使用流程" class="headerlink" title="8.4 基本使用流程"></a>8.4 基本使用流程</h3><p>推荐流程如下：</p>
+<ol>
+<li>准备好动作图片目录。</li>
+<li>打开 <code>DesktopPet-resize.exe</code>。</li>
+<li>选择对应宠物的 <code>pet.json</code>。</li>
+<li>选择动作目录。</li>
+<li>检查或手动设置目标宽度和高度。</li>
+<li>保持“启用备份”处于开启状态。</li>
+<li>选择缩放方式。</li>
+<li>点击“开始处理”。</li>
+<li>检查日志和输出图片。</li>
+<li>回到 DesktopPet 主程序，在“动作设置”中导入或配置动作。</li>
+</ol>
+<h3 id="8-5-缩放方式说明"><a href="#8-5-缩放方式说明" class="headerlink" title="8.5 缩放方式说明"></a>8.5 缩放方式说明</h3><ul>
+<li>保持比例 + 居中填充：尽量保持原图比例，将图像缩放后居中放入目标画布。适合大多数宠物动作素材。</li>
+<li>直接拉伸到目标尺寸：强制拉伸到目标宽高。可能导致图像变形，只有在确认素材比例匹配时再使用。</li>
+</ul>
+<h3 id="8-6-备份建议"><a href="#8-6-备份建议" class="headerlink" title="8.6 备份建议"></a>8.6 备份建议</h3><p><strong>建议先输出或备份到新目录，不要直接覆盖原始素材。</strong></p>
+<p>工具默认会在处理前复制原目录，避免图片处理结果不符合预期时无法恢复。关闭备份时，工具会提示确认，因为处理会直接覆盖原图片。</p>
+<h3 id="8-7-注意事项"><a href="#8-7-注意事项" class="headerlink" title="8.7 注意事项"></a>8.7 注意事项</h3><ul>
+<li>GIF 文件会被跳过，主要处理 PNG、JPG、JPEG、WEBP、BMP 等图片文件。</li>
+<li>如果 Qt 环境不支持写入某些格式，例如 WEBP，日志中会提示保存失败。</li>
+<li>如果图片已经是目标尺寸，工具会跳过该文件。</li>
+<li>处理完成后仍需在主程序中导入或配置动作。</li>
+</ul>
+<hr>
+<h2 id="9-LLM-设置"><a href="#9-LLM-设置" class="headerlink" title="9. LLM 设置"></a>9. LLM 设置</h2><p>“LLM 设置”用于配置 AI 对话模型和角色设定。</p>
+<h3 id="9-1-当前-API-配置"><a href="#9-1-当前-API-配置" class="headerlink" title="9.1 当前 API 配置"></a>9.1 当前 API 配置</h3><p>页面顶部显示当前选中的 API Profile。可以测试连接，也可以重新加载磁盘上的 API 配置。</p>
+<h3 id="9-2-配置库"><a href="#9-2-配置库" class="headerlink" title="9.2 配置库"></a>9.2 配置库</h3><p>配置库中保存多个 API Profile。每个配置通常包含：</p>
+<ul>
+<li>供应商</li>
+<li>API Key</li>
+<li>Base URL</li>
+<li>模型名</li>
+<li>Max Tokens</li>
+<li>Temperature</li>
+<li>API 格式</li>
+</ul>
+<p><strong>当前仅支持 OpenAI-compatible API。</strong>Claude / Anthropic 原生接口暂未开放。</p>
+<p>“自定义”供应商仍按 OpenAI 兼容接口调用，模板中会说明仅支持 OpenAI 兼容格式。</p>
+<h3 id="9-3-新增、编辑、删除配置"><a href="#9-3-新增、编辑、删除配置" class="headerlink" title="9.3 新增、编辑、删除配置"></a>9.3 新增、编辑、删除配置</h3><ul>
+<li>新增配置：创建新的 API Profile。</li>
+<li>编辑配置：修改当前配置内容。</li>
+<li>删除配置：删除配置库中的配置。</li>
+</ul>
+<p><strong>API Key 保存在本地配置文件中，请勿在公共电脑保存。</strong>当前版本的 API Key 保存在本地 <code>config/api_profiles.json</code>，请妥善保管设备和配置文件。</p>
+<h3 id="9-4-测试连接"><a href="#9-4-测试连接" class="headerlink" title="9.4 测试连接"></a>9.4 测试连接</h3><p>点击“测试连接”会使用当前 API 配置发起一个轻量请求，用于验证：</p>
+<ul>
+<li>API Key 是否可用</li>
+<li>Base URL 是否正确</li>
+<li>模型名是否可用</li>
+</ul>
+<p>测试结果会通过提示显示，不会写入聊天记录。</p>
+<h3 id="9-5-对话设置"><a href="#9-5-对话设置" class="headerlink" title="9.5 对话设置"></a>9.5 对话设置</h3><p>“对话设置”是角色设定文本。它用于控制桌宠回复风格，例如：</p>
+<ul>
+<li>说话语气</li>
+<li>是否使用中文</li>
+<li>是否扮演某个角色</li>
+<li>回复是否简短</li>
+<li>是否带宠物感</li>
+</ul>
+<p>保存后，之后的聊天会使用新的设定。</p>
+<hr>
+<h2 id="10-聊天面板"><a href="#10-聊天面板" class="headerlink" title="10. 聊天面板"></a>10. 聊天面板</h2><h3 id="10-1-打开与关闭"><a href="#10-1-打开与关闭" class="headerlink" title="10.1 打开与关闭"></a>10.1 打开与关闭</h3><p>左键单击桌宠 player 可打开或关闭聊天面板。</p>
+<h3 id="10-2-发送消息"><a href="#10-2-发送消息" class="headerlink" title="10.2 发送消息"></a>10.2 发送消息</h3><p>输入框支持：</p>
+<ul>
+<li>Enter：发送消息</li>
+<li>Shift + Enter：换行</li>
+</ul>
+<p>聊天面板中消息显示为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">我： 用户消息</span><br><span class="line"></span><br><span class="line">宠物名： 宠物回复</span><br></pre></td></tr></table></figure>
+<h3 id="10-3-上下文"><a href="#10-3-上下文" class="headerlink" title="10.3 上下文"></a>10.3 上下文</h3><p>DesktopPet 会保留近期对话作为短期上下文，但不会无限保留所有对话。程序退出后，聊天窗口内容不会自动恢复。</p>
+<h3 id="10-4-当前时间上下文"><a href="#10-4-当前时间上下文" class="headerlink" title="10.4 当前时间上下文"></a>10.4 当前时间上下文</h3><p>每次请求都会临时注入当前本地时间、日期、星期和时区，用于回答“现在几点”“今天星期几”等问题。</p>
+<p>这条时间上下文不会显示在聊天窗口，不会写入聊天日志，也不会保存到对话历史。</p>
+<h3 id="10-5-结构化回复与情绪动作"><a href="#10-5-结构化回复与情绪动作" class="headerlink" title="10.5 结构化回复与情绪动作"></a>10.5 结构化回复与情绪动作</h3><p>DesktopPet 会要求模型返回结构化 JSON：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;reply&quot;</span><span class="punctuation">:</span> <span class="string">&quot;显示给用户的回复&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;emotion&quot;</span><span class="punctuation">:</span> <span class="string">&quot;happy&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>聊天窗口只显示 <code>reply</code>。<code>emotion</code> 用于触发情绪动作。</p>
+<p>支持的 emotion：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">neutral</span><br><span class="line">happy</span><br><span class="line">sad</span><br><span class="line">angry</span><br><span class="line">surprised</span><br><span class="line">fear</span><br><span class="line">confused</span><br></pre></td></tr></table></figure>
+<p>其中 <code>neutral</code> 表示不播放动作。其他 emotion 如果在当前宠物的 <code>playlist.json</code> 中配置了对应情绪动作，就会自动播放；未配置时会静默跳过，不影响聊天。</p>
+<hr>
+<h2 id="11-搜索设置与联网搜索"><a href="#11-搜索设置与联网搜索" class="headerlink" title="11. 搜索设置与联网搜索"></a>11. 搜索设置与联网搜索</h2><p>“搜索设置”用于配置联网搜索增强能力。</p>
+<h3 id="11-1-启用联网搜索"><a href="#11-1-启用联网搜索" class="headerlink" title="11.1 启用联网搜索"></a>11.1 启用联网搜索</h3><p>勾选“启用联网搜索”后，DesktopPet 可在需要外部实时信息时调用搜索服务。</p>
+<p>支持的搜索服务包括：</p>
+<ul>
+<li>Tavily</li>
+<li>Brave Search</li>
+<li>Exa</li>
+</ul>
+<p>需要填写对应服务的 API Key。</p>
+<h3 id="11-2-搜索参数"><a href="#11-2-搜索参数" class="headerlink" title="11.2 搜索参数"></a>11.2 搜索参数</h3><p>搜索设置包括：</p>
+<ul>
+<li>搜索服务</li>
+<li>API Key</li>
+<li>结果数量</li>
+<li>搜索深度</li>
+<li>超时时间</li>
+</ul>
+<p>配置完成后可以保存设置，也可以测试搜索。</p>
+<h3 id="11-3-重新加载"><a href="#11-3-重新加载" class="headerlink" title="11.3 重新加载"></a>11.3 重新加载</h3><p>“重新加载”会重新读取 <code>config/websearch_settings.json</code> 中的搜索配置，适合手动修改或恢复配置文件后使用。</p>
+<h3 id="11-4-自动触发搜索"><a href="#11-4-自动触发搜索" class="headerlink" title="11.4 自动触发搜索"></a>11.4 自动触发搜索</h3><p>当用户消息涉及外部实时信息时，DesktopPet 会触发搜索。例如：</p>
+<ul>
+<li>今天有什么新闻</li>
+<li>最近有什么新闻</li>
+<li>最新版本</li>
+<li>天气</li>
+<li>股价</li>
+<li>汇率</li>
+<li>价格</li>
+<li>发布信息</li>
+</ul>
+<p>普通闲聊不会触发搜索。例如：</p>
+<ul>
+<li>最近怎么样</li>
+<li>现在几点</li>
+<li>今天几号</li>
+</ul>
+<p>时间类问题由本地时间上下文回答，不使用联网搜索。</p>
+<h3 id="11-5-手动强制搜索"><a href="#11-5-手动强制搜索" class="headerlink" title="11.5 手动强制搜索"></a>11.5 手动强制搜索</h3><p><strong>/search 和 #search 可强制联网搜索。</strong>也可以使用中文指令“搜一下”“查一下”。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/search</span><br><span class="line">#search</span><br><span class="line">搜一下</span><br><span class="line">查一下</span><br></pre></td></tr></table></figure>
+<p>指令可以放在开头，也可以放在消息中间。命令后的文本会作为搜索 query。</p>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/search Qt 6.11 发布信息</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">宝宝我来啦 /search 水豚喜欢吃什么零食</span><br></pre></td></tr></table></figure>
+<h3 id="11-6-首次对话时搜索角色设定中的实时内容"><a href="#11-6-首次对话时搜索角色设定中的实时内容" class="headerlink" title="11.6 首次对话时搜索角色设定中的实时内容"></a>11.6 首次对话时搜索角色设定中的实时内容</h3><p>搜索设置中可以启用“首次对话时搜索角色设定中的实时内容”。启用后，应用启动后的第一次聊天中，如果角色设定包含“最近、最新、当前、很火、流行”等实时内容，DesktopPet 会额外搜索一次作为背景。</p>
+<p>该搜索只在首次对话触发一次，不会每轮都搜索。</p>
+<hr>
+<h2 id="12-对话日志"><a href="#12-对话日志" class="headerlink" title="12. 对话日志"></a>12. 对话日志</h2><p>“对话日志”用于查看已保存的聊天记录。</p>
+<h3 id="12-1-日志写入"><a href="#12-1-日志写入" class="headerlink" title="12.1 日志写入"></a>12.1 日志写入</h3><p>DesktopPet 会把聊天窗口中可见的消息写入本地 JSONL 日志，包括：</p>
+<ul>
+<li>用户消息</li>
+<li>宠物回复</li>
+<li>可见系统提示</li>
+</ul>
+<p>不会写入：</p>
+<ul>
+<li>API Key</li>
+<li>临时 system prompt</li>
+<li>当前时间 system message</li>
+<li>联网搜索上下文原文</li>
+<li>模型返回 JSON 的隐藏 emotion 字段</li>
+</ul>
+<h3 id="12-2-日志路径"><a href="#12-2-日志路径" class="headerlink" title="12.2 日志路径"></a>12.2 日志路径</h3><p>日志路径：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logs/chat/&lt;petId&gt;/&lt;yyyyMMdd&gt;.jsonl</span><br></pre></td></tr></table></figure>
+<p>如果没有当前宠物，则使用：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logs/chat/_no_pet/&lt;yyyyMMdd&gt;.jsonl</span><br></pre></td></tr></table></figure>
+<h3 id="12-3-加载日志"><a href="#12-3-加载日志" class="headerlink" title="12.3 加载日志"></a>12.3 加载日志</h3><p>在“对话日志”页面点击“加载日志”，选择 <code>.jsonl</code> 文件即可查看。</p>
+<p>页面支持搜索日志内容，可以按对话内容、宠物、API 配置等关键词过滤显示。</p>
+<h3 id="12-4-日志与记忆的区别"><a href="#12-4-日志与记忆的区别" class="headerlink" title="12.4 日志与记忆的区别"></a>12.4 日志与记忆的区别</h3><p><strong>对话日志不会自动作为长期记忆注入。</strong>日志只是本地查看和检索用途。当前版本不会自动把日志恢复到聊天窗口，也不会把日志作为长期记忆重新注入给模型。</p>
+<hr>
+<h2 id="13-个性化"><a href="#13-个性化" class="headerlink" title="13. 个性化"></a>13. 个性化</h2><p>“个性化”用于调整外观、显示和启动行为。</p>
+<h3 id="13-1-外观主题"><a href="#13-1-外观主题" class="headerlink" title="13.1 外观主题"></a>13.1 外观主题</h3><p>可以选择浅色主题和深色主题。主题会影响：</p>
+<ul>
+<li>设置窗口背景</li>
+<li>卡片颜色</li>
+<li>按钮颜色</li>
+<li>列表颜色</li>
+<li>输入框颜色</li>
+<li>菜单样式</li>
+</ul>
+<h3 id="13-2-桌宠显示"><a href="#13-2-桌宠显示" class="headerlink" title="13.2 桌宠显示"></a>13.2 桌宠显示</h3><p>可调整：</p>
+<ul>
+<li>桌宠不透明度：控制 player 的整体透明程度。</li>
+<li>卡片渐变强度：控制设置界面卡片渐变效果。</li>
+<li>随机渐变：启用后卡片可以使用随机渐变风格。</li>
+<li>基础移动速度：控制动作移动播放时的基础移动速度。</li>
+</ul>
+<h3 id="13-3-启动行为"><a href="#13-3-启动行为" class="headerlink" title="13.3 启动行为"></a>13.3 启动行为</h3><p>可配置：</p>
+<ul>
+<li>开机自启动：Windows 登录后自动启动 DesktopPet。</li>
+<li>启动后自动开始播放：程序启动后自动播放宠物动作。</li>
+<li>启动时打开设置窗口：程序启动时自动显示设置窗口。</li>
+</ul>
+<h3 id="13-4-清空注册表修改"><a href="#13-4-清空注册表修改" class="headerlink" title="13.4 清空注册表修改"></a>13.4 清空注册表修改</h3><p>“清空注册表修改”用于清理 DesktopPet 写入的本机设置，例如启动相关设置。它不会删除宠物资源、动作资源、配置文件、日志文件。</p>
+<p>该操作主要用于恢复本机设置状态，或排查启动项、主题、窗口设置等本机设置异常。</p>
+<hr>
+<h2 id="14-关于、用户手册与更新"><a href="#14-关于、用户手册与更新" class="headerlink" title="14. 关于、用户手册与更新"></a>14. 关于、用户手册与更新</h2><p>“关于”页面包含项目说明、用户手册入口、当前版本和更新检查入口。</p>
+<h3 id="14-1-项目信息"><a href="#14-1-项目信息" class="headerlink" title="14.1 项目信息"></a>14.1 项目信息</h3><p>显示 DesktopPet 图标、名称和简要介绍。</p>
+<h3 id="14-2-用户手册"><a href="#14-2-用户手册" class="headerlink" title="14.2 用户手册"></a>14.2 用户手册</h3><p>关于页可以提供“打开用户手册”按钮。点击后会使用默认浏览器打开用户手册页面，例如博客页面。</p>
+<h3 id="14-3-版本信息"><a href="#14-3-版本信息" class="headerlink" title="14.3 版本信息"></a>14.3 版本信息</h3><p>显示当前版本，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v1.0.0</span><br></pre></td></tr></table></figure>
+<h3 id="14-4-检查更新"><a href="#14-4-检查更新" class="headerlink" title="14.4 检查更新"></a>14.4 检查更新</h3><p>点击“检查更新”会请求 GitHub Releases 最新正式版本。</p>
+<p>如果当前已是最新版本，会显示“当前已是最新版本”。</p>
+<p>如果发现新版本，会显示：</p>
+<ul>
+<li>最新版本号</li>
+<li>更新说明</li>
+<li>下载并安装按钮</li>
+<li>打开发布页按钮</li>
+</ul>
+<h3 id="14-5-下载并安装"><a href="#14-5-下载并安装" class="headerlink" title="14.5 下载并安装"></a>14.5 下载并安装</h3><p>点击“下载并安装”后，DesktopPet 会下载发布页中的安装程序：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DesktopPet_Setup*.exe</span><br></pre></td></tr></table></figure>
+<p>下载位置为系统临时目录。下载完成后会启动安装向导，并退出当前 DesktopPet。</p>
+<p><strong>更新程序只下载安装包，不会直接覆盖正在运行的 exe。</strong>文件替换由 Inno Setup 安装程序处理。</p>
+<p><strong>config / pets / logs 不会被主动删除。</strong>更新不会主动删除：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">config/</span><br><span class="line">pets/</span><br><span class="line">logs/</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="15-数据目录与配置文件"><a href="#15-数据目录与配置文件" class="headerlink" title="15. 数据目录与配置文件"></a>15. 数据目录与配置文件</h2><p>DesktopPet 的运行数据主要位于程序运行目录下。</p>
+<h3 id="15-1-配置目录"><a href="#15-1-配置目录" class="headerlink" title="15.1 配置目录"></a>15.1 配置目录</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config/</span><br><span class="line">├── api_profiles.json</span><br><span class="line">├── chat_settings.json</span><br><span class="line">└── websearch_settings.json</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<ul>
+<li><code>api_profiles.json</code>：API 配置档案，<code>currentProfile</code> 字段保存当前选中配置。</li>
+<li><code>chat_settings.json</code>：对话设置。</li>
+<li><code>websearch_settings.json</code>：搜索设置。</li>
+</ul>
+<h3 id="15-2-宠物与动作目录"><a href="#15-2-宠物与动作目录" class="headerlink" title="15.2 宠物与动作目录"></a>15.2 宠物与动作目录</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">petlibrary.json</span><br><span class="line">pets/&lt;petId&gt;/</span><br><span class="line">actions/&lt;actionId&gt;/</span><br></pre></td></tr></table></figure>
+<p><strong>petId 必须与 pet.json 中的 id 一致。</strong></p>
+<h3 id="15-3-日志目录"><a href="#15-3-日志目录" class="headerlink" title="15.3 日志目录"></a>15.3 日志目录</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logs/chat/&lt;petId&gt;/&lt;yyyyMMdd&gt;.jsonl</span><br></pre></td></tr></table></figure>
+<h3 id="15-4-不内置默认资源"><a href="#15-4-不内置默认资源" class="headerlink" title="15.4 不内置默认资源"></a>15.4 不内置默认资源</h3><p><strong>DesktopPet 不内置默认宠物资源。</strong>安装包和 release 包不会打包默认 <code>pets</code> 资源。用户需要自行创建、导入或恢复宠物。</p>
+<hr>
+<h2 id="16-常见问题"><a href="#16-常见问题" class="headerlink" title="16. 常见问题"></a>16. 常见问题</h2><h3 id="16-1-为什么首次打开没有宠物？"><a href="#16-1-为什么首次打开没有宠物？" class="headerlink" title="16.1 为什么首次打开没有宠物？"></a>16.1 为什么首次打开没有宠物？</h3><p>因为 DesktopPet 不内置默认宠物资源。请到“宠物管理”中新建或导入宠物。</p>
+<h3 id="16-2-为什么宠物不播放？"><a href="#16-2-为什么宠物不播放？" class="headerlink" title="16.2 为什么宠物不播放？"></a>16.2 为什么宠物不播放？</h3><p>可能原因：</p>
+<ul>
+<li>当前没有启用宠物。</li>
+<li>当前宠物没有动作资源。</li>
+<li>动作未加入播放列表。</li>
+<li>程序处于暂停状态。</li>
+<li>动作资源路径缺失。</li>
+</ul>
+<p>可依次检查“宠物管理”和“动作设置”。</p>
+<h3 id="16-3-为什么情绪动作没有触发？"><a href="#16-3-为什么情绪动作没有触发？" class="headerlink" title="16.3 为什么情绪动作没有触发？"></a>16.3 为什么情绪动作没有触发？</h3><p>可能原因：</p>
+<ul>
+<li>模型返回的是 <code>neutral</code>。</li>
+<li>当前宠物没有配置对应 emotion 的动作。</li>
+<li>动作资源缺失。</li>
+<li>当前动作还在播放，情绪动作已入队但尚未轮到播放。</li>
+</ul>
+<h3 id="16-4-为什么-search-没有触发？"><a href="#16-4-为什么-search-没有触发？" class="headerlink" title="16.4 为什么 /search 没有触发？"></a>16.4 为什么 /search 没有触发？</h3><p>请确认：</p>
+<ul>
+<li>搜索设置中已启用联网搜索。</li>
+<li>已配置搜索 API Key。</li>
+<li>使用了 <code>/search</code>、<code>#search</code>、<code>搜一下</code> 或 <code>查一下</code>。</li>
+<li>命令后有可搜索内容。</li>
+</ul>
+<h3 id="16-5-为什么“现在几点”没有联网搜索？"><a href="#16-5-为什么“现在几点”没有联网搜索？" class="headerlink" title="16.5 为什么“现在几点”没有联网搜索？"></a>16.5 为什么“现在几点”没有联网搜索？</h3><p>这是正常行为。时间问题使用本地系统时间上下文，不调用联网搜索。</p>
+<h3 id="16-6-为什么更新检查失败？"><a href="#16-6-为什么更新检查失败？" class="headerlink" title="16.6 为什么更新检查失败？"></a>16.6 为什么更新检查失败？</h3><p>可能原因：</p>
+<ul>
+<li>网络不可用。</li>
+<li>GitHub 无法访问。</li>
+<li>仓库没有发布正式 release。</li>
+<li>release 是 draft 或 prerelease。</li>
+<li>release 中没有符合名称规则的安装包 asset。</li>
+</ul>
+<h3 id="16-7-更新会删除宠物和配置吗？"><a href="#16-7-更新会删除宠物和配置吗？" class="headerlink" title="16.7 更新会删除宠物和配置吗？"></a>16.7 更新会删除宠物和配置吗？</h3><p>不会。更新程序只下载安装包并启动安装向导，不会主动删除 <code>config</code>、<code>pets</code>、<code>logs</code>。</p>
+<h3 id="16-8-DesktopPet-resize-会自动导入动作吗？"><a href="#16-8-DesktopPet-resize-会自动导入动作吗？" class="headerlink" title="16.8 DesktopPet-resize 会自动导入动作吗？"></a>16.8 DesktopPet-resize 会自动导入动作吗？</h3><p>不会。<strong>DesktopPet-resize 不会自动导入资源。</strong>它只处理图片。处理完成后，需要回到 DesktopPet 主程序，在“动作设置”中导入或配置动作。</p>
+<hr>
+<h2 id="17-使用建议"><a href="#17-使用建议" class="headerlink" title="17. 使用建议"></a>17. 使用建议</h2><ol>
+<li>先创建或导入宠物，再配置动作。</li>
+<li>至少配置一个日常动作，否则宠物可能没有可播放内容。</li>
+<li>情绪动作建议每个 emotion 配置 1 到 3 个动作，以增加表现变化。</li>
+<li>API Key 请只保存在可信设备上。</li>
+<li>更新前可备份 <code>config</code>、<code>pets</code>、<code>actions</code> 和 <code>logs</code>。</li>
+<li>如果手动复制资源，使用“重新加载”恢复索引。</li>
+<li>使用 DesktopPet-resize 处理图片前，建议保留备份。</li>
+</ol>
+<hr>
+<h2 id="18-后续计划"><a href="#18-后续计划" class="headerlink" title="18. 后续计划"></a>18. 后续计划</h2><p>后续版本可能继续补充：</p>
+<ul>
+<li>更完善的长期记忆与摘要记忆</li>
+<li>流式输出</li>
+<li>Tool Calling / Function Calling</li>
+<li>更完整的资源编辑器</li>
+<li>更完善的自动更新策略</li>
+<li>更多平台适配</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/">http://example.com/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/" title="Qt 窗口部件"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Qt 窗口部件</div></div><div class="info-2"><div class="info-item-1">Qt 窗口部件[TOC] 1 基础窗口部件QWidget QWidget类是所有用户界面对象的基类，即基础窗口部件。 QWidget 继承自 QObject 和 QPaintDevice。QObject 提供 Qt 对象模型、信号槽、父子对象等机制；QPaintDevice 表示该对象可以作为绘图设备，被 QPainter 绘制。  1.1 窗口与子部件 窗口是没有父部件的部件，即顶级部件（top-level widget）。 非窗口部件称为子部件（child widget）。  在构造函数里面，  如果传入 父部件 parent widget，通常成为该 parent 内部的子部件； 如果没有 parent，通常成为顶级窗口。  例如: 1QLabel *label = new QLabel(this); 这里this=parent，于是QLabel对象会变成this窗口里面的一个子控件。 12QLabel *label = new QLabel;label-&gt;show(); 这里QLabel对象没有父对象，于是它自己就是一个独立窗口。 1.2 窗口类型窗口一般都有边框和...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DesktopPet-%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C"><span class="toc-text">DesktopPet 用户手册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%BD%AF%E4%BB%B6%E7%AE%80%E4%BB%8B"><span class="toc-text">1. 软件简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85%E3%80%81%E5%90%AF%E5%8A%A8%E4%B8%8E%E9%80%80%E5%87%BA"><span class="toc-text">2. 安装、启动与退出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%89%E8%A3%85"><span class="toc-text">2.1 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%90%AF%E5%8A%A8"><span class="toc-text">2.2 启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%80%80%E5%87%BA"><span class="toc-text">2.3 退出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%A1%8C%E5%AE%A0-player-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-text">3. 桌宠 player 基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%B7%A6%E9%94%AE%E7%82%B9%E5%87%BB"><span class="toc-text">3.1 左键点击</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%B7%A6%E9%94%AE%E6%8B%96%E5%8A%A8"><span class="toc-text">3.2 左键拖动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95"><span class="toc-text">3.3 右键菜单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E7%8A%B6%E6%80%81%E6%8F%90%E7%A4%BA"><span class="toc-text">3.4 状态提示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%B3%BB%E7%BB%9F%E6%89%98%E7%9B%98%E8%8F%9C%E5%8D%95"><span class="toc-text">4. 系统托盘菜单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%AE%BE%E7%BD%AE%E7%AA%97%E5%8F%A3%E6%80%BB%E8%A7%88"><span class="toc-text">5. 设置窗口总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AE%A0%E7%89%A9%E7%AE%A1%E7%90%86"><span class="toc-text">6. 宠物管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%BD%93%E5%89%8D%E5%AE%A0%E7%89%A9"><span class="toc-text">6.1 当前宠物</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%AE%A0%E7%89%A9%E5%88%97%E8%A1%A8"><span class="toc-text">6.2 宠物列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E6%96%B0%E5%BB%BA%E5%AE%A0%E7%89%A9"><span class="toc-text">6.3 新建宠物</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E5%AF%BC%E5%85%A5%E5%AE%A0%E7%89%A9"><span class="toc-text">6.4 导入宠物</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD"><span class="toc-text">6.5 重新加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E5%BC%80%E5%A7%8B%E4%B8%8E%E6%9A%82%E5%81%9C"><span class="toc-text">6.6 开始与暂停</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-7-%E5%8F%B3%E9%94%AE%E5%AE%A0%E7%89%A9%E5%88%97%E8%A1%A8"><span class="toc-text">6.7 右键宠物列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%8A%A8%E4%BD%9C%E8%AE%BE%E7%BD%AE"><span class="toc-text">7. 动作设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%8A%A8%E4%BD%9C%E5%BA%93"><span class="toc-text">7.1 动作库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E6%96%B0%E5%BB%BA%E5%8A%A8%E4%BD%9C"><span class="toc-text">7.2 新建动作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E5%AF%BC%E5%85%A5%E5%8A%A8%E4%BD%9C"><span class="toc-text">7.3 导入动作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E5%8A%A8%E4%BD%9C%E5%88%86%E7%B1%BB"><span class="toc-text">7.4 动作分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8%E5%8A%A8%E4%BD%9C"><span class="toc-text">日常动作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%8A%A8%E4%BD%9C"><span class="toc-text">随机动作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E5%8A%A8%E4%BD%9C"><span class="toc-text">定时动作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%83%85%E7%BB%AA%E5%8A%A8%E4%BD%9C"><span class="toc-text">情绪动作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E6%8A%8A%E5%8A%A8%E4%BD%9C%E5%8A%A0%E5%85%A5%E5%88%86%E7%B1%BB"><span class="toc-text">7.5 把动作加入分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-6-%E5%BD%93%E5%89%8D%E5%8A%A8%E4%BD%9C%E9%85%8D%E7%BD%AE"><span class="toc-text">7.6 当前动作配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-7-%E4%BF%9D%E5%AD%98%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BF%9D%E5%AD%98%E5%B9%B6%E5%BA%94%E7%94%A8"><span class="toc-text">7.7 保存配置与保存并应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E9%85%8D%E5%A5%97%E5%B7%A5%E5%85%B7%EF%BC%9ADesktopPet-resize-%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7"><span class="toc-text">8. 配套工具：DesktopPet-resize 图片处理工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8"><span class="toc-text">8.1 什么时候需要使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F"><span class="toc-text">8.2 打开方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E7%95%8C%E9%9D%A2%E9%A1%B9%E7%9B%AE"><span class="toc-text">8.3 界面项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">8.4 基本使用流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-%E7%BC%A9%E6%94%BE%E6%96%B9%E5%BC%8F%E8%AF%B4%E6%98%8E"><span class="toc-text">8.5 缩放方式说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-6-%E5%A4%87%E4%BB%BD%E5%BB%BA%E8%AE%AE"><span class="toc-text">8.6 备份建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-7-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">8.7 注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-LLM-%E8%AE%BE%E7%BD%AE"><span class="toc-text">9. LLM 设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E5%BD%93%E5%89%8D-API-%E9%85%8D%E7%BD%AE"><span class="toc-text">9.1 当前 API 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E9%85%8D%E7%BD%AE%E5%BA%93"><span class="toc-text">9.2 配置库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E6%96%B0%E5%A2%9E%E3%80%81%E7%BC%96%E8%BE%91%E3%80%81%E5%88%A0%E9%99%A4%E9%85%8D%E7%BD%AE"><span class="toc-text">9.3 新增、编辑、删除配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E6%B5%8B%E8%AF%95%E8%BF%9E%E6%8E%A5"><span class="toc-text">9.4 测试连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-%E5%AF%B9%E8%AF%9D%E8%AE%BE%E7%BD%AE"><span class="toc-text">9.5 对话设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E8%81%8A%E5%A4%A9%E9%9D%A2%E6%9D%BF"><span class="toc-text">10. 聊天面板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E6%89%93%E5%BC%80%E4%B8%8E%E5%85%B3%E9%97%AD"><span class="toc-text">10.1 打开与关闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="toc-text">10.2 发送消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">10.3 上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-4-%E5%BD%93%E5%89%8D%E6%97%B6%E9%97%B4%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">10.4 当前时间上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-5-%E7%BB%93%E6%9E%84%E5%8C%96%E5%9B%9E%E5%A4%8D%E4%B8%8E%E6%83%85%E7%BB%AA%E5%8A%A8%E4%BD%9C"><span class="toc-text">10.5 结构化回复与情绪动作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%90%9C%E7%B4%A2%E8%AE%BE%E7%BD%AE%E4%B8%8E%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2"><span class="toc-text">11. 搜索设置与联网搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E5%90%AF%E7%94%A8%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2"><span class="toc-text">11.1 启用联网搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E6%90%9C%E7%B4%A2%E5%8F%82%E6%95%B0"><span class="toc-text">11.2 搜索参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD"><span class="toc-text">11.3 重新加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-4-%E8%87%AA%E5%8A%A8%E8%A7%A6%E5%8F%91%E6%90%9C%E7%B4%A2"><span class="toc-text">11.4 自动触发搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-5-%E6%89%8B%E5%8A%A8%E5%BC%BA%E5%88%B6%E6%90%9C%E7%B4%A2"><span class="toc-text">11.5 手动强制搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-6-%E9%A6%96%E6%AC%A1%E5%AF%B9%E8%AF%9D%E6%97%B6%E6%90%9C%E7%B4%A2%E8%A7%92%E8%89%B2%E8%AE%BE%E5%AE%9A%E4%B8%AD%E7%9A%84%E5%AE%9E%E6%97%B6%E5%86%85%E5%AE%B9"><span class="toc-text">11.6 首次对话时搜索角色设定中的实时内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E5%AF%B9%E8%AF%9D%E6%97%A5%E5%BF%97"><span class="toc-text">12. 对话日志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E6%97%A5%E5%BF%97%E5%86%99%E5%85%A5"><span class="toc-text">12.1 日志写入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E6%97%A5%E5%BF%97%E8%B7%AF%E5%BE%84"><span class="toc-text">12.2 日志路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-3-%E5%8A%A0%E8%BD%BD%E6%97%A5%E5%BF%97"><span class="toc-text">12.3 加载日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-4-%E6%97%A5%E5%BF%97%E4%B8%8E%E8%AE%B0%E5%BF%86%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">12.4 日志与记忆的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E4%B8%AA%E6%80%A7%E5%8C%96"><span class="toc-text">13. 个性化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-%E5%A4%96%E8%A7%82%E4%B8%BB%E9%A2%98"><span class="toc-text">13.1 外观主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-%E6%A1%8C%E5%AE%A0%E6%98%BE%E7%A4%BA"><span class="toc-text">13.2 桌宠显示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-3-%E5%90%AF%E5%8A%A8%E8%A1%8C%E4%B8%BA"><span class="toc-text">13.3 启动行为</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-4-%E6%B8%85%E7%A9%BA%E6%B3%A8%E5%86%8C%E8%A1%A8%E4%BF%AE%E6%94%B9"><span class="toc-text">13.4 清空注册表修改</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%85%B3%E4%BA%8E%E3%80%81%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C%E4%B8%8E%E6%9B%B4%E6%96%B0"><span class="toc-text">14. 关于、用户手册与更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-1-%E9%A1%B9%E7%9B%AE%E4%BF%A1%E6%81%AF"><span class="toc-text">14.1 项目信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-2-%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C"><span class="toc-text">14.2 用户手册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-3-%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-text">14.3 版本信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-4-%E6%A3%80%E6%9F%A5%E6%9B%B4%E6%96%B0"><span class="toc-text">14.4 检查更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-5-%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85"><span class="toc-text">14.5 下载并安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">15. 数据目录与配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-1-%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95"><span class="toc-text">15.1 配置目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-2-%E5%AE%A0%E7%89%A9%E4%B8%8E%E5%8A%A8%E4%BD%9C%E7%9B%AE%E5%BD%95"><span class="toc-text">15.2 宠物与动作目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-3-%E6%97%A5%E5%BF%97%E7%9B%AE%E5%BD%95"><span class="toc-text">15.3 日志目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-4-%E4%B8%8D%E5%86%85%E7%BD%AE%E9%BB%98%E8%AE%A4%E8%B5%84%E6%BA%90"><span class="toc-text">15.4 不内置默认资源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#16-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-text">16. 常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#16-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%A6%96%E6%AC%A1%E6%89%93%E5%BC%80%E6%B2%A1%E6%9C%89%E5%AE%A0%E7%89%A9%EF%BC%9F"><span class="toc-text">16.1 为什么首次打开没有宠物？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%A0%E7%89%A9%E4%B8%8D%E6%92%AD%E6%94%BE%EF%BC%9F"><span class="toc-text">16.2 为什么宠物不播放？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%83%85%E7%BB%AA%E5%8A%A8%E4%BD%9C%E6%B2%A1%E6%9C%89%E8%A7%A6%E5%8F%91%EF%BC%9F"><span class="toc-text">16.3 为什么情绪动作没有触发？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-4-%E4%B8%BA%E4%BB%80%E4%B9%88-search-%E6%B2%A1%E6%9C%89%E8%A7%A6%E5%8F%91%EF%BC%9F"><span class="toc-text">16.4 为什么 &#x2F;search 没有触发？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-5-%E4%B8%BA%E4%BB%80%E4%B9%88%E2%80%9C%E7%8E%B0%E5%9C%A8%E5%87%A0%E7%82%B9%E2%80%9D%E6%B2%A1%E6%9C%89%E8%81%94%E7%BD%91%E6%90%9C%E7%B4%A2%EF%BC%9F"><span class="toc-text">16.5 为什么“现在几点”没有联网搜索？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-6-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9B%B4%E6%96%B0%E6%A3%80%E6%9F%A5%E5%A4%B1%E8%B4%A5%EF%BC%9F"><span class="toc-text">16.6 为什么更新检查失败？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-7-%E6%9B%B4%E6%96%B0%E4%BC%9A%E5%88%A0%E9%99%A4%E5%AE%A0%E7%89%A9%E5%92%8C%E9%85%8D%E7%BD%AE%E5%90%97%EF%BC%9F"><span class="toc-text">16.7 更新会删除宠物和配置吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#16-8-DesktopPet-resize-%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%85%A5%E5%8A%A8%E4%BD%9C%E5%90%97%EF%BC%9F"><span class="toc-text">16.8 DesktopPet-resize 会自动导入动作吗？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#17-%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AE%AE"><span class="toc-text">17. 使用建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#18-%E5%90%8E%E7%BB%AD%E8%AE%A1%E5%88%92"><span class="toc-text">18. 后续计划</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/" title="DesktopPet用户手册">DesktopPet用户手册</a><time datetime="2026-05-31T12:43:25.000Z" title="Created 2026-05-31 20:43:25">2026-05-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/" title="Qt 窗口部件">Qt 窗口部件</a><time datetime="2026-05-27T11:58:05.000Z" title="Created 2026-05-27 19:58:05">2026-05-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/08/20260508/" title="20260508">20260508</a><time datetime="2026-05-08T15:19:12.000Z" title="Created 2026-05-08 23:19:12">2026-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/20/shctf-2026/" title="shctf_2026">shctf_2026</a><time datetime="2026-03-20T04:37:06.000Z" title="Created 2026-03-20 12:37:06">2026-03-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/04/NewYear-CTF-2025/" title="NewYear_CTF_2025">NewYear_CTF_2025</a><time datetime="2026-03-04T13:50:07.000Z" title="Created 2026-03-04 21:50:07">2026-03-04</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
