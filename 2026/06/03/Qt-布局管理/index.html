@@ -1,0 +1,523 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Qt 布局管理 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="Qt 布局管理 Qt 主要提供了 QLayout 类及其子类来作为布局管理器。QLayout 类继承于 QObject 类与 QLayoutItem 类。  [TOC] 1 布局管理系统 所有 QWidget 的子类对象都可以使用布局管理器管理位于它们之中的子部件，QWidget::setLayout可以在一个部件上应用布局管理器。  在一个部件上设置了布局管理器，可以完成如下功能： 12345定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt 布局管理">
+<meta property="og:url" content="http://example.com/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Qt 布局管理 Qt 主要提供了 QLayout 类及其子类来作为布局管理器。QLayout 类继承于 QObject 类与 QLayoutItem 类。  [TOC] 1 布局管理系统 所有 QWidget 的子类对象都可以使用布局管理器管理位于它们之中的子部件，QWidget::setLayout可以在一个部件上应用布局管理器。  在一个部件上设置了布局管理器，可以完成如下功能： 12345定">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-06-03T11:17:46.000Z">
+<meta property="article:modified_time" content="2026-06-03T11:18:50.102Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Qt 布局管理",
+  "url": "http://example.com/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-06-03T11:17:46.000Z",
+  "dateModified": "2026-06-03T11:18:50.102Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Qt 布局管理',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">Qt 布局管理</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Qt 布局管理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-06-03T11:17:46.000Z" title="Created 2026-06-03 19:17:46">2026-06-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-06-03T11:18:50.102Z" title="Updated 2026-06-03 19:18:50">2026-06-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Qt/">Qt</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">3.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>13mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Qt-布局管理"><a href="#Qt-布局管理" class="headerlink" title="Qt 布局管理"></a>Qt 布局管理</h1><blockquote>
+<p>Qt 主要提供了 QLayout 类及其子类来作为布局管理器。QLayout 类继承于 QObject 类与 QLayoutItem 类。</p>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="1-布局管理系统"><a href="#1-布局管理系统" class="headerlink" title="1 布局管理系统"></a>1 布局管理系统</h2><blockquote>
+<p>所有 QWidget 的子类对象都可以使用布局管理器管理位于它们之中的子部件，<code>QWidget::setLayout</code><br>可以在一个部件上应用布局管理器。</p>
+</blockquote>
+<p>在一个部件上设置了布局管理器，可以完成如下功能：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">定位子部件</span><br><span class="line">感知窗口默认大小</span><br><span class="line">感知窗口最小大小</span><br><span class="line">窗口大小变化时进行处理</span><br><span class="line">当内容改变时自动更新</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h3><p>QLayout 是布局管理器的基类，它是一个抽象类，继承于 QObject 类和 Q LayoutItem 类。QLayout 有几个子类：<br><code>QBoxLayout (基本布局管理器)</code><br><code>QGridLayout (栅格布局管理器)</code><br><code>QFormLayout (窗体布局管理器)</code><br><code>QStackedLayout (栈布局管理器)</code><br>其中<code>QStackedLayout</code>与上一讲的<code>QStackedWidget</code>用法相似，不再讲述。</p>
+<h3 id="1-2-基本布局管理器"><a href="#1-2-基本布局管理器" class="headerlink" title="1.2 基本布局管理器"></a>1.2 基本布局管理器</h3><p>QBoxLayout可以使子部件在水平方向或者垂直方向排成一列。<br>它将所有空间分成一行box，然后把每个部件放入一个box中。</p>
+<ul>
+<li>它有两个子类:<code>QHBoxLayout(水平布局管理器)</code>和<code>QVBoxLayout(垂直布局管理器)</code>。<br>布局管理器有如下常用属性:</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>layoutName</td>
+<td>布局管理器名称</td>
+</tr>
+<tr>
+<td>layoutLeftMargin</td>
+<td>布局管理器到左边界距离</td>
+</tr>
+<tr>
+<td>。layoutTopMargin</td>
+<td>布局管理器到左上边界距离</td>
+</tr>
+<tr>
+<td>layoutRightMargin</td>
+<td>布局管理器到右边界距离</td>
+</tr>
+<tr>
+<td>layoutBottomMargin</td>
+<td>布局管理器到下边界距离</td>
+</tr>
+<tr>
+<td>layoutSpacing</td>
+<td>布局管理器中各个子部件之间的距离</td>
+</tr>
+<tr>
+<td>layoutStretch</td>
+<td>伸缩因子</td>
+</tr>
+<tr>
+<td>layoutSizeConstraint</td>
+<td>设置大小的约束条件</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置布局和父窗口边缘的空白距离：左、上、右、下</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setContentsMargins</span><span class="params">(<span class="type">int</span> left, <span class="type">int</span> top, <span class="type">int</span> right, <span class="type">int</span> bottom)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取布局边距</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getContentsMargins</span><span class="params">(<span class="type">int</span> *left, <span class="type">int</span> *top, <span class="type">int</span> *right, <span class="type">int</span> *bottom)</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置控件之间的间距</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSpacing</span><span class="params">(<span class="type">int</span> spacing)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取控件之间的间距</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">spacing</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置布局的尺寸约束</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSizeConstraint</span><span class="params">(QLayout::SizeConstraint constraint)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取布局的尺寸约束</span></span><br><span class="line"><span class="function">QLayout::SizeConstraint <span class="title">sizeConstraint</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置布局所在区域的几何位置</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setGeometry</span><span class="params">(<span class="type">const</span> QRect &amp;rect)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取布局当前占用的区域</span></span><br><span class="line"><span class="function">QRect <span class="title">geometry</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使布局重新计算</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">invalidate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 强制激活布局</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">activate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加一个控件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addWidget</span><span class="params">(QWidget *widget)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加一个子布局</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addLayout</span><span class="params">(QLayout *layout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>示例:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QVBoxLayout *layout = <span class="keyword">new</span> <span class="built_in">QVBoxLayout</span>(<span class="keyword">this</span>);</span><br><span class="line">layout-&gt;<span class="built_in">setContentsMargins</span>(<span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>);</span><br><span class="line">layout-&gt;<span class="built_in">setSpacing</span>(<span class="number">8</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QLabel</span>(<span class="string">&quot;用户名&quot;</span>, <span class="keyword">this</span>));</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QLineEdit</span>(<span class="keyword">this</span>));</span><br></pre></td></tr></table></figure>
+<p>表示的含义:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">整个布局距离窗口边缘 10px</span><br><span class="line">控件之间间隔 8px</span><br><span class="line">控件按垂直方向排列</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-栅格布局管理器"><a href="#1-3-栅格布局管理器" class="headerlink" title="1.3 栅格布局管理器"></a>1.3 栅格布局管理器</h3><p>QGridLayout将部件在网格中布局，将所有的空间分为行和列，交叉处形成单元格，将部件放入一个特定的单元格中。</p>
+<p>核心概念</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">row / column      控件所在的行和列</span><br><span class="line">spacing           行列之间的间距</span><br><span class="line">stretch           窗口放大时的空间分配比例</span><br><span class="line">minimum size      行或列允许的最小尺寸</span><br><span class="line">rowSpan           跨越的行数</span><br><span class="line">columnSpan        跨越的列数</span><br></pre></td></tr></table></figure>
+<p>常用属性:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置水平间距</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setHorizontalSpacing</span><span class="params">(<span class="type">int</span> spacing)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取水平间距</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">horizontalSpacing</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置垂直间距</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setVerticalSpacing</span><span class="params">(<span class="type">int</span> spacing)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取垂直间距</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">verticalSpacing</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时设置水平和垂直间距</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSpacing</span><span class="params">(<span class="type">int</span> spacing)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置布局边距（左、上、右、下）</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setContentsMargins</span><span class="params">(<span class="type">int</span> left, <span class="type">int</span> top, <span class="type">int</span> right, <span class="type">int</span> bottom)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取布局边距</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getContentsMargins</span><span class="params">(<span class="type">int</span> *left, <span class="type">int</span> *top, <span class="type">int</span> *right, <span class="type">int</span> *bottom)</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置某一行的拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setRowStretch</span><span class="params">(<span class="type">int</span> row, <span class="type">int</span> stretch)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置某一列的拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setColumnStretch</span><span class="params">(<span class="type">int</span> column, <span class="type">int</span> stretch)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取某一行的拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">rowStretch</span><span class="params">(<span class="type">int</span> row)</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取某一列的拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">columnStretch</span><span class="params">(<span class="type">int</span> column)</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置某一行的最小高度</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setRowMinimumHeight</span><span class="params">(<span class="type">int</span> row, <span class="type">int</span> minSize)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置某一列的最小宽度</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setColumnMinimumWidth</span><span class="params">(<span class="type">int</span> column, <span class="type">int</span> minSize)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加控件到指定行列</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addWidget</span><span class="params">(QWidget *widget, <span class="type">int</span> row, <span class="type">int</span> column)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加控件并跨行跨列</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addWidget</span><span class="params">(QWidget *widget, <span class="type">int</span> row, <span class="type">int</span> column, <span class="type">int</span> rowSpan, <span class="type">int</span> columnSpan)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在指定位置添加子布局</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addLayout</span><span class="params">(QLayout *layout, <span class="type">int</span> row, <span class="type">int</span> column)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在指定位置添加跨行跨列子布局</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addLayout</span><span class="params">(QLayout *layout, <span class="type">int</span> row, <span class="type">int</span> column, <span class="type">int</span> rowSpan, <span class="type">int</span> columnSpan)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取布局中的行数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">rowCount</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<p>例如:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">QWidget *window = <span class="keyword">new</span> QWidget;</span><br><span class="line"></span><br><span class="line">QLabel *userLabel = <span class="keyword">new</span> <span class="built_in">QLabel</span>(<span class="string">&quot;用户名：&quot;</span>, window);</span><br><span class="line">QLineEdit *userEdit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(window);</span><br><span class="line"></span><br><span class="line">QLabel *passwordLabel = <span class="keyword">new</span> <span class="built_in">QLabel</span>(<span class="string">&quot;密码：&quot;</span>, window);</span><br><span class="line">QLineEdit *passwordEdit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(window);</span><br><span class="line">passwordEdit-&gt;<span class="built_in">setEchoMode</span>(QLineEdit::Password);</span><br><span class="line"></span><br><span class="line">QPushButton *loginButton = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;登录&quot;</span>, window);</span><br><span class="line">QPushButton *cancelButton = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;取消&quot;</span>, window);</span><br><span class="line"></span><br><span class="line">QGridLayout *layout = <span class="keyword">new</span> <span class="built_in">QGridLayout</span>(window);</span><br><span class="line"></span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(userLabel, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(userEdit, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(passwordLabel, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(passwordEdit, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(loginButton, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(cancelButton, <span class="number">2</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">window-&gt;<span class="built_in">setLayout</span>(layout);</span><br><span class="line">window-&gt;<span class="built_in">show</span>();</span><br></pre></td></tr></table></figure>
+<p>上述代码的流程是:</p>
+<ol>
+<li>创建一个顶级窗口 window</li>
+<li>创建一个布局 layout</li>
+<li>往 layout 里面添加控件</li>
+<li>把 layout 安装到 window 上</li>
+<li>window 显示时，layout 负责摆放控件</li>
+</ol>
+<h4 id="1-4-窗体布局管理器"><a href="#1-4-窗体布局管理器" class="headerlink" title="1.4 窗体布局管理器"></a>1.4 窗体布局管理器</h4><p>eg.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用户名： [____________]</span><br><span class="line"></span><br><span class="line">密码：   [____________]</span><br><span class="line"></span><br><span class="line">邮箱：   [____________]</span><br></pre></td></tr></table></figure>
+<p>写法:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">QFormLayout *layout = <span class="keyword">new</span> QFormLayout;</span><br><span class="line"></span><br><span class="line">layout-&gt;<span class="built_in">addRow</span>(<span class="string">&quot;用户名：&quot;</span>, <span class="keyword">new</span> QLineEdit);</span><br><span class="line">layout-&gt;<span class="built_in">addRow</span>(<span class="string">&quot;密码：&quot;</span>, <span class="keyword">new</span> QLineEdit);</span><br><span class="line">layout-&gt;<span class="built_in">addRow</span>(<span class="string">&quot;邮箱：&quot;</span>, <span class="keyword">new</span> QLineEdit);</span><br></pre></td></tr></table></figure>
+<p>常用函数有:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加一行（文本标签 + 控件）</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addRow</span><span class="params">(<span class="type">const</span> QString &amp;labelText,</span></span></span><br><span class="line"><span class="params"><span class="function">            QWidget *field)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加一行（标签控件 + 控件）</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addRow</span><span class="params">(QWidget *label,</span></span></span><br><span class="line"><span class="params"><span class="function">            QWidget *field)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加单独一行控件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addRow</span><span class="params">(QWidget *widget)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加单独一行布局</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addRow</span><span class="params">(QLayout *layout)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>常用属性和枚举量:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ---------- 1. 标签对齐方式 ----------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置左侧 label 的对齐方式</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setLabelAlignment</span><span class="params">(Qt::Alignment alignment)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 常用枚举 / flags</span></span><br><span class="line">Qt::AlignLeft;     <span class="comment">// 左对齐</span></span><br><span class="line">Qt::AlignRight;    <span class="comment">// 右对齐</span></span><br><span class="line">Qt::AlignHCenter;  <span class="comment">// 水平居中</span></span><br><span class="line">Qt::AlignTop;      <span class="comment">// 顶部对齐</span></span><br><span class="line">Qt::AlignVCenter;  <span class="comment">// 垂直居中</span></span><br><span class="line">Qt::AlignCenter;   <span class="comment">// 水平 + 垂直居中</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------- 2. 整个表单对齐方式 ----------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置整个 form layout 在可用空间中的对齐方式</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFormAlignment</span><span class="params">(Qt::Alignment alignment)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 常用枚举 / flags</span></span><br><span class="line">Qt::AlignLeft;     <span class="comment">// 整体靠左</span></span><br><span class="line">Qt::AlignRight;    <span class="comment">// 整体靠右</span></span><br><span class="line">Qt::AlignHCenter;  <span class="comment">// 整体水平居中</span></span><br><span class="line">Qt::AlignTop;      <span class="comment">// 整体靠上</span></span><br><span class="line">Qt::AlignBottom;   <span class="comment">// 整体靠下</span></span><br><span class="line">Qt::AlignCenter;   <span class="comment">// 整体居中</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------- 3. 行换行策略 ----------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置一行太长时如何换行</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setRowWrapPolicy</span><span class="params">(QFormLayout::RowWrapPolicy policy)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 枚举常量</span></span><br><span class="line">QFormLayout::DontWrapRows;  <span class="comment">// 不换行，label 和 field 始终在同一行</span></span><br><span class="line">QFormLayout::WrapLongRows;  <span class="comment">// 行太长时换行</span></span><br><span class="line">QFormLayout::WrapAllRows;   <span class="comment">// 所有行都换行，label 在上，field 在下</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------- 4. 输入控件增长策略 ----------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置右侧 field 控件如何占用多余空间</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setFieldGrowthPolicy</span><span class="params">(QFormLayout::FieldGrowthPolicy policy)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 枚举常量</span></span><br><span class="line">QFormLayout::FieldsStayAtSizeHint;   <span class="comment">// field 保持推荐大小</span></span><br><span class="line">QFormLayout::ExpandingFieldsGrow;    <span class="comment">// 可扩展 field 占用多余空间</span></span><br><span class="line">QFormLayout::AllNonFixedFieldsGrow;  <span class="comment">// 所有非固定大小 field 都占用多余空间</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------- 5. 行间距 / 列间距 ----------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置水平间距，也就是 label 和 field 之间的距离</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setHorizontalSpacing</span><span class="params">(<span class="type">int</span> spacing)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置垂直间距，也就是行与行之间的距离</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setVerticalSpacing</span><span class="params">(<span class="type">int</span> spacing)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时设置水平和垂直间距</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSpacing</span><span class="params">(<span class="type">int</span> spacing)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ---------- 6. 外边距 ----------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置布局和外部边界之间的距离</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setContentsMargins</span><span class="params">(<span class="type">int</span> left, <span class="type">int</span> top, <span class="type">int</span> right, <span class="type">int</span> bottom)</span></span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以发现，Qt中很多时候都是传入某个枚举类型的枚举值。</p>
+</blockquote>
+<h3 id="1-5-综合使用"><a href="#1-5-综合使用" class="headerlink" title="1.5 综合使用"></a>1.5 综合使用</h3><ul>
+<li>讲解一个例子。</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────┐</span><br><span class="line">│ 标题                       │</span><br><span class="line">│                            │</span><br><span class="line">│ API Key： [____________]   │  ← QFormLayout</span><br><span class="line">│ 模型：    [____________]   │</span><br><span class="line">│                            │</span><br><span class="line">│ [选项A] [选项B]             │  ← QGridLayout</span><br><span class="line">│ [选项C] [选项D]             │</span><br><span class="line">│                            │</span><br><span class="line">│              [取消] [保存] │  ← QHBoxLayout</span><br><span class="line">└────────────────────────────┘</span><br></pre></td></tr></table></figure>
+<p>如:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────┐</span><br><span class="line">│ LLM 设置                                    │</span><br><span class="line">│                                            │</span><br><span class="line">│ API Key：   [__________________________]   │</span><br><span class="line">│ 模型：      [__________________________]   │</span><br><span class="line">│ Base URL：  [__________________________]   │</span><br><span class="line">│                                            │</span><br><span class="line">│ [ ] 启用搜索        [ ] 流式输出            │</span><br><span class="line">│ [ ] 保存历史        [ ] 开机启动            │</span><br><span class="line">│                                            │</span><br><span class="line">│                         [取消]   [保存]    │</span><br><span class="line">└────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+<p>实现如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">QWidget *window = <span class="keyword">new</span> QWidget;</span><br><span class="line"></span><br><span class="line">QVBoxLayout *mainLayout = <span class="keyword">new</span> <span class="built_in">QVBoxLayout</span>(window); <span class="comment">// 外层：从上到下</span></span><br><span class="line"></span><br><span class="line">QLabel *title = <span class="keyword">new</span> <span class="built_in">QLabel</span>(<span class="string">&quot;LLM 设置&quot;</span>, window);</span><br><span class="line">mainLayout-&gt;<span class="built_in">addWidget</span>(title);</span><br><span class="line"></span><br><span class="line">QFormLayout *formLayout = <span class="keyword">new</span> QFormLayout;</span><br><span class="line">formLayout-&gt;<span class="built_in">addRow</span>(<span class="string">&quot;API Key：&quot;</span>, <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(window));</span><br><span class="line">formLayout-&gt;<span class="built_in">addRow</span>(<span class="string">&quot;模型：&quot;</span>, <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(window));</span><br><span class="line">formLayout-&gt;<span class="built_in">addRow</span>(<span class="string">&quot;Base URL：&quot;</span>, <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(window));</span><br><span class="line">mainLayout-&gt;<span class="built_in">addLayout</span>(formLayout);</span><br><span class="line"></span><br><span class="line">QGridLayout *gridLayout = <span class="keyword">new</span> QGridLayout;</span><br><span class="line">gridLayout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;启用搜索&quot;</span>, window), <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">gridLayout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;流式输出&quot;</span>, window), <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">gridLayout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;保存历史&quot;</span>, window), <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">gridLayout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;开机启动&quot;</span>, window), <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">mainLayout-&gt;<span class="built_in">addLayout</span>(gridLayout);</span><br><span class="line"></span><br><span class="line">QHBoxLayout *buttonLayout = <span class="keyword">new</span> QHBoxLayout;</span><br><span class="line">buttonLayout-&gt;<span class="built_in">addStretch</span>();</span><br><span class="line">buttonLayout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;取消&quot;</span>, window));</span><br><span class="line">buttonLayout-&gt;<span class="built_in">addWidget</span>(<span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;保存&quot;</span>, window));</span><br><span class="line">mainLayout-&gt;<span class="built_in">addLayout</span>(buttonLayout);</span><br><span class="line"></span><br><span class="line">window-&gt;<span class="built_in">show</span>();</span><br></pre></td></tr></table></figure>
+<h3 id="1-6-部件大小"><a href="#1-6-部件大小" class="headerlink" title="1.6 部件大小"></a>1.6 部件大小</h3><h4 id="1-6-1-大小提示和最小大小提示"><a href="#1-6-1-大小提示和最小大小提示" class="headerlink" title="1.6.1 大小提示和最小大小提示"></a>1.6.1 大小提示和最小大小提示</h4><blockquote>
+<p>所有继承于QWidget的类都有这两个属性。</p>
+</blockquote>
+<ul>
+<li><code>sizeHint</code>保存了建议大小，不同的部件默认有不同的sizeHint。通过调用<code>sizeHint()</code>可以获取其值。</li>
+<li><code>minimumSizeHint</code>保存了最小建议大小。通过调用<code>minimumSizeHint()</code>可以获取其值。</li>
+</ul>
+<h4 id="1-6-2-QSizePolicy-大小策略属性"><a href="#1-6-2-QSizePolicy-大小策略属性" class="headerlink" title="1.6.2 QSizePolicy 大小策略属性"></a>1.6.2 QSizePolicy 大小策略属性</h4><p>以下是QSizepolicy的所有枚举值:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QSizePolicy::Fixed</td>
+<td>只使用sizeHint()提供是值，不能伸缩</td>
+</tr>
+<tr>
+<td>QSizePolicy::Preferred</td>
+<td>sizeHint()提供的是最佳大小，可以伸缩</td>
+</tr>
+<tr>
+<td>QSizePolicy::Expanding</td>
+<td>sizeHint()提供的是最佳大小，可以伸缩，有多余空间就自动被拉伸</td>
+</tr>
+<tr>
+<td>QSizePolicy::Ignored</td>
+<td>sizeHint()值被忽略，可以伸缩，有多少空间全部拉伸</td>
+</tr>
+<tr>
+<td>QSizePolicy::Minimum</td>
+<td>sizeHint()值为最小值，可以伸缩</td>
+</tr>
+<tr>
+<td>QSizePolicy::Maximum</td>
+<td>sizeHint()值为最大值，可以伸缩</td>
+</tr>
+<tr>
+<td>QSizePolicy::MinimumExpanding</td>
+<td>sizeHint()值为最小值，可以伸缩，有多余空间就自动被拉伸</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>注：Expanding比Ignored更常用</li>
+</ul>
+<h3 id="1-6-3-缩放因子-Stretch-Factor"><a href="#1-6-3-缩放因子-Stretch-Factor" class="headerlink" title="1.6.3 缩放因子 Stretch Factor"></a>1.6.3 缩放因子 Stretch Factor</h3><blockquote>
+<p>缩放因子不是控件自己的大小，而是不同控件之间的比例分配。</p>
+</blockquote>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">QHBoxLayout *layout = <span class="keyword">new</span> <span class="built_in">QHBoxLayout</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">QPushButton *btn1 = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;A&quot;</span>, <span class="keyword">this</span>);</span><br><span class="line">QPushButton *btn2 = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;B&quot;</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(btn1, <span class="number">1</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(btn2, <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p><code>1</code> 和 <code>2</code> 就是缩放因子。</p>
+<p>btn1 : btn2 = 1 : 2，窗口变宽时，多余空间按 1:2 分配。</p>
+<p>如果是</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">layout-&gt;<span class="built_in">addWidget</span>(btn1);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(btn2);</span><br></pre></td></tr></table></figure>
+<p>相当于</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">layout-&gt;addWidget(btn1, <span class="number">0</span>);</span><br><span class="line">layout-&gt;addWidget(btn2, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>则根据<code>sizeHint()</code>、<code>sizePolicy()</code>来划分。</p>
+<p>常用函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加控件，并设置拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QBoxLayout::addWidget</span><span class="params">(QWidget *widget, <span class="type">int</span> stretch = <span class="number">0</span>, Qt::Alignment alignment = Qt::Alignment())</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加子布局，并设置拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QBoxLayout::addLayout</span><span class="params">(QLayout *layout, <span class="type">int</span> stretch = <span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加弹性空白</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QBoxLayout::addStretch</span><span class="params">(<span class="type">int</span> stretch = <span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置指定位置 item 的拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">QBoxLayout::setStretch</span><span class="params">(<span class="type">int</span> index, <span class="type">int</span> stretch)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取指定位置 item 的拉伸因子</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">QBoxLayout::stretch</span><span class="params">(<span class="type">int</span> index)</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<h3 id="1-7-可扩展窗口"><a href="#1-7-可扩展窗口" class="headerlink" title="1.7 可扩展窗口"></a>1.7 可扩展窗口</h3><blockquote>
+<p>一个窗口的功能是很多的，其中一部分只在需要的时候显示出来或者消失，这就是可扩展窗口。</p>
+</blockquote>
+<p>eg.</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">展开前：</span><br><span class="line"></span><br><span class="line">┌────────────────────────┐</span><br><span class="line">│ 搜索内容： [________]  │</span><br><span class="line">│                        │</span><br><span class="line">│          [更多 &gt;&gt;] [搜索] │</span><br><span class="line">└────────────────────────┘</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">展开后：</span><br><span class="line"></span><br><span class="line">┌────────────────────────┐</span><br><span class="line">│ 搜索内容： [________]  │</span><br><span class="line">│                        │</span><br><span class="line">│ 大小写敏感： [ ]       │</span><br><span class="line">│ 全词匹配：   [ ]       │</span><br><span class="line">│ 使用正则：   [ ]       │</span><br><span class="line">│                        │</span><br><span class="line">│          [更少 &lt;&lt;] [搜索] │</span><br><span class="line">└────────────────────────┘</span><br></pre></td></tr></table></figure>
+<p>示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDialog&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QVBoxLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QHBoxLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QFormLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QLineEdit&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QCheckBox&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QPushButton&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SearchDialog</span> : <span class="keyword">public</span> QDialog</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">SearchDialog</span><span class="params">(QWidget *parent = <span class="literal">nullptr</span>)</span> : QDialog(parent)</span></span><br><span class="line"><span class="function">    &#123;</span></span><br><span class="line">        <span class="built_in">setWindowTitle</span>(<span class="string">&quot;搜索&quot;</span>);</span><br><span class="line"></span><br><span class="line">        QVBoxLayout *mainLayout = <span class="keyword">new</span> <span class="built_in">QVBoxLayout</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        QFormLayout *formLayout = <span class="keyword">new</span> QFormLayout;</span><br><span class="line">        QLineEdit *searchEdit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(<span class="keyword">this</span>);</span><br><span class="line">        formLayout-&gt;<span class="built_in">addRow</span>(<span class="string">&quot;搜索内容：&quot;</span>, searchEdit);</span><br><span class="line"></span><br><span class="line">        extensionWidget = <span class="keyword">new</span> <span class="built_in">QWidget</span>(<span class="keyword">this</span>);</span><br><span class="line">        QVBoxLayout *extensionLayout = <span class="keyword">new</span> <span class="built_in">QVBoxLayout</span>(extensionWidget);</span><br><span class="line">        extensionLayout-&gt;<span class="built_in">setContentsMargins</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        QCheckBox *caseCheck = <span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;大小写敏感&quot;</span>, extensionWidget);</span><br><span class="line">        QCheckBox *wordCheck = <span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;全词匹配&quot;</span>, extensionWidget);</span><br><span class="line">        QCheckBox *regexCheck = <span class="keyword">new</span> <span class="built_in">QCheckBox</span>(<span class="string">&quot;使用正则&quot;</span>, extensionWidget);</span><br><span class="line"></span><br><span class="line">        extensionLayout-&gt;<span class="built_in">addWidget</span>(caseCheck);</span><br><span class="line">        extensionLayout-&gt;<span class="built_in">addWidget</span>(wordCheck);</span><br><span class="line">        extensionLayout-&gt;<span class="built_in">addWidget</span>(regexCheck);</span><br><span class="line"></span><br><span class="line">        extensionWidget-&gt;<span class="built_in">hide</span>();</span><br><span class="line"></span><br><span class="line">        QHBoxLayout *buttonLayout = <span class="keyword">new</span> QHBoxLayout;</span><br><span class="line">        QPushButton *moreButton = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;更多 &gt;&gt;&quot;</span>, <span class="keyword">this</span>);</span><br><span class="line">        QPushButton *searchButton = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;搜索&quot;</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">        buttonLayout-&gt;<span class="built_in">addStretch</span>();</span><br><span class="line">        buttonLayout-&gt;<span class="built_in">addWidget</span>(moreButton);</span><br><span class="line">        buttonLayout-&gt;<span class="built_in">addWidget</span>(searchButton);</span><br><span class="line"></span><br><span class="line">        mainLayout-&gt;<span class="built_in">addLayout</span>(formLayout);</span><br><span class="line">        mainLayout-&gt;<span class="built_in">addWidget</span>(extensionWidget);</span><br><span class="line">        mainLayout-&gt;<span class="built_in">addLayout</span>(buttonLayout);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">connect</span>(moreButton, &amp;QPushButton::clicked, <span class="keyword">this</span>, [=]() &#123;</span><br><span class="line">            <span class="type">bool</span> visible = extensionWidget-&gt;<span class="built_in">isVisible</span>();</span><br><span class="line">            extensionWidget-&gt;<span class="built_in">setVisible</span>(!visible);</span><br><span class="line">            moreButton-&gt;<span class="built_in">setText</span>(visible ? <span class="string">&quot;更多 &gt;&gt;&quot;</span> : <span class="string">&quot;更少 &lt;&lt;&quot;</span>);</span><br><span class="line">            <span class="built_in">adjustSize</span>();</span><br><span class="line">        &#125;); </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    QWidget *extensionWidget = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="1-8-拆分器-QSplitter"><a href="#1-8-拆分器-QSplitter" class="headerlink" title="1.8 拆分器 QSplitter"></a>1.8 拆分器 QSplitter</h3><p>不说概念了，直接上图</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────┬──────────────────────┐</span><br><span class="line">│ 左侧列表       │ 右侧内容区            │</span><br><span class="line">│               │                      │</span><br><span class="line">│               │                      │</span><br><span class="line">└───────────────┴──────────────────────┘</span><br><span class="line">                ↑</span><br><span class="line">            这里可以拖动</span><br></pre></td></tr></table></figure>
+<p>典型用途：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">文件管理器：左侧目录树 + 右侧文件列表</span><br><span class="line">代码编辑器：左侧项目树 + 右侧编辑区</span><br><span class="line">聊天软件：左侧会话列表 + 右侧聊天内容</span><br><span class="line">设置窗口：左侧分类导航 + 右侧设置页面</span><br></pre></td></tr></table></figure>
+<ul>
+<li>事实上，QSplitter类继承于QFrame类即继承于QWidget类。换言之，QSplitter类具有QWidget类的特性，可以像QFrame类一样设置边框。</li>
+</ul>
+<p>常用函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建水平或垂直拆分器</span></span><br><span class="line"><span class="built_in">QSplitter</span>(Qt::Orientation orientation, QWidget *parent = <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加控件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">addWidget</span><span class="params">(QWidget *widget)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入控件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">insertWidget</span><span class="params">(<span class="type">int</span> index, QWidget *widget)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置方向</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setOrientation</span><span class="params">(Qt::Orientation orientation)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取方向</span></span><br><span class="line"><span class="function">Qt::Orientation <span class="title">orientation</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置各个子控件大小</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setSizes</span><span class="params">(<span class="type">const</span> QList&lt;<span class="type">int</span>&gt; &amp;list)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取各个子控件大小</span></span><br><span class="line"><span class="function">QList&lt;<span class="type">int</span>&gt; <span class="title">sizes</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置某个子控件是否可以被折叠到 0</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setCollapsible</span><span class="params">(<span class="type">int</span> index, <span class="type">bool</span> collapse)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置所有子控件是否可以被折叠</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setChildrenCollapsible</span><span class="params">(<span class="type">bool</span> collapse)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>其中，Qt::Orientation有两个枚举值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 水平方向</span></span><br><span class="line">Qt::Horizontal</span><br><span class="line"></span><br><span class="line"><span class="comment">// 垂直方向</span></span><br><span class="line">Qt::Vertical</span><br></pre></td></tr></table></figure>
+<h2 id="2-伙伴-buddy"><a href="#2-伙伴-buddy" class="headerlink" title="2 伙伴 buddy"></a>2 伙伴 buddy</h2><blockquote>
+<p><code>buddy 机制</code>提出于QLabel类。让一个标签 QLabel 和另一个输入控件建立关联，<br>用户按快捷键时，焦点自动跳到对应控件。</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用户名(&amp;U)： [____________]</span><br><span class="line">密码(&amp;P)：   [____________]</span><br></pre></td></tr></table></figure>
+<p>这里 用户名(&amp;U) 这个 label 的伙伴就是右边的 QLineEdit。</p>
+<blockquote>
+<p>Q: &amp;U是什么？</p>
+<p>A：<code>&amp;U</code> 表示快捷键助记符，也叫 mnemonic。用户按：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Alt + U</span><br></pre></td></tr></table></figure>
+<p>Qt 就会触发这个 label 的快捷键。</p>
+</blockquote>
+<p>实现方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">QWidget *window = <span class="keyword">new</span> QWidget;</span><br><span class="line"></span><br><span class="line">QLabel *userLabel = <span class="keyword">new</span> <span class="built_in">QLabel</span>(<span class="string">&quot;用户名(&amp;U)：&quot;</span>, window);</span><br><span class="line">QLineEdit *userEdit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(window);</span><br><span class="line"></span><br><span class="line">QLabel *passwordLabel = <span class="keyword">new</span> <span class="built_in">QLabel</span>(<span class="string">&quot;密码(&amp;P)：&quot;</span>, window);</span><br><span class="line">QLineEdit *passwordEdit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(window);</span><br><span class="line">passwordEdit-&gt;<span class="built_in">setEchoMode</span>(QLineEdit::Password);</span><br><span class="line"></span><br><span class="line">userLabel-&gt;<span class="built_in">setBuddy</span>(userEdit);</span><br><span class="line">passwordLabel-&gt;<span class="built_in">setBuddy</span>(passwordEdit);</span><br><span class="line"></span><br><span class="line">QGridLayout *layout = <span class="keyword">new</span> <span class="built_in">QGridLayout</span>(window);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(userLabel, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(userEdit, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(passwordLabel, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">layout-&gt;<span class="built_in">addWidget</span>(passwordEdit, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">window-&gt;<span class="built_in">show</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="3-设计Tab键顺序"><a href="#3-设计Tab键顺序" class="headerlink" title="3 设计Tab键顺序"></a>3 设计Tab键顺序</h2><p>核心函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">QWidget::setTabOrder</span><span class="params">(QWidget *first, QWidget *second)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>意思是：按 Tab 时，从 first 跳到 second</p>
+<p>例如登录窗口：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">QLineEdit *userEdit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(<span class="keyword">this</span>);</span><br><span class="line">QLineEdit *passwordEdit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(<span class="keyword">this</span>);</span><br><span class="line">QPushButton *loginButton = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;登录&quot;</span>, <span class="keyword">this</span>);</span><br><span class="line">QPushButton *cancelButton = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;取消&quot;</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">QWidget::<span class="built_in">setTabOrder</span>(userEdit, passwordEdit);</span><br><span class="line">QWidget::<span class="built_in">setTabOrder</span>(passwordEdit, loginButton);</span><br><span class="line">QWidget::<span class="built_in">setTabOrder</span>(loginButton, cancelButton);</span><br></pre></td></tr></table></figure>
+<p>这样按 Tab 的顺序就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userEdit → passwordEdit → loginButton → cancelButton</span><br></pre></td></tr></table></figure>
+<p>设置链式顺序时要按顺序写：<code>setTabOrder(a, b); setTabOrder(b, c); setTabOrder(c, d);</code>，不要乱序。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/">http://example.com/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/" title="DesktopPet用户手册"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">DesktopPet用户手册</div></div><div class="info-2"><div class="info-item-1">DesktopPet 用户手册适用版本：DesktopPet v1.0.0平台：Windows说明：本手册面向普通用户，介绍 DesktopPet 的安装、启动、桌宠操作、宠物管理、动作设置、AI 对话、联网搜索、对话日志、个性化、托盘菜单、图片处理工具、更新机制和数据目录。不同小版本界面文字可能略有差异，以实际程序为准。  1. 软件简介DesktopPet 是一款桌面宠物应用。它可以在桌面上显示一个可拖动、可播放动作的宠物，并提供 AI 对话、联网搜索、动作配置、情绪动作、主题个性化、对话日志和更新检查等功能。 DesktopPet 不内置默认宠物资源。首次使用时，如果没有创建或导入宠物，桌面 player 会显示状态提示。用户需要在“宠物管理”页面中新建宠物、导入宠物，或手动恢复已有宠物资源。 DesktopPet 的核心使用流程通常是：  安装并启动 DesktopPet。 在“宠物管理”中新建或导入宠物。 在“动作设置”中创建、导入并配置动作。 在“LLM 设置”中配置 AI 模型。 根据需要开启“搜索设置”、查看“对话日志”、调整“个性化”。   2. 安装、启动与退...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86"><span class="toc-text">Qt 布局管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F"><span class="toc-text">1 布局管理系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%AE%80%E4%BB%8B"><span class="toc-text">1.1 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%9F%BA%E6%9C%AC%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-text">1.2 基本布局管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%A0%85%E6%A0%BC%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-text">1.3 栅格布局管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E7%AA%97%E4%BD%93%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-text">1.4 窗体布局管理器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E7%BB%BC%E5%90%88%E4%BD%BF%E7%94%A8"><span class="toc-text">1.5 综合使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E9%83%A8%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="toc-text">1.6 部件大小</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-1-%E5%A4%A7%E5%B0%8F%E6%8F%90%E7%A4%BA%E5%92%8C%E6%9C%80%E5%B0%8F%E5%A4%A7%E5%B0%8F%E6%8F%90%E7%A4%BA"><span class="toc-text">1.6.1 大小提示和最小大小提示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-2-QSizePolicy-%E5%A4%A7%E5%B0%8F%E7%AD%96%E7%95%A5%E5%B1%9E%E6%80%A7"><span class="toc-text">1.6.2 QSizePolicy 大小策略属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-3-%E7%BC%A9%E6%94%BE%E5%9B%A0%E5%AD%90-Stretch-Factor"><span class="toc-text">1.6.3 缩放因子 Stretch Factor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E5%8F%AF%E6%89%A9%E5%B1%95%E7%AA%97%E5%8F%A3"><span class="toc-text">1.7 可扩展窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-%E6%8B%86%E5%88%86%E5%99%A8-QSplitter"><span class="toc-text">1.8 拆分器 QSplitter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BC%99%E4%BC%B4-buddy"><span class="toc-text">2 伙伴 buddy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%BE%E8%AE%A1Tab%E9%94%AE%E9%A1%BA%E5%BA%8F"><span class="toc-text">3 设计Tab键顺序</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/" title="Qt 布局管理">Qt 布局管理</a><time datetime="2026-06-03T11:17:46.000Z" title="Created 2026-06-03 19:17:46">2026-06-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/" title="DesktopPet用户手册">DesktopPet用户手册</a><time datetime="2026-05-31T12:43:25.000Z" title="Created 2026-05-31 20:43:25">2026-05-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/" title="Qt 窗口部件">Qt 窗口部件</a><time datetime="2026-05-27T11:58:05.000Z" title="Created 2026-05-27 19:58:05">2026-05-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/08/20260508/" title="20260508">20260508</a><time datetime="2026-05-08T15:19:12.000Z" title="Created 2026-05-08 23:19:12">2026-05-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/20/shctf-2026/" title="shctf_2026">shctf_2026</a><time datetime="2026-03-20T04:37:06.000Z" title="Created 2026-03-20 12:37:06">2026-03-20</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
