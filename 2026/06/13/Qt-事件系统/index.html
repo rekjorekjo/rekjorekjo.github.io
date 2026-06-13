@@ -1,0 +1,666 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Qt 事件系统 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="Qt 事件系统 Qt中，事件作为一个对象，继承自QEvent类，常见的有键盘事件QKeyEvent，鼠标事件QMouseEvent，定时器事件QTimerEvent等。  [TOC] 1 Qt中的事件 事件是对各种应用程序需要知道的由应用程序内部或者外部产生的事情或者动作的通称。 事件与信号并不相同。 eg.单一一下按钮，那么就会产生鼠标事件QMouseEvent（不是按钮产生的），而因为按钮被按">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt 事件系统">
+<meta property="og:url" content="http://example.com/2026/06/13/Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Qt 事件系统 Qt中，事件作为一个对象，继承自QEvent类，常见的有键盘事件QKeyEvent，鼠标事件QMouseEvent，定时器事件QTimerEvent等。  [TOC] 1 Qt中的事件 事件是对各种应用程序需要知道的由应用程序内部或者外部产生的事情或者动作的通称。 事件与信号并不相同。 eg.单一一下按钮，那么就会产生鼠标事件QMouseEvent（不是按钮产生的），而因为按钮被按">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-06-13T15:15:49.000Z">
+<meta property="article:modified_time" content="2026-06-13T15:16:19.747Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Qt 事件系统",
+  "url": "http://example.com/2026/06/13/Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-06-13T15:15:49.000Z",
+  "dateModified": "2026-06-13T15:16:19.747Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/06/13/Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Qt 事件系统',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">Qt 事件系统</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Qt 事件系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-06-13T15:15:49.000Z" title="Created 2026-06-13 23:15:49">2026-06-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-06-13T15:16:19.747Z" title="Updated 2026-06-13 23:16:19">2026-06-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Qt/">Qt</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">4.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>19mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Qt-事件系统"><a href="#Qt-事件系统" class="headerlink" title="Qt 事件系统"></a>Qt 事件系统</h1><blockquote>
+<p>Qt中，事件作为一个对象，继承自<code>QEvent类</code>，常见的有键盘事件<code>QKeyEvent</code>，鼠标事件<code>QMouseEvent</code>，定时器事件<code>QTimerEvent</code>等。</p>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="1-Qt中的事件"><a href="#1-Qt中的事件" class="headerlink" title="1 Qt中的事件"></a>1 Qt中的事件</h2><blockquote>
+<p>事件是对各种应用程序需要知道的由应用程序内部或者外部产生的事情或者动作的通称。</p>
+<p>事件与信号并不相同。</p>
+<p>eg.单一一下按钮，那么就会产生鼠标事件QMouseEvent（不是按钮产生的），而因为按钮被按下了，所以他会发射<code>clicked()单击信号</code>(按钮产生的)。一般需要考虑单击信号，如果要设计这个按钮被单击时候产生别的效果，那么需要考虑鼠标事件。</p>
+<p>因此，事件与信号是两个不同层面的东西。</p>
+</blockquote>
+<p><strong>Qt中，任何QObject子类对象都可以接收和处理事件。</strong></p>
+<h3 id="1-1-事件的处理"><a href="#1-1-事件的处理" class="headerlink" title="1.1 事件的处理"></a>1.1 事件的处理</h3><p>一个事件由某个<code>QEvent</code>或<code>QEvent</code>子类对象表示，每个事件对象都有一个事件类型，事件类型由 QEvent::Type 枚举值表示，其中有100多个枚举常量。</p>
+<h4 id="1-1-1-事件处理函数"><a href="#1-1-1-事件处理函数" class="headerlink" title="1.1.1 事件处理函数"></a>1.1.1 事件处理函数</h4><p>Qt 的控件类里已经准备了很多虚函数，专门用来处理事件。</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *event)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">keyPressEvent</span><span class="params">(QKeyEvent *event)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">closeEvent</span><span class="params">(QCloseEvent *event)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">resizeEvent</span><span class="params">(QResizeEvent *event)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">paintEvent</span><span class="params">(QPaintEvent *event)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>自己写类时，可以重写这些函数。</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">PetWidget</span> : <span class="keyword">public</span> QWidget</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::mousePressEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;鼠标按下了&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表示：当 PetWidget 收到鼠标按下事件时，执行这段代码。</p>
+<h4 id="1-1-2-事件的处理流程"><a href="#1-1-2-事件的处理流程" class="headerlink" title="1.1.2 事件的处理流程"></a>1.1.2 事件的处理流程</h4><p>以鼠标点击桌宠为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">用户点击桌宠</span><br><span class="line">        ↓</span><br><span class="line">操作系统收到鼠标消息</span><br><span class="line">        ↓</span><br><span class="line">Qt 把系统消息转换成 QMouseEvent</span><br><span class="line">        ↓</span><br><span class="line">Qt 判断鼠标点在哪个 QWidget 上</span><br><span class="line">        ↓</span><br><span class="line">把事件发送给这个 QWidget</span><br><span class="line">        ↓</span><br><span class="line">调用 mousePressEvent(event)</span><br></pre></td></tr></table></figure>
+<h4 id="1-1-3-accept和ignore"><a href="#1-1-3-accept和ignore" class="headerlink" title="1.1.3 accept和ignore"></a>1.1.3 accept和ignore</h4><p>很多事件对象都有：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">event-&gt;<span class="built_in">ignore</span>();</span><br></pre></td></tr></table></figure>
+<p>它们表示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">accept：表示当前对象已经接受/处理这个事件。</span><br><span class="line">ignore：表示当前对象不处理这个事件，某些事件可能继续传递给父对象或由 Qt 做默认处理。</span><br></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyWidget::mousePressEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;处理左键&quot;</span>;</span><br><span class="line">        event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        event-&gt;<span class="built_in">ignore</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-事件的传递"><a href="#1-2-事件的传递" class="headerlink" title="1.2 事件的传递"></a>1.2 事件的传递</h3><h4 id="1-2-1-事件的传递"><a href="#1-2-1-事件的传递" class="headerlink" title="1.2.1 事件的传递"></a>1.2.1 事件的传递</h4><p>对 QWidget 来说，很多输入事件如果子控件不处理，可能会传给父控件。</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PetWidget</span><br><span class="line"> └─ QLabel</span><br></pre></td></tr></table></figure>
+<p>如果点到了 <code>QLabel</code>，事件先到 <code>QLabel</code>。</p>
+<p>如果 <code>QLabel</code> 不处理，可能再传给父控件 <code>PetWidget</code>。</p>
+<h4 id="1-2-2-event-函数"><a href="#1-2-2-event-函数" class="headerlink" title="1.2.2 event()函数"></a>1.2.2 event()函数</h4><p>除了专门的事件函数，Qt 还有一个总入口：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">event</span><span class="params">(QEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>所有事件进入某个对象时，通常会先经过这个总函数，然后再分发给具体处理函数。</p>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">event</span>()</span><br><span class="line"> ├─ <span class="built_in">mousePressEvent</span>()</span><br><span class="line"> ├─ <span class="built_in">keyPressEvent</span>()</span><br><span class="line"> ├─ <span class="built_in">paintEvent</span>()</span><br><span class="line"> ├─ <span class="built_in">resizeEvent</span>()</span><br><span class="line"> └─ <span class="built_in">closeEvent</span>()</span><br></pre></td></tr></table></figure>
+<p>可以重写 <code>event()</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MyWidget::event</span><span class="params">(QEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">type</span>() == QEvent::MouseButtonPress) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;在 event() 里捕获鼠标按下&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> QWidget::<span class="built_in">event</span>(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>表示事件已经处理。</p>
+<h2 id="2-鼠标事件和滚轮事件"><a href="#2-鼠标事件和滚轮事件" class="headerlink" title="2 鼠标事件和滚轮事件"></a>2 鼠标事件和滚轮事件</h2><blockquote>
+<p><code>QMouseEvent</code>类用来表示一个鼠标事件，在窗口部件中按下鼠标或者移动鼠标指针，都会产生鼠标事件。一般通过重定义部件的鼠标事件处理函数来进行一些自定义的操作。</p>
+</blockquote>
+<p>最常用的几个函数是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;    <span class="comment">// 鼠标按下</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;     <span class="comment">// 鼠标移动</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mouseReleaseEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;  <span class="comment">// 鼠标释放</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mouseDoubleClickEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>; <span class="comment">// 鼠标双击</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wheelEvent</span><span class="params">(QWheelEvent *event)</span> <span class="keyword">override</span></span>;         <span class="comment">// 鼠标滚轮</span></span><br></pre></td></tr></table></figure>
+<p>这些函数通常写在自己的 QWidget 子类里面，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">PetWidget</span> : <span class="keyword">public</span> QWidget</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mouseReleaseEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">wheelEvent</span><span class="params">(QWheelEvent *event)</span> <span class="keyword">override</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-鼠标按下事件"><a href="#2-1-鼠标按下事件" class="headerlink" title="2.1 鼠标按下事件"></a>2.1 鼠标按下事件</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>鼠标按下时触发。常用来判断用户按的是左键、右键还是中键。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::mousePressEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;左键按下&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::RightButton) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;右键按下&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常用函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Qt::MouseButton <span class="title">button</span><span class="params">()</span> <span class="type">const</span></span>;   <span class="comment">// 触发本次事件的按钮</span></span><br><span class="line"><span class="function">Qt::MouseButtons <span class="title">buttons</span><span class="params">()</span> <span class="type">const</span></span>; <span class="comment">// 当前处于按下状态的所有按钮</span></span><br><span class="line"><span class="function">QPointF <span class="title">position</span><span class="params">()</span> <span class="type">const</span></span>;         <span class="comment">// 鼠标在当前控件内的位置，Qt 6 常用</span></span><br><span class="line"><span class="function">QPointF <span class="title">globalPosition</span><span class="params">()</span> <span class="type">const</span></span>;   <span class="comment">// 鼠标在屏幕上的全局位置，Qt 6 常用</span></span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">button</span>()</span><br></pre></td></tr></table></figure>
+<p>表示“这一次事件是哪一个按钮触发的”。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">buttons</span>()</span><br></pre></td></tr></table></figure>
+<p>表示“当前有哪些鼠标按钮正处于按下状态”。</p>
+<h3 id="2-2-鼠标移动事件"><a href="#2-2-鼠标移动事件" class="headerlink" title="2.2 鼠标移动事件"></a>2.2 鼠标移动事件</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>鼠标移动时触发。</p>
+<p>不过：<strong>默认情况下，只有鼠标按下后移动，控件才会收到 mouseMoveEvent。</strong></p>
+<p>如果希望鼠标不按下，只要经过控件就触发移动事件，需要开启：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setMouseTracking</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PetWidget::<span class="built_in">PetWidget</span>(QWidget *parent) : <span class="built_in">QWidget</span>(parent)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">setMouseTracking</span>(<span class="literal">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;鼠标移动到：&quot;</span> &lt;&lt; event-&gt;<span class="built_in">position</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>例题：用鼠标事件实现拖拽窗口</li>
+</ul>
+<p>基本思路：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">鼠标按下：记录鼠标相对窗口左上角的偏移</span><br><span class="line">鼠标移动：用鼠标全局位置 - 偏移量，得到窗口新位置</span><br><span class="line">鼠标释放：结束拖动</span><br></pre></td></tr></table></figure>
+<p>示例代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">PetWidget</span> : <span class="keyword">public</span> QWidget</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">PetWidget</span><span class="params">(QWidget *parent = <span class="literal">nullptr</span>)</span> : QWidget(parent) &#123;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mousePressEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton) &#123;</span><br><span class="line">            dragging = <span class="literal">true</span>;</span><br><span class="line">            dragOffset = event-&gt;<span class="built_in">globalPosition</span>().<span class="built_in">toPoint</span>() - <span class="built_in">frameGeometry</span>().<span class="built_in">topLeft</span>();</span><br><span class="line">            event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dragging &amp;&amp; (event-&gt;<span class="built_in">buttons</span>() &amp; Qt::LeftButton)) &#123;</span><br><span class="line">            <span class="built_in">move</span>(event-&gt;<span class="built_in">globalPosition</span>().<span class="built_in">toPoint</span>() - dragOffset);</span><br><span class="line">            event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mouseReleaseEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton) &#123;</span><br><span class="line">            dragging = <span class="literal">false</span>;</span><br><span class="line">            event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">bool</span> dragging = <span class="literal">false</span>;</span><br><span class="line">    QPoint dragOffset;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里最关键的是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dragOffset = event-&gt;<span class="built_in">globalPosition</span>().<span class="built_in">toPoint</span>() - <span class="built_in">frameGeometry</span>().<span class="built_in">topLeft</span>();</span><br></pre></td></tr></table></figure>
+<p>表示鼠标点下去的位置，距离窗口左上角有多远。</p>
+<p>移动时：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">move</span>(event-&gt;<span class="built_in">globalPosition</span>().<span class="built_in">toPoint</span>() - dragOffset);</span><br></pre></td></tr></table></figure>
+<p>表示：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">窗口新左上角 = 当前鼠标屏幕位置 - 当初记录的偏移</span><br></pre></td></tr></table></figure>
+<p>这样窗口就会跟着鼠标移动，而且不会突然跳一下。</p>
+<h3 id="2-3-鼠标释放事件"><a href="#2-3-鼠标释放事件" class="headerlink" title="2.3 鼠标释放事件"></a>2.3 鼠标释放事件</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mouseReleaseEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>鼠标松开时触发。常用于结束拖动、结束选择、结束绘制等。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::mouseReleaseEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton) &#123;</span><br><span class="line">        dragging = <span class="literal">false</span>;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;左键释放&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-4-鼠标双击事件"><a href="#2-4-鼠标双击事件" class="headerlink" title="2.4 鼠标双击事件"></a>2.4 鼠标双击事件</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mouseDoubleClickEvent</span><span class="params">(QMouseEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>双击时触发，例如桌宠双击打开聊天窗口：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::mouseDoubleClickEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton) &#123;</span><br><span class="line">        <span class="built_in">openChatWindow</span>();</span><br><span class="line">        event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-右键菜单"><a href="#2-5-右键菜单" class="headerlink" title="2.5 右键菜单"></a>2.5 右键菜单</h3><p>右键菜单可以直接在 <code>mousePressEvent()</code> 里判断右键，也可以重写专门的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">contextMenuEvent</span><span class="params">(QContextMenuEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>简单写法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::mousePressEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::RightButton) &#123;</span><br><span class="line">        <span class="function">QMenu <span class="title">menu</span><span class="params">(<span class="keyword">this</span>)</span></span>;</span><br><span class="line">        menu.<span class="built_in">addAction</span>(<span class="string">&quot;打开设置&quot;</span>);</span><br><span class="line">        menu.<span class="built_in">addAction</span>(<span class="string">&quot;退出&quot;</span>);</span><br><span class="line">        menu.<span class="built_in">exec</span>(event-&gt;<span class="built_in">globalPosition</span>().<span class="built_in">toPoint</span>());</span><br><span class="line">        event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QWidget::<span class="built_in">mousePressEvent</span>(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过更标准的是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::contextMenuEvent</span><span class="params">(QContextMenuEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QMenu <span class="title">menu</span><span class="params">(<span class="keyword">this</span>)</span></span>;</span><br><span class="line">    menu.<span class="built_in">addAction</span>(<span class="string">&quot;打开设置&quot;</span>);</span><br><span class="line">    menu.<span class="built_in">addAction</span>(<span class="string">&quot;退出&quot;</span>);</span><br><span class="line">    menu.<span class="built_in">exec</span>(event-&gt;<span class="built_in">globalPos</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-滚轮事件"><a href="#2-6-滚轮事件" class="headerlink" title="2.6 滚轮事件"></a>2.6 滚轮事件</h3><p>滚轮事件函数是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">wheelEvent</span><span class="params">(QWheelEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>常用来做缩放、调节透明度、调节音量等。</p>
+<p>Qt 6 常用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QPoint <span class="title">angleDelta</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这个函数返回一个 <code>QPoint</code>，里面有两个方向的滚动量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">angleDelta</span>().<span class="built_in">x</span>();  <span class="comment">// 水平方向滚动量</span></span><br><span class="line">event-&gt;<span class="built_in">angleDelta</span>().<span class="built_in">y</span>();  <span class="comment">// 垂直方向滚动量</span></span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::wheelEvent</span><span class="params">(QWheelEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> delta = event-&gt;<span class="built_in">angleDelta</span>().<span class="built_in">y</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (delta &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;滚轮向上&quot;</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (delta &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;滚轮向下&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">angleDelta().y() &gt; 0   向上滚</span><br><span class="line">angleDelta().y() &lt; 0   向下滚</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: <code>button()</code> 和 <code>buttons()</code> 的区别?</p>
+<p>A: </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">button</span>()</span><br></pre></td></tr></table></figure>
+<p>表示本次事件由哪个按钮触发。</p>
+<p>常用于：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mousePressEvent</span>()</span><br><span class="line"><span class="built_in">mouseReleaseEvent</span>()</span><br><span class="line"><span class="built_in">mouseDoubleClickEvent</span>()</span><br></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton)</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">buttons</span>()</span><br></pre></td></tr></table></figure>
+<p>表示当前哪些按钮正在被按住。</p>
+<p>常用于：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mouseMoveEvent</span>()</span><br></pre></td></tr></table></figure>
+<p>比如拖动时：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event-&gt;<span class="built_in">buttons</span>() &amp; Qt::LeftButton)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="2-7-常用枚举"><a href="#2-7-常用枚举" class="headerlink" title="2.7 常用枚举"></a>2.7 常用枚举</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Qt::LeftButton;    <span class="comment">// 左键</span></span><br><span class="line">Qt::RightButton;   <span class="comment">// 右键</span></span><br><span class="line">Qt::MiddleButton;  <span class="comment">// 中键</span></span><br><span class="line">Qt::NoButton;      <span class="comment">// 没有按钮</span></span><br></pre></td></tr></table></figure>
+<p>判断单个按钮：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event-&gt;<span class="built_in">button</span>() == Qt::LeftButton) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>判断当前是否按着某个按钮：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event-&gt;<span class="built_in">buttons</span>() &amp; Qt::LeftButton) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-键盘事件"><a href="#3-键盘事件" class="headerlink" title="3 键盘事件"></a>3 键盘事件</h2><blockquote>
+<p><code>QKeyEvent</code>类用来描述一个键盘事件。当键盘按键被按下或者被释放时，键盘事件就会被发送给有键盘输入焦点的部件。</p>
+</blockquote>
+<p>常用的两个函数是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">keyPressEvent</span><span class="params">(QKeyEvent *event)</span> <span class="keyword">override</span></span>;    <span class="comment">// 键盘按下</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">keyReleaseEvent</span><span class="params">(QKeyEvent *event)</span> <span class="keyword">override</span></span>;  <span class="comment">// 键盘释放</span></span><br></pre></td></tr></table></figure>
+<p>它们一般写在自己的 <code>QWidget</code> 子类里。</p>
+<h3 id="3-1-示例"><a href="#3-1-示例" class="headerlink" title="3.1 示例"></a>3.1 示例</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QKeyEvent&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyWidget::keyPressEvent</span><span class="params">(QKeyEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">key</span>() == Qt::Key_Escape) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;按下了 Esc&quot;</span>;</span><br><span class="line">        <span class="built_in">close</span>();</span><br><span class="line">        event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QWidget::<span class="built_in">keyPressEvent</span>(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">key</span>()</span><br></pre></td></tr></table></figure>
+<p>表示用户按下的是哪个键。</p>
+<p>常见按键枚举：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Qt::Key_Escape;  <span class="comment">// Esc</span></span><br><span class="line">Qt::Key_Return;  <span class="comment">// 回车，主键盘 Enter</span></span><br><span class="line">Qt::Key_Enter;   <span class="comment">// 小键盘 Enter</span></span><br><span class="line">Qt::Key_Space;   <span class="comment">// 空格</span></span><br><span class="line">Qt::Key_A;       <span class="comment">// A</span></span><br><span class="line">Qt::Key_Z;       <span class="comment">// Z</span></span><br><span class="line">Qt::Key_0;       <span class="comment">// 数字 0</span></span><br><span class="line">Qt::Key_F1;      <span class="comment">// F1</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-2-key-和-text"><a href="#3-2-key-和-text" class="headerlink" title="3.2 key() 和 text()"></a>3.2 <code>key()</code> 和 <code>text()</code></h3><p><code>QKeyEvent</code> 里常用两个信息：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">key</span><span class="params">()</span> <span class="type">const</span></span>;</span><br><span class="line"><span class="function">QString <span class="title">text</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<p>区别是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">key()  ：表示物理/逻辑按键，比如 Qt::Key_A、Qt::Key_Escape</span><br><span class="line">text() ：表示这个按键产生的文本，比如 &quot;a&quot;、&quot;A&quot;、&quot;中&quot;</span><br></pre></td></tr></table></figure>
+<p>例如按下 <code>A</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;key()  可能是 Qt::Key_A</span><br><span class="line">event-&gt;text() 可能是 &quot;a&quot;</span><br></pre></td></tr></table></figure>
+<p>如果同时按 <code>Shift + A</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;key()  仍然是 Qt::Key_A</span><br><span class="line">event-&gt;text() 可能是 &quot;A&quot;</span><br></pre></td></tr></table></figure>
+<p>如果按 <code>Esc</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;key()  是 Qt::Key_Escape</span><br><span class="line">event-&gt;text() 通常为空</span><br></pre></td></tr></table></figure>
+<p>所以：</p>
+<ul>
+<li>判断快捷键/功能键：用 key()</li>
+<li>获取用户输入字符：用 text()</li>
+</ul>
+<h3 id="3-3-判断组合键"><a href="#3-3-判断组合键" class="headerlink" title="3.3 判断组合键"></a>3.3 判断组合键</h3><p>比如判断 <code>Ctrl + S</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyWidget::keyPressEvent</span><span class="params">(QKeyEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">key</span>() == Qt::Key_S &amp;&amp;</span><br><span class="line">        (event-&gt;<span class="built_in">modifiers</span>() &amp; Qt::ControlModifier)) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;Ctrl + S&quot;</span>;</span><br><span class="line">        event-&gt;<span class="built_in">accept</span>();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QWidget::<span class="built_in">keyPressEvent</span>(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">modifiers</span>()</span><br></pre></td></tr></table></figure>
+<p>返回当前按下的修饰键集合。</p>
+<p>常见修饰键：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Qt::ControlModifier;  <span class="comment">// Ctrl</span></span><br><span class="line">Qt::ShiftModifier;    <span class="comment">// Shift</span></span><br><span class="line">Qt::AltModifier;      <span class="comment">// Alt</span></span><br><span class="line">Qt::MetaModifier;     <span class="comment">// Windows键 / Command键</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-4-让-QWidget-接收键盘事件"><a href="#3-4-让-QWidget-接收键盘事件" class="headerlink" title="3.4 让 QWidget 接收键盘事件"></a>3.4 让 QWidget 接收键盘事件</h3><p>有些控件默认不主动接受键盘焦点。可以设置焦点策略：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setFocusPolicy</span>(Qt::StrongFocus);</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MyWidget::<span class="built_in">MyWidget</span>(QWidget *parent) : <span class="built_in">QWidget</span>(parent)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">setFocusPolicy</span>(Qt::StrongFocus);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常见焦点策略：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Qt::NoFocus;          <span class="comment">// 不接受键盘焦点</span></span><br><span class="line">Qt::TabFocus;         <span class="comment">// 可以通过 Tab 获得焦点</span></span><br><span class="line">Qt::ClickFocus;       <span class="comment">// 点击后获得焦点</span></span><br><span class="line">Qt::StrongFocus;      <span class="comment">// Tab 和点击都可以获得焦点</span></span><br><span class="line">Qt::WheelFocus;       <span class="comment">// StrongFocus + 鼠标滚轮可获得焦点</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-5-按键自动重复"><a href="#3-5-按键自动重复" class="headerlink" title="3.5 按键自动重复"></a>3.5 按键自动重复</h3><p>长按一个键时，系统会不断生成键盘事件。这叫 auto repeat。</p>
+<p>可以用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isAutoRepeat</span><span class="params">()</span> <span class="type">const</span></span>;</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyWidget::keyPressEvent</span><span class="params">(QKeyEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (event-&gt;<span class="built_in">isAutoRepeat</span>()) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;这是长按产生的重复事件&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果只想处理第一次按下，可以这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event-&gt;<span class="built_in">isAutoRepeat</span>()) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">第1次：真正按下 A        isAutoRepeat() == false</span><br><span class="line">第2次：长按自动重复 A    isAutoRepeat() == true</span><br><span class="line">第3次：长按自动重复 A    isAutoRepeat() == true</span><br><span class="line">第4次：长按自动重复 A    isAutoRepeat() == true</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="3-6-keyPressEvent-和快捷键系统的区别"><a href="#3-6-keyPressEvent-和快捷键系统的区别" class="headerlink" title="3.6 keyPressEvent() 和快捷键系统的区别"></a>3.6 <code>keyPressEvent()</code> 和快捷键系统的区别</h3><p>可以用键盘事件判断快捷键：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (event-&gt;<span class="built_in">key</span>() == Qt::Key_S &amp;&amp;</span><br><span class="line">    (event-&gt;<span class="built_in">modifiers</span>() &amp; Qt::ControlModifier)) &#123;</span><br><span class="line">    <span class="built_in">save</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但更标准的快捷键做法通常是用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QShortcut</span><br><span class="line">QAction</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QShortcut *shortcut = <span class="keyword">new</span> <span class="built_in">QShortcut</span>(<span class="built_in">QKeySequence</span>(<span class="string">&quot;Ctrl+S&quot;</span>), <span class="keyword">this</span>);</span><br><span class="line"><span class="built_in">connect</span>(shortcut, &amp;QShortcut::activated, <span class="keyword">this</span>, &amp;MyWidget::save);</span><br></pre></td></tr></table></figure>
+<p>区别：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">keyPressEvent：</span><br><span class="line">适合处理当前控件内部的键盘行为。</span><br><span class="line"></span><br><span class="line">QShortcut / QAction：</span><br><span class="line">适合处理窗口或应用中的功能快捷键，比如保存、复制、关闭、打开设置。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：</p>
+<ul>
+<li><code>QKeySequence</code> 表示一个<strong>按键组合</strong>。</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">QKeySequence</span>(<span class="string">&quot;Ctrl+S&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>QShortcut</code> 是真正的<strong>快捷键对象</strong>。</p>
+<p>它负责把某个快捷键注册到某个控件或窗口上。</p>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QShortcut *shortcut = <span class="keyword">new</span> <span class="built_in">QShortcut</span>(<span class="built_in">QKeySequence</span>(<span class="string">&quot;Ctrl+S&quot;</span>), <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>意思是：在 this 这个窗口/控件中注册 Ctrl+S 快捷键</p>
+<p>但是此时只是创建了快捷键，还没说触发后要干什么。</p>
+<p>所以还要：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">connect</span>(shortcut, &amp;QShortcut::activated, <span class="keyword">this</span>, &amp;MyWidget::save);</span><br></pre></td></tr></table></figure>
+<p>意思是：当 Ctrl+S 被按下时，调用 save()</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="4-定时器事件与随机数"><a href="#4-定时器事件与随机数" class="headerlink" title="4 定时器事件与随机数"></a>4 定时器事件与随机数</h2><blockquote>
+<p><code>QTimerEvent</code>类用来描述一个定时器事件。</p>
+<p><code>QRandomGenerator</code>类用来实现随机数的生成。</p>
+</blockquote>
+<h3 id="4-1-timerEvent函数"><a href="#4-1-timerEvent函数" class="headerlink" title="4.1 timerEvent函数"></a>4.1 timerEvent函数</h3><ul>
+<li><strong>QObject的子类都可以启动定时器。</strong></li>
+</ul>
+<p>核心函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">startTimer</span><span class="params">(<span class="type">int</span> interval)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">killTimer</span><span class="params">(<span class="type">int</span> id)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">timerEvent</span><span class="params">(QTimerEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>其中：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">interval 是时间间隔，单位是毫秒</span><br><span class="line">1000 ms = 1 秒</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyWidget</span> : <span class="keyword">public</span> QWidget</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MyWidget</span><span class="params">(QWidget *parent = <span class="literal">nullptr</span>)</span> : QWidget(parent)</span></span><br><span class="line"><span class="function">    &#123;</span></span><br><span class="line">        timerId = <span class="built_in">startTimer</span>(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">timerEvent</span><span class="params">(QTimerEvent *event)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (event-&gt;<span class="built_in">timerId</span>() == timerId) &#123;</span><br><span class="line">            <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;每秒执行一次&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> timerId = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>含义是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">构造函数里启动一个 1000ms 的定时器；</span><br><span class="line">之后每隔 1 秒，Qt 会自动调用 timerEvent()。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: 为什么有timerId?</p>
+<p>A: 因为一个对象可以启动多个定时器。</p>
+<p>startTimer() 返回 id<br>killTimer(id) 停止对应定时器</p>
+</blockquote>
+<h3 id="4-2-QTimer"><a href="#4-2-QTimer" class="headerlink" title="4.2 QTimer"></a>4.2 QTimer</h3><p>实际项目里更多用<code>QTimer</code>类。它是一个 QObject 子类，可以发出 <code>timeout()</code> 信号。</p>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">QTimer *timer = <span class="keyword">new</span> <span class="built_in">QTimer</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">connect</span>(timer, &amp;QTimer::timeout, <span class="keyword">this</span>, [=]() &#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;每秒执行一次&quot;</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">timer-&gt;<span class="built_in">start</span>(<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+<p>含义：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">每隔 1000ms，timer 发出 timeout() 信号；</span><br><span class="line">然后执行 lambda 里的代码。</span><br></pre></td></tr></table></figure>
+<p>这个写法比 <code>timerEvent()</code> 更直观。</p>
+<h3 id="4-3-单次定时器"><a href="#4-3-单次定时器" class="headerlink" title="4.3 单次定时器"></a>4.3 单次定时器</h3><p>如果只想延迟执行一次，可以用<code>singleShot</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QTimer::<span class="built_in">singleShot</span>(<span class="number">3000</span>, <span class="keyword">this</span>, [=]() &#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;3秒后执行一次&quot;</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">弹出提示后 3 秒自动隐藏</span><br><span class="line">保存成功提示延迟消失</span><br><span class="line">等待动画播放完再切换状态</span><br></pre></td></tr></table></figure>
+<h3 id="4-4-随机数"><a href="#4-4-随机数" class="headerlink" title="4.4 随机数"></a>4.4 随机数</h3><p>Qt 里常用<code>QRandomGenerator</code>类。</p>
+<p>包含头文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QRandomGenerator&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>生成一个随机整数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> value = QRandomGenerator::<span class="built_in">global</span>()-&gt;<span class="built_in">bounded</span>(<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<p>含义：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">生成 [0, 100) 之间的整数</span><br><span class="line">也就是 0 到 99</span><br></pre></td></tr></table></figure>
+<p>生成指定范围：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> value = QRandomGenerator::<span class="built_in">global</span>()-&gt;<span class="built_in">bounded</span>(<span class="number">10</span>, <span class="number">21</span>);</span><br></pre></td></tr></table></figure>
+<p>含义：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">生成 [10, 21) 之间的整数</span><br><span class="line">也就是 10 到 20</span><br></pre></td></tr></table></figure>
+<h2 id="5-拖放事件"><a href="#5-拖放事件" class="headerlink" title="5 拖放事件"></a>5 拖放事件</h2><blockquote>
+<p>Qt提供了强大的拖放机制<code>Drag and Drop</code>。</p>
+</blockquote>
+<p>拖放事件的核心是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户把一个东西拖到窗口上</span><br><span class="line">Qt 产生拖放相关事件</span><br><span class="line">窗口决定“接不接收”</span><br><span class="line">如果接收，就在 dropEvent() 里处理数据</span><br></pre></td></tr></table></figure>
+<p>比如你把一个图片文件拖到桌宠窗口上，可以实现：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">拖入图片 → 导入宠物资源</span><br><span class="line">拖入 zip → 导入角色包</span><br><span class="line">拖入 txt → 读取文本</span><br><span class="line">拖入文件到聊天框 → 作为附件/路径处理</span><br></pre></td></tr></table></figure>
+<p>最常用的事件函数是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dragEnterEvent</span><span class="params">(QDragEnterEvent *event)</span> <span class="keyword">override</span></span>; <span class="comment">// 拖拽进入窗口</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dragMoveEvent</span><span class="params">(QDragMoveEvent *event)</span> <span class="keyword">override</span></span>;   <span class="comment">// 拖拽在窗口内移动</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dragLeaveEvent</span><span class="params">(QDragLeaveEvent *event)</span> <span class="keyword">override</span></span>; <span class="comment">// 拖拽离开窗口</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dropEvent</span><span class="params">(QDropEvent *event)</span> <span class="keyword">override</span></span>;           <span class="comment">// 松手放下</span></span><br></pre></td></tr></table></figure>
+<p>不过在使用前，必须先开启接收拖放：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setAcceptDrops</span>(<span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>否则窗口不会收到拖放事件。</p>
+<h3 id="5-1-MIME类型"><a href="#5-1-MIME类型" class="headerlink" title="5.1 MIME类型"></a>5.1 MIME类型</h3><blockquote>
+<p>拖放数据通常通过<strong>MIME</strong>格式描述。Qt 使用<code>QMimeData</code>保存拖放数据，例如文本、URL、图片等。</p>
+</blockquote>
+<p>一个最简单的“拖入文件并输出路径”的例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDragEnterEvent&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDropEvent&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QMimeData&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QUrl&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DropWidget</span> : <span class="keyword">public</span> QWidget</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">DropWidget</span><span class="params">(QWidget *parent = <span class="literal">nullptr</span>)</span> : QWidget(parent)</span></span><br><span class="line"><span class="function">    &#123;</span></span><br><span class="line">        <span class="built_in">setAcceptDrops</span>(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dragEnterEvent</span><span class="params">(QDragEnterEvent *event)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">hasUrls</span>()) &#123;</span><br><span class="line">            event-&gt;<span class="built_in">acceptProposedAction</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            event-&gt;<span class="built_in">ignore</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">dropEvent</span><span class="params">(QDropEvent *event)</span> <span class="keyword">override</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">const</span> QList&lt;QUrl&gt; urls = event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">urls</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> QUrl &amp;url : urls) &#123;</span><br><span class="line">            QString path = url.<span class="built_in">toLocalFile</span>();</span><br><span class="line">            <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;拖入文件：&quot;</span> &lt;&lt; path;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        event-&gt;<span class="built_in">acceptProposedAction</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这里最关键的是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">mimeData</span>()</span><br></pre></td></tr></table></figure>
+<p>拖进来的数据都放在 <code>QMimeData</code> 里面。它可能包含：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">hasUrls</span>();   <span class="comment">// 文件路径/URL</span></span><br><span class="line">event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">hasText</span>();   <span class="comment">// 文本</span></span><br><span class="line">event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">hasImage</span>();  <span class="comment">// 图片数据</span></span><br></pre></td></tr></table></figure>
+<h3 id="5-2-拖放事件的流程"><a href="#5-2-拖放事件的流程" class="headerlink" title="5.2 拖放事件的流程"></a>5.2 拖放事件的流程</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">拖着文件进入窗口</span><br><span class="line">        ↓</span><br><span class="line">dragEnterEvent()</span><br><span class="line">        ↓</span><br><span class="line">如果 accept，Qt 才允许继续拖放</span><br><span class="line">        ↓</span><br><span class="line">用户松手</span><br><span class="line">        ↓</span><br><span class="line">dropEvent()</span><br><span class="line">        ↓</span><br><span class="line">读取 mimeData() 并处理</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>所以 <code>dragEnterEvent()</code> 的作用不是处理文件，而是告诉 Qt：这个东西我能接收。</p>
+</li>
+<li><p>真正处理数据一般在：dropEvent()里面。</p>
+</li>
+</ul>
+<p>例题：拖入文件导入资源。比如只接受图片：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::dragEnterEvent</span><span class="params">(QDragEnterEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">hasUrls</span>()) &#123;</span><br><span class="line">        event-&gt;<span class="built_in">ignore</span>();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">const</span> QList&lt;QUrl&gt; urls = event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">urls</span>();</span><br><span class="line">    <span class="keyword">if</span> (urls.<span class="built_in">isEmpty</span>()) &#123;</span><br><span class="line">        event-&gt;<span class="built_in">ignore</span>();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QString path = urls.<span class="built_in">first</span>().<span class="built_in">toLocalFile</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (path.<span class="built_in">endsWith</span>(<span class="string">&quot;.png&quot;</span>, Qt::CaseInsensitive) ||</span><br><span class="line">        path.<span class="built_in">endsWith</span>(<span class="string">&quot;.jpg&quot;</span>, Qt::CaseInsensitive) ||</span><br><span class="line">        path.<span class="built_in">endsWith</span>(<span class="string">&quot;.gif&quot;</span>, Qt::CaseInsensitive)) &#123;</span><br><span class="line">        event-&gt;<span class="built_in">acceptProposedAction</span>();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        event-&gt;<span class="built_in">ignore</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: 这个event被ignore了会怎么样？</p>
+<p>A: 在 <code>dragEnterEvent()</code> 里调用</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">ignore</span>();</span><br><span class="line"><span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+<p>就是告诉 Qt：这个拖进来的东西我不接收。</p>
+<p>于是通常表现为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">鼠标光标会变成禁止拖放的样子</span><br><span class="line">用户松开鼠标时不会触发有效 drop</span><br><span class="line">你的 dropEvent() 通常也不会被调用</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>然后在 <code>dropEvent()</code> 里真正导入：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PetWidget::dropEvent</span><span class="params">(QDropEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">const</span> QList&lt;QUrl&gt; urls = event-&gt;<span class="built_in">mimeData</span>()-&gt;<span class="built_in">urls</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">const</span> QUrl &amp;url : urls) &#123;</span><br><span class="line">        QString path = url.<span class="built_in">toLocalFile</span>();</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;准备导入图片：&quot;</span> &lt;&lt; path;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    event-&gt;<span class="built_in">acceptProposedAction</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-事件过滤器与事件的发送"><a href="#6-事件过滤器与事件的发送" class="headerlink" title="6 事件过滤器与事件的发送"></a>6 事件过滤器与事件的发送</h2><blockquote>
+<p>Qt中提供了事件过滤器，来实现在一个部件中监控其它多个部件的事件。</p>
+</blockquote>
+<ul>
+<li>事件过滤器是什么</li>
+</ul>
+<p>正常情况下，一个事件会直接送到目标对象。</p>
+<p>比如用户点击 <code>QLineEdit</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">鼠标点击</span><br><span class="line">  ↓</span><br><span class="line">QLineEdit 收到 mousePressEvent()</span><br></pre></td></tr></table></figure>
+<p>但如果安装了事件过滤器，流程会变成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">鼠标点击</span><br><span class="line">  ↓</span><br><span class="line">事件过滤器先看到这个事件</span><br><span class="line">  ↓</span><br><span class="line">过滤器决定：放行 / 拦截</span><br><span class="line">  ↓</span><br><span class="line">如果放行，QLineEdit 再处理</span><br></pre></td></tr></table></figure>
+<h3 id="6-1-事件过滤器的基本写法"><a href="#6-1-事件过滤器的基本写法" class="headerlink" title="6.1 事件过滤器的基本写法"></a>6.1 事件过滤器的基本写法</h3><p>事件过滤器函数是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">eventFilter</span><span class="params">(QObject *watched, QEvent *event)</span> <span class="keyword">override</span></span>;</span><br></pre></td></tr></table></figure>
+<p>通常写在父窗口类里。</p>
+<p>例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyWidget</span> : <span class="keyword">public</span> QWidget</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MyWidget</span><span class="params">(QWidget *parent = <span class="literal">nullptr</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">eventFilter</span><span class="params">(QObject *watched, QEvent *event)</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    QLineEdit *edit = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>构造函数里<strong>安装</strong>过滤器：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MyWidget::<span class="built_in">MyWidget</span>(QWidget *parent) : <span class="built_in">QWidget</span>(parent)</span><br><span class="line">&#123;</span><br><span class="line">    edit = <span class="keyword">new</span> <span class="built_in">QLineEdit</span>(<span class="keyword">this</span>);</span><br><span class="line">    edit-&gt;<span class="built_in">installEventFilter</span>(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这句：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edit-&gt;<span class="built_in">installEventFilter</span>(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>意思是：让 this 帮 edit 过滤事件。</p>
+<p>之后，<code>edit</code> 收到事件前，<code>this-&gt;eventFilter(...)</code> 会先被调用。</p>
+<p>例子：拦截 <code>QLineEdit</code> 的 Enter 键。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">MyWidget::eventFilter</span><span class="params">(QObject *watched, QEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (watched == edit &amp;&amp; event-&gt;<span class="built_in">type</span>() == QEvent::KeyPress) &#123;</span><br><span class="line">        QKeyEvent *keyEvent = <span class="built_in">static_cast</span>&lt;QKeyEvent *&gt;(event);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (keyEvent-&gt;<span class="built_in">key</span>() == Qt::Key_Return || keyEvent-&gt;<span class="built_in">key</span>() == Qt::Key_Enter) &#123;</span><br><span class="line">            <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;在事件过滤器中拦截 Enter&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> QWidget::<span class="built_in">eventFilter</span>(watched, event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里有几个关键点。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watched == edit</span><br></pre></td></tr></table></figure>
+<p>表示：这个事件是不是来自 <code>edit</code>。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">event-&gt;<span class="built_in">type</span>() == QEvent::KeyPress</span><br></pre></td></tr></table></figure>
+<p>表示：这个事件是不是键盘按下事件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">static_cast</span>&lt;QKeyEvent *&gt;(event)</span><br></pre></td></tr></table></figure>
+<p>表示：既然已经确认它是 <code>KeyPress</code>，就把通用的 <code>QEvent *</code> 转成更具体的 <code>QKeyEvent *</code>，这样才能调用 <code>key()</code>。</p>
+<h3 id="6-2-return-true-和-return-false-的区别"><a href="#6-2-return-true-和-return-false-的区别" class="headerlink" title="6.2 return true 和 return false 的区别"></a>6.2 return true 和 return false 的区别</h3><p>这是事件过滤器最重要的地方。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>表示：事件被拦截了，不再交给原来的对象处理。</p>
+<p>也就是说，<code>edit</code> 不会再收到这个 Enter 键事件。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> QWidget::<span class="built_in">eventFilter</span>(watched, event);</span><br></pre></td></tr></table></figure>
+<p>表示：不拦截，继续交给原来的对象处理。</p>
+<blockquote>
+<p>Q: 事件过滤器的典型用途?</p>
+<p>A: 它适合这种场景：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">不想继承某个控件，但想监听它的事件。</span><br><span class="line">想统一监听多个控件的事件。</span><br><span class="line">想在事件到达控件之前提前处理。</span><br><span class="line">想让父窗口管理子控件的一些特殊行为。</span><br></pre></td></tr></table></figure>
+<p>比如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">监听多个输入框的 Enter 键。</span><br><span class="line">鼠标进入某个控件时改变样式。</span><br><span class="line">拦截 Esc 键关闭弹窗。</span><br><span class="line">在 QTextEdit 中实现 Enter 发送、Shift+Enter 换行。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="6-3-事件的发送"><a href="#6-3-事件的发送" class="headerlink" title="6.3 事件的发送"></a>6.3 事件的发送</h3><p>事件发送指的是：程序主动创建一个事件，然后发给某个对象。</p>
+<p>常见函数有两个：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">bool</span> <span class="title">QCoreApplication::sendEvent</span><span class="params">(QObject *receiver, QEvent *event)</span></span>;</span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">QCoreApplication::postEvent</span><span class="params">(QObject *receiver, QEvent *event)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>它们区别很重要。</p>
+<h4 id="6-3-1-sendEvent"><a href="#6-3-1-sendEvent" class="headerlink" title="6.3.1 sendEvent"></a>6.3.1 sendEvent</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">QKeyEvent <span class="title">event</span><span class="params">(QEvent::KeyPress, Qt::Key_A, Qt::NoModifier, <span class="string">&quot;a&quot;</span>)</span></span>;</span><br><span class="line">QCoreApplication::<span class="built_in">sendEvent</span>(edit, &amp;event);</span><br></pre></td></tr></table></figure>
+<p>意思是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">立刻把这个键盘事件发给 edit。</span><br><span class="line">sendEvent 会同步执行，等事件处理完才返回。</span><br></pre></td></tr></table></figure>
+<p>可以理解为：现在就送，现在就处理。</p>
+<h4 id="6-3-2-postEvent"><a href="#6-3-2-postEvent" class="headerlink" title="6.3.2 postEvent"></a>6.3.2 postEvent</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">QKeyEvent *event = <span class="keyword">new</span> <span class="built_in">QKeyEvent</span>(QEvent::KeyPress, Qt::Key_A, Qt::NoModifier, <span class="string">&quot;a&quot;</span>);</span><br><span class="line">QCoreApplication::<span class="built_in">postEvent</span>(edit, event);</span><br></pre></td></tr></table></figure>
+<p>意思是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">把事件放进 Qt 事件队列。</span><br><span class="line">等事件循环有空时再处理。</span><br></pre></td></tr></table></figure>
+<p>可以理解为：先排队，稍后处理。</p>
+<p>注意：<code>postEvent()</code> 传进去的事件一般要用 <code>new</code> 创建，因为 Qt 之后会接管并删除它。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/06/13/Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F/">http://example.com/2026/06/13/Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/" title="Qt 布局管理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Qt 布局管理</div></div><div class="info-2"><div class="info-item-1">Qt 布局管理 Qt 主要提供了 QLayout 类及其子类来作为布局管理器。QLayout 类继承于 QObject 类与 QLayoutItem 类。  [TOC] 1 布局管理系统 所有 QWidget 的子类对象都可以使用布局管理器管理位于它们之中的子部件，QWidget::setLayout可以在一个部件上应用布局管理器。  在一个部件上设置了布局管理器，可以完成如下功能： 12345定位子部件感知窗口默认大小感知窗口最小大小窗口大小变化时进行处理当内容改变时自动更新 1.1 简介QLayout 是布局管理器的基类，它是一个抽象类，继承于 QObject 类和 Q LayoutItem 类。QLayout 有几个子类：QBoxLayout (基本布局管理器)QGridLayout (栅格布局管理器)QFormLayout (窗体布局管理器)QStackedLayout (栈布局管理器)其中QStackedLayout与上一讲的QStackedWidget用法相似，不再讲述。 1.2 基本布局管理器QBoxLayout可以使子部件在水平方向或者垂直方向排成一列。它将所有空...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-text">Qt 事件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Qt%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6"><span class="toc-text">1 Qt中的事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-text">1.1 事件的处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="toc-text">1.1.1 事件处理函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-text">1.1.2 事件的处理流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-accept%E5%92%8Cignore"><span class="toc-text">1.1.3 accept和ignore</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BA%8B%E4%BB%B6%E7%9A%84%E4%BC%A0%E9%80%92"><span class="toc-text">1.2 事件的传递</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E4%BA%8B%E4%BB%B6%E7%9A%84%E4%BC%A0%E9%80%92"><span class="toc-text">1.2.1 事件的传递</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-event-%E5%87%BD%E6%95%B0"><span class="toc-text">1.2.2 event()函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6%E5%92%8C%E6%BB%9A%E8%BD%AE%E4%BA%8B%E4%BB%B6"><span class="toc-text">2 鼠标事件和滚轮事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E9%BC%A0%E6%A0%87%E6%8C%89%E4%B8%8B%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.1 鼠标按下事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E9%BC%A0%E6%A0%87%E7%A7%BB%E5%8A%A8%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.2 鼠标移动事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%BC%A0%E6%A0%87%E9%87%8A%E6%94%BE%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.3 鼠标释放事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E9%BC%A0%E6%A0%87%E5%8F%8C%E5%87%BB%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.4 鼠标双击事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95"><span class="toc-text">2.5 右键菜单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E6%BB%9A%E8%BD%AE%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.6 滚轮事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E5%B8%B8%E7%94%A8%E6%9E%9A%E4%B8%BE"><span class="toc-text">2.7 常用枚举</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="toc-text">3 键盘事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%A4%BA%E4%BE%8B"><span class="toc-text">3.1 示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-key-%E5%92%8C-text"><span class="toc-text">3.2 key() 和 text()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%88%A4%E6%96%AD%E7%BB%84%E5%90%88%E9%94%AE"><span class="toc-text">3.3 判断组合键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E8%AE%A9-QWidget-%E6%8E%A5%E6%94%B6%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6"><span class="toc-text">3.4 让 QWidget 接收键盘事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%8C%89%E9%94%AE%E8%87%AA%E5%8A%A8%E9%87%8D%E5%A4%8D"><span class="toc-text">3.5 按键自动重复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-keyPressEvent-%E5%92%8C%E5%BF%AB%E6%8D%B7%E9%94%AE%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">3.6 keyPressEvent() 和快捷键系统的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%9A%E6%97%B6%E5%99%A8%E4%BA%8B%E4%BB%B6%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="toc-text">4 定时器事件与随机数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-timerEvent%E5%87%BD%E6%95%B0"><span class="toc-text">4.1 timerEvent函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-QTimer"><span class="toc-text">4.2 QTimer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%8D%95%E6%AC%A1%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-text">4.3 单次定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="toc-text">4.4 随机数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8B%96%E6%94%BE%E4%BA%8B%E4%BB%B6"><span class="toc-text">5 拖放事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-MIME%E7%B1%BB%E5%9E%8B"><span class="toc-text">5.1 MIME类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%8B%96%E6%94%BE%E4%BA%8B%E4%BB%B6%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="toc-text">5.2 拖放事件的流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BA%8B%E4%BB%B6%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%8E%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%8F%91%E9%80%81"><span class="toc-text">6 事件过滤器与事件的发送</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E4%BA%8B%E4%BB%B6%E8%BF%87%E6%BB%A4%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%86%99%E6%B3%95"><span class="toc-text">6.1 事件过滤器的基本写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-return-true-%E5%92%8C-return-false-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">6.2 return true 和 return false 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%8F%91%E9%80%81"><span class="toc-text">6.3 事件的发送</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-1-sendEvent"><span class="toc-text">6.3.1 sendEvent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-2-postEvent"><span class="toc-text">6.3.2 postEvent</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/13/Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="Qt 事件系统">Qt 事件系统</a><time datetime="2026-06-13T15:15:49.000Z" title="Created 2026-06-13 23:15:49">2026-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/" title="Qt 布局管理">Qt 布局管理</a><time datetime="2026-06-03T11:17:46.000Z" title="Created 2026-06-03 19:17:46">2026-06-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/31/DesktopPet%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/" title="DesktopPet用户手册">DesktopPet用户手册</a><time datetime="2026-05-31T12:43:25.000Z" title="Created 2026-05-31 20:43:25">2026-05-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/27/Qt-%E7%AA%97%E5%8F%A3%E9%83%A8%E4%BB%B6/" title="Qt 窗口部件">Qt 窗口部件</a><time datetime="2026-05-27T11:58:05.000Z" title="Created 2026-05-27 19:58:05">2026-05-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/08/20260508/" title="20260508">20260508</a><time datetime="2026-05-08T15:19:12.000Z" title="Created 2026-05-08 23:19:12">2026-05-08</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
