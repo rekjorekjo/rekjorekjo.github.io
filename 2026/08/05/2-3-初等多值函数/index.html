@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2.3_初等多值函数 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="2.3 初等多值函数[TOC] 单叶性 定义：设 $f(z)$ 在区域 $D$ 内有定义，且对任意 $z_1\neq z_2$，$z_1,z_2\in D$，都有 $f(z_1)\neq f(z_2)$，则称 $f(z)$ 在 $D$ 内是单叶的，并称 $D$ 为 $f(z)$ 的单叶性区域。  辐角函数与辐角改变量$w&#x3D;\operatorname{Arg}z$ 是辐角函数，其定义域为 $\mat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.3_初等多值函数">
+<meta property="og:url" content="http://example.com/2026/08/05/2-3-%E5%88%9D%E7%AD%89%E5%A4%9A%E5%80%BC%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2.3 初等多值函数[TOC] 单叶性 定义：设 $f(z)$ 在区域 $D$ 内有定义，且对任意 $z_1\neq z_2$，$z_1,z_2\in D$，都有 $f(z_1)\neq f(z_2)$，则称 $f(z)$ 在 $D$ 内是单叶的，并称 $D$ 为 $f(z)$ 的单叶性区域。  辐角函数与辐角改变量$w&#x3D;\operatorname{Arg}z$ 是辐角函数，其定义域为 $\mat">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-08-05T06:09:41.000Z">
+<meta property="article:modified_time" content="2026-08-05T06:15:01.970Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2.3_初等多值函数",
+  "url": "http://example.com/2026/08/05/2-3-%E5%88%9D%E7%AD%89%E5%A4%9A%E5%80%BC%E5%87%BD%E6%95%B0/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-08-05T06:09:41.000Z",
+  "dateModified": "2026-08-05T06:15:01.970Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/08/05/2-3-%E5%88%9D%E7%AD%89%E5%A4%9A%E5%80%BC%E5%87%BD%E6%95%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2.3_初等多值函数',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">2.3_初等多值函数</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">2.3_初等多值函数</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-08-05T06:09:41.000Z" title="Created 2026-08-05 14:09:41">2026-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-05T06:15:01.970Z" title="Updated 2026-08-05 14:15:01">2026-08-05</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>4mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="2-3-初等多值函数"><a href="#2-3-初等多值函数" class="headerlink" title="2.3 初等多值函数"></a>2.3 初等多值函数</h1><p>[TOC]</p>
+<h2 id="单叶性"><a href="#单叶性" class="headerlink" title="单叶性"></a>单叶性</h2><blockquote>
+<p><strong>定义：</strong>设 $f(z)$ 在区域 $D$ 内有定义，且对任意 $z_1\neq z_2$，$z_1,z_2\in D$，都有 $f(z_1)\neq f(z_2)$，则称 $f(z)$ 在 $D$ 内是<strong>单叶的</strong>，并称 $D$ 为 $f(z)$ 的<strong>单叶性区域</strong>。</p>
+</blockquote>
+<h2 id="辐角函数与辐角改变量"><a href="#辐角函数与辐角改变量" class="headerlink" title="辐角函数与辐角改变量"></a>辐角函数与辐角改变量</h2><p>$w=\operatorname{Arg}z$ 是辐角函数，其定义域为 $\mathbb C\setminus\{0\}$。</p>
+<p>沿曲线 $L$ 的辐角改变量记为 $\Delta_L\operatorname{Arg}z$，约定<strong>逆时针为正</strong>。</p>
+<p>尽管曲线的起点、终点相同，但若曲线不同、绕原点的圈数不同，则 $\Delta_L\operatorname{Arg}z$ 也不同，彼此可相差 $2k\pi$（其中 $k\in\mathbb Z$）。</p>
+<p>若曲线 $L_0$ 不通过原点，并可在 $\mathbb C\setminus\{0\}$ 内连续变形为曲线 $L_1$，则在连续变化的过程中，辐角改变量不能发生 $2k\pi$ 的跳跃，只能保持原值。因此</p>
+<script type="math/tex; mode=display">
+\Delta_{L_0}\operatorname{Arg}z=\Delta_{L_1}\operatorname{Arg}z</script><p>若 $L_0,L_1$ 在 $\mathbb C\setminus\{0\}$ 内可连续变形，则称它们<strong>同伦</strong>，记为 $L_0\sim L_1$。</p>
+<ul>
+<li>特别地，若 $L_0$ 为一个点，则 $\Delta_{L_0}\operatorname{Arg}z=0$。</li>
+</ul>
+<p>由于 $\mathbb C\setminus\{0\}$ 上任一不绕原点的简单闭曲线都能连续收缩到一点 $P$，即 $L_0\sim P$。</p>
+<p>因此，$\forall L\subset \mathbb C\setminus\{0\}$，有</p>
+<script type="math/tex; mode=display">
+\Delta_L\operatorname{Arg}z=
+\begin{cases}
+0, & 0\text{ 在 }L\text{ 外部},\\[4pt]
+2\pi, & 0\text{ 在 }L\text{ 内部}
+\end{cases}</script><blockquote>
+<p><strong>拓扑前置知识</strong></p>
+<ul>
+<li><strong>道路（路径）：</strong>区域 $D$ 中的道路是连续映射 $\gamma:[0,1]\to D$。若 $\gamma(0)=\gamma(1)$，则称为<strong>闭路</strong>。</li>
+<li><strong>同伦：</strong>两条道路 $\gamma_0,\gamma_1:[0,1]\to D$ 若存在连续映射 $H:[0,1]\times[0,1]\to D$，满足 $H(0,t)=\gamma_0(t)$、$H(1,t)=\gamma_1(t)$，则称二者在 $D$ 内同伦。讨论固定端点的道路时，还要求 $H(s,0)$ 与 $H(s,1)$ 在变形中保持不动。</li>
+<li><strong>收缩（零伦）：</strong>闭路 $\gamma$ 若与某个常值道路 $\gamma_<em>(t)\equiv z_</em>$ 同伦，则称 $\gamma$ 在 $D$ 内<strong>可收缩到一点</strong>，也称 $\gamma$ 是<strong>零伦的</strong>。即存在连续映射 $H:[0,1]^2\to D$，使 $H(0,t)=\gamma(t)$、$H(1,t)=z_*$，且每个 $s$ 下都有 $H(s,0)=H(s,1)$。</li>
+<li><strong>单连通：</strong>道路连通区域 $D$ 中的每一条闭路都能在 $D$ 内收缩到一点时，称 $D$ 为单连通区域。</li>
+<li>在 $\mathbb C\setminus\{0\}$ 中，绕原点非零圈的闭路不能收缩到一点；辐角改变量为 $0$ 的闭路才可能与常值道路同伦。</li>
+</ul>
+</blockquote>
+<h2 id="辐角的单值连续分支"><a href="#辐角的单值连续分支" class="headerlink" title="辐角的单值连续分支"></a>辐角的单值连续分支</h2><p>设 $L$ 是 $\mathbb C\setminus\{0\}$ 内的一条简单曲线，$z_0$ 是 $L$ 的起点，$z$ 是终点。在 $z_0$ 处取定 $\arg z_0$ 的一个值，作为 $\operatorname{Arg}z$ 在 $z_0$ 处的初值，则终点处的值为</p>
+<script type="math/tex; mode=display">
+\operatorname{Arg}z=\arg z_0+\Delta_L\operatorname{Arg}z</script><p>记 $G=\mathbb C\setminus(-\infty,0]$，即从 $z$ 平面中去掉负实轴。对 $G$ 内任一简单闭曲线 $L$，有 $L\sim P$，从而有 $\Delta_L\operatorname{Arg}z=0$。</p>
+<p>因此，在 $G$ 内沿任意简单曲线的辐角改变量只与起点、终点有关。由此可在 $G$ 内定义无穷多个单值连续函数</p>
+<script type="math/tex; mode=display">
+\boxed{\arg_k z=\arg_0 z+2k\pi,\quad z\in G,\quad k\in\mathbb Z}</script><p>例如可取 $\arg_0z\in(-\pi,\pi)$，并令 $\arg_0(1)=0$，$\arg_0(i)=\dfrac\pi2$。于是 $\{\arg_k z\}$ 是一单值连续函数簇。</p>
+<ul>
+<li>简单证明一下 $L\sim P$。</li>
+</ul>
+<p>设 $z=re^{i\theta}$，并将曲线参数化为 $z(t)=r(t)e^{i\theta(t)}$。令</p>
+<script type="math/tex; mode=display">
+H(s,t)=r(t)^{1-s}e^{i(1-s)\theta(t)},\qquad 0\leq s\leq1</script><p>则 $H(0,t)=z(t)$，$H(1,t)=1$。又因为 $|H(s,t)|=|r(t)|^{1-s}&gt;0$，所以变形过程中不通过原点。因此 $L\sim1$，即 $L$ 在该区域内可以收缩成一个点。</p>
+<h2 id="根式函数"><a href="#根式函数" class="headerlink" title="根式函数"></a>根式函数</h2><p>$w=\sqrt[n]{z}$ 是映射 $z=w^n$ 的反函数，其中 $n&gt;1$、$n\in\mathbb N$，并可写为</p>
+<script type="math/tex; mode=display">
+w=\sqrt[n]{|z|}\,e^{i\frac{\operatorname{Arg}z}{n}}</script><p>对于每一个 $z\neq0,\infty$，在 $w$ 平面上有 $n$ 个像，它们是以原点为中心的正 $n$ 边形的顶点。</p>
+<p>因此 $w=\sqrt[n]{z}$ 是 $n$ 值函数。</p>
+<p>设 $z=re^{i\theta}$，$w=\rho e^{i\varphi}$，则 $r=\rho^n$，$\theta=n\varphi$。</p>
+<p>将 $w$ 平面分成 $n$ 个角形区域</p>
+<script type="math/tex; mode=display">
+T_k:\quad \frac{2k\pi}{n}-\frac\pi n<\varphi<\frac{2k\pi}{n}+\frac\pi n,
+\qquad k=0,1,\ldots,n-1,</script><p>各区域可映到割去负实轴的 $z$ 平面区域 $G$。</p>
+<p><img src="/images/2026080501.png" alt=""></p>
+<p>在 $G$ 内可定义</p>
+<script type="math/tex; mode=display">
+\boxed{w_k(z)=\sqrt[n]{r(z)}\,e^{i\frac{\theta(z)+2k\pi}{n}},
+\qquad z\in G,\quad k=0,1,\ldots,n-1}</script><p>这 $n$ 个函数称为 $\sqrt[n]{z}$ 的 $n$ 个<strong>单值连续分支</strong>。</p>
+<blockquote>
+<p>设 $F(z)$ 是区域 $G$ 内的多值函数，$f(z)$ 是 $G$ 内的单值连续解析函数。若对 $G$ 内任一点 $z$ 都有 $f(z)\in F(z)$，则称 $f(z)$ 为 $F(z)$ 在 $G$ 内的一个<strong>单值连续解析分支</strong>。</p>
+</blockquote>
+<h2 id="支点与支割线"><a href="#支点与支割线" class="headerlink" title="支点与支割线"></a>支点与支割线</h2><blockquote>
+<p>当 $z$ 绕某点一整圈回到原来的位置，而函数值没有回到原来的值时，称该点为多值函数的<strong>支点</strong>。</p>
+</blockquote>
+<p>例如，$w=\sqrt[n]{z}$ 的支点为 $z=0$ 与 $z=\infty$。</p>
+<blockquote>
+<p>用来割开 $z$ 平面、分出根式函数单值解析分支的曲线称为<strong>支割线</strong>。</p>
+</blockquote>
+<p>支割线不唯一。通常取负实轴为支割线，并把在正实轴上取正实值的分支称为<strong>主值支</strong>。</p>
+<blockquote>
+<p><strong>例 2.18</strong>　设 $w=\sqrt[3]{z}$ 定义在从原点沿负实轴割开的 $z$ 平面上，且 $w(i)=-i$，求 $w(-i)$。</p>
+</blockquote>
+<p><strong>解</strong>　$r(i)=1$，$\theta(i)=\dfrac\pi2$。</p>
+<p>由 $-i=e^{i(\frac\pi2+2k\pi)/3}$ 得 $k=2$。</p>
+<p>又 $r(-i)=1$，$\theta(-i)=-\dfrac\pi2$，所以在同一分支上</p>
+<script type="math/tex; mode=display">
+w(-i)=e^{i\frac{-\frac\pi2+4\pi}{3}}=e^{i\frac{7\pi}{6}}</script><h2 id="复对数函数"><a href="#复对数函数" class="headerlink" title="复对数函数"></a>复对数函数</h2><p>由 $e^w=z$ 得到 $w=\operatorname{Ln}z$。若 $z=re^{i\theta}$，则</p>
+<script type="math/tex; mode=display">
+\operatorname{Ln}(re^{i\theta})
+=\ln r+i(\theta+2k\pi)
+=\ln|z|+i\operatorname{Arg}z
+=\ln|z|+i(\arg z+2k\pi),\qquad k\in\mathbb Z</script><p>当 $-\pi&lt;\arg z\leq\pi$ 时，记主值为</p>
+<script type="math/tex; mode=display">
+\boxed{\ln z=\ln|z|+i\arg z}</script><blockquote>
+<p><strong>例 2.19</strong>　设 $a&gt;0$，写出 $\operatorname{Ln}a$、$\operatorname{Ln}(-a)$ 及其主值。</p>
+</blockquote>
+<p><strong>解</strong>　$\operatorname{Ln}a=\ln a+i2k\pi$，其主值为 $\ln a$；而 $\operatorname{Ln}(-a)=\ln a+i(2k+1)\pi$，其主值为 $\ln(-a)=\ln a+\pi i$。因此</p>
+<script type="math/tex; mode=display">
+\operatorname{Ln}(-1)=(2k+1)\pi i,\quad
+\operatorname{ln}(-1)=\pi i,\\
+\operatorname{Ln}(-e)=1+(2k+1)\pi i,\quad
+\ln(-e)=1+\pi i</script><h3 id="z-e-w-的变换性质"><a href="#z-e-w-的变换性质" class="headerlink" title="$z=e^w$ 的变换性质"></a>$z=e^w$ 的变换性质</h3><p>设 $z=re^{i\theta}$，$w=u+iv$，则 $r=e^u$，$\theta=v$。</p>
+<ul>
+<li>把 $v=v_0$ 固定，得到射线 $\theta=v_0$；</li>
+<li>把 $u=u_0$ 固定，在 $-\pi&lt;v\leq\pi$ 内得到圆 $r=e^{u_0}$。</li>
+</ul>
+<p>因此，映射 $z=e^w$ 把带形区域 $-\pi&lt;v\leq\pi$ 映到割去负实轴的区域 $G$。更一般地，将带形区域</p>
+<script type="math/tex; mode=display">
+B_k:\quad (2k-1)\pi<v\leq(2k+1)\pi</script><p>映到同一割平面 $G$。</p>
+<ul>
+<li>$w=\operatorname{Ln}z$ 的支点为 $z=0$ 与 $z=\infty$。</li>
+</ul>
+<h2 id="幂函数与指数函数"><a href="#幂函数与指数函数" class="headerlink" title="幂函数与指数函数"></a>幂函数与指数函数</h2><h3 id="幂函数"><a href="#幂函数" class="headerlink" title="幂函数"></a>幂函数</h3><script type="math/tex; mode=display">
+\boxed{w=z^\alpha=e^{\alpha\operatorname{Ln}z}},
+\qquad z\neq0,\infty,\quad \alpha\in\mathbb C</script><p>设 $\operatorname{Ln}z$ 的任一值为 $(\operatorname{Ln}z)_0$，并记 $w_0=e^{\alpha(\operatorname{Ln}z)_0}$，则 $w=w_0e^{2k\pi\alpha i}$。</p>
+<ol>
+<li>若 $\alpha\in\mathbb Z$，则 $w=w_0$，为单值函数。</li>
+<li>若 $\alpha=\dfrac qp$ 且 $(p,q)=1$，则 $w=w_0e^{2k\pi i q/p}$，$k=0,1,\ldots,p-1$，共有 $p$ 个值。</li>
+<li>若 $\alpha\notin\mathbb Q$，则 $w$ 是多值函数，并有无穷多个值。</li>
+</ol>
+<h3 id="指数函数"><a href="#指数函数" class="headerlink" title="指数函数"></a>指数函数</h3><script type="math/tex; mode=display">
+\boxed{w=\alpha^z=e^{z\operatorname{Ln}\alpha}},
+\qquad \alpha\neq0,\infty,\quad \alpha\in\mathbb C</script><blockquote>
+<p><strong>例 2.22</strong>　求 $i^i$。</p>
+</blockquote>
+<p><strong>解</strong>　</p>
+<script type="math/tex; mode=display">
+i^i=e^{i\operatorname{Ln}i}
+=e^{i(\frac\pi2 i+2k\pi i)}
+=e^{-\frac\pi2-2k\pi},\qquad k=0,\pm1,\pm2,\ldots</script><p>其主值为 $\boxed{e^{-\pi/2}}$。</p>
+<blockquote>
+<p><strong>例 2.23</strong>　求 $2^{1+i}$。</p>
+</blockquote>
+<p><strong>解</strong>　</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+2^{1+i}
+&=e^{(1+i)\operatorname{Ln}2}
+=e^{(1+i)(\ln2+2k\pi i)}\\
+&=e^{(\ln2-2k\pi)+(\ln2+2k\pi)i}
+=e^{\ln2-2k\pi}\bigl(\cos\ln2+i\sin\ln2\bigr),
+\end{aligned}</script><p>其中 $k=0,\pm1,\pm2,\ldots$。其主值为 $e^{\ln2}(\cos\ln2+i\sin\ln2)$。</p>
+<h2 id="代数函数的支点"><a href="#代数函数的支点" class="headerlink" title="代数函数的支点"></a>代数函数的支点</h2><p>以 $w=\sqrt[n]{P(z)}$ 为例，设</p>
+<script type="math/tex; mode=display">
+P(z)=A(z-a_1)^{\alpha_1}(z-a_2)^{\alpha_2}\cdots(z-a_m)^{\alpha_m},</script><p>且 $P(z)$ 是 $z$ 的 $N$ 次多项式，其中 $\alpha_1+\alpha_2+\cdots+\alpha_m=N$。</p>
+<ol>
+<li>可能的支点为 $a_1,a_2,\ldots,a_m,\infty$；</li>
+<li>若 $n\nmid\alpha_i$，则 $a_i$ 是支点；</li>
+<li>若 $n\nmid N$，则 $\infty$ 是支点；</li>
+<li>若某些支点对应的指数之和可被 $n$ 整除，则这些支点可以连接成一条割线。</li>
+</ol>
+<p>连接规则：</p>
+<ul>
+<li>每 $n$ 个点连成一条割线；</li>
+<li>每一组支点绕一圈之后，函数回到原值，即这一组支点的指数之和为 $n$ 的倍数。（$n\mid\left(\alpha_{j_1}+\alpha_{j_2}+\cdots+\alpha_{j_m}\right)$）</li>
+</ul>
+<blockquote>
+<p><strong>例</strong>　判断 $w=\sqrt{z(z-1)(z-2)(z-3)(z-4)}$ 与 $w=\sqrt[4]{z(z-1)(z-2)(z-3)(z-4)}$ 的支点。</p>
+</blockquote>
+<p><strong>解</strong>　两者的支点均为 $0,1,2,3,4,\infty$。</p>
+<p>第一个函数可以构造如下割线：从 $0$ 到 $1$ 割开，从 $2$ 到 $3$ 割开，从 $4$ 沿正实轴割开。</p>
+<p>第二个函数可以构造如下割线：从 $0$ 到 $1$ 到 $2$ 割开，从 $3$ 到 $4$ 再沿正实轴割开。</p>
+<h2 id="计算终值问题"><a href="#计算终值问题" class="headerlink" title="计算终值问题"></a>计算终值问题</h2><p>若沿曲线 $C$ 从 $z_1$ 延拓到 $z_2$，则</p>
+<script type="math/tex; mode=display">
+f(z_2)=|f(z_2)|e^{i\arg f(z_2)}
+=|f(z_2)|e^{i\Delta_C\arg f(z)}e^{i\arg f(z_1)}</script><blockquote>
+<p><strong>例 2.25</strong>　设 $f(z)=\sqrt[3]{z(1-z)}$。证明 将 $z$ 平面适当割开后，能分出三个单值解析分支；并求在 $z=2$ 取负值的那个分支在 $z=i$ 的值。</p>
+</blockquote>
+<p><strong>解</strong>　$f(z)$ 的支点为 $0,1,\infty$。</p>
+<p>对每一个 $z$，方程 $w^3=z(1-z)$ 有三个根。</p>
+<p>因此将 $z$ 平面从 $0$ 到 $1$ 割开，再沿负虚轴割开，能分出三个单值解析函数。</p>
+<p><img src="/images/2026080502.png" alt=""></p>
+<p>在 $z=2$ 取负值，即 $f(2)=-\sqrt[3]{2}$，$\arg f(2)=\pi$。</p>
+<p>有 $\Delta_C\arg z=\dfrac\pi2$，$\Delta_C\arg(1-z)=\dfrac{3\pi}{4}$。因此</p>
+<script type="math/tex; mode=display">
+\Delta_C\arg f(z)^3
+=\Delta_C\arg z+\Delta_C\arg(1-z)=\frac{5\pi}{4},</script><p>从而 $\Delta_C\arg f(z)=\dfrac{5\pi}{12}$。又 $|f(i)|=\sqrt[3]{|i|\,|1-i|}=\sqrt[6]{2}$，所以</p>
+<script type="math/tex; mode=display">
+f(i)=-\sqrt[6]{2}\,e^{i\frac{5\pi}{12}}</script><p>相应地，沿曲线延拓对数时可写为</p>
+<script type="math/tex; mode=display">
+\operatorname{Ln}f(z_2)=\ln|f(z_2)|+i\Delta_C\arg f(z)+i\arg f(z_1)</script><blockquote>
+<p><strong>例 2.26</strong>　证明 $\operatorname{Ln}(1-z^2)$ 在割去下列曲线的 $z$ 平面内能分出单值解析分支：从 $-1$ 到 $i$ 的直线段、从 $i$ 到 $1$ 的直线段，以及射线 $x=0$ 且 $y\geq1$。并求在 $z=0$ 时等于 $0$ 的那一支在 $z=2$ 的值。</p>
+</blockquote>
+<p><strong>解</strong>　因为 $\operatorname{Ln}(1-z^2)=\operatorname{Ln}(1-z)+\operatorname{Ln}(1+z)$，所以其支点为 $z=\pm1$ 与 $z=\infty$。</p>
+<p>当 $z$ 绕 $+1$ 或 $-1$ 一周时，$\operatorname{Ln}(1-z^2)$ 的值改变 $2\pi i$；</p>
+<p>当 $z$ 同时绕 $\pm1$ 一周时，其值改变 $4\pi i$。</p>
+<p>将平面按题设曲线割开后，不可能再单独绕某个支点一周或同时绕 $\pm1$ 一周，因此在割破后的 $z$ 平面内可分出无穷多个单值解析分支。</p>
+<p><img src="/images/2026080503.png" alt=""></p>
+<p>沿图中从 $0$ 到 $2$ 的路径 $C$，有</p>
+<script type="math/tex; mode=display">
+\Delta_C\arg(1-z^2)
+=\Delta_C\arg(1+z)+\Delta_C\arg(1-z)=0+\pi=\pi</script><p>因为 $\operatorname{Ln}(1-z^2)=\ln|1-z^2|+2k\pi i+i\arg(1-z^2)$。在 $z=0$ 时，该分支取值为 $0$，故 $k=0$。</p>
+<p>因此在 $z=2$ 时，</p>
+<script type="math/tex; mode=display">
+\operatorname{Ln}(1-2^2)=\ln|1-2^2|+\pi i=\ln3+\pi i</script><h2 id="反三角函数与反双曲函数"><a href="#反三角函数与反双曲函数" class="headerlink" title="反三角函数与反双曲函数"></a>反三角函数与反双曲函数</h2><p>由 $w=\arctan z$ 得</p>
+<script type="math/tex; mode=display">
+z=\tan w=\frac{e^{iw}-e^{-iw}}{e^{iw}+e^{-iw}}\cdot\frac1i,</script><p>因此 $e^{2iw}=\dfrac{1+iz}{1-iz}$，从而</p>
+<script type="math/tex; mode=display">
+\boxed{\operatorname{Arctan}z=\frac1{2i}\operatorname{Ln}\frac{1+iz}{1-iz}}</script><p>类似地，</p>
+<script type="math/tex; mode=display">
+\boxed{
+\begin{aligned}
+\operatorname{Arctanh}z&=\frac12\operatorname{Ln}\frac{1+z}{1-z},\\
+\operatorname{Arcsin}z&=-i\operatorname{Ln}\left(iz+\sqrt{1-z^2}\right),\\
+\operatorname{Arcsinh}z&=\operatorname{Ln}\left(z+\sqrt{z^2+1}\right),\\
+\operatorname{Arccos}z&=\frac1i\operatorname{Ln}\left(z+\sqrt{z^2-1}\right),\\
+\operatorname{Arccosh}z&=\operatorname{Ln}\left(z\pm\sqrt{z^2-1}\right)
+\end{aligned}}</script><blockquote>
+<p><strong>例 2.27</strong>　求 $\operatorname{Arcsin}2$。</p>
+</blockquote>
+<script type="math/tex; mode=display">
+\operatorname{Arcsin}2
+=-i\operatorname{Ln}(2i\pm\sqrt3\,i) \\
+=-i(\operatorname{ln}(2\pm\sqrt3)+\operatorname{ln}i) \\
+=\frac\pi2+2k\pi-i\ln(2\pm\sqrt3)\\
+k=0,\pm1,\pm2,\ldots</script><p>因此</p>
+<script type="math/tex; mode=display">
+\operatorname{Arcsin}2=\frac\pi2+2k\pi-i\ln(2\pm\sqrt3)\quad k=0,\pm1,\pm2,\ldots</script><blockquote>
+<p><strong>例 2.28</strong>　求 $\operatorname{Arctan}(2i)$。</p>
+</blockquote>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\operatorname{Arctan}(2i)
+&=\frac1{2i}\operatorname{Ln}\frac{1+i(2i)}{1-i(2i)}
+=\frac1{2i}\operatorname{Ln}\left(-\frac13\right)\\
+&=\left(k+\frac12\right)\pi+\frac{i\ln3}{2},
+\qquad k=0,\pm1,\pm2,\ldots
+\end{aligned}</script><p>即</p>
+<script type="math/tex; mode=display">
+\operatorname{Arctan}(2i)=\left(k+\frac12\right)\pi+\frac{i\ln3}{2} \quad k=0,\pm1,\pm2,\ldots</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/08/05/2-3-%E5%88%9D%E7%AD%89%E5%A4%9A%E5%80%BC%E5%87%BD%E6%95%B0/">http://example.com/2026/08/05/2-3-%E5%88%9D%E7%AD%89%E5%A4%9A%E5%80%BC%E5%87%BD%E6%95%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/08/05/2-2-%E5%88%9D%E7%AD%89%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/" title="2.2_初等解析函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">2.2_初等解析函数</div></div><div class="info-2"><div class="info-item-1">2.2 初等解析函数[TOC] 1. 指数函数复指数函数定义  \boxed{e^z=e^{x+iy}=e^x(\cos y+i\sin y)}性质：  ，   在整个复平面上解析，且   的基本周期为   无意义，即极限不存在  简证　沿  且  时 ；沿  且  时 。  注   若 ，则称  为  的周期。若  的所有周期都是  的整数倍，则称  为  的基本周期。 因为 ，但 ，所以复变函数不满足数学分析中的 Rolle 定理，故微分中值定理也不能直接推广到复平面上。但L’Hospital 法则成立。 ，其中   2. 三角函数定义  \boxed{\sin z=\frac{e^{iz}-e^{-iz}}{2i} \cos z=\frac{e^{iz}+e^{-iz}}{2}}性质：  、 均为解析函数  、和差化积等公式在复平面上成立 、 的基本周期均为 ；其零点分别为 ，，其中 。 、 在复平面上无界  3. 正切、余切、正割与余割、、、 在分母不为  的地方解析。  、 的基本周期为 。 、 的基本周期为 。  4. 双曲函数定义  \boxed{\sinh z=\...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2-3-%E5%88%9D%E7%AD%89%E5%A4%9A%E5%80%BC%E5%87%BD%E6%95%B0"><span class="toc-text">2.3 初等多值函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E5%8F%B6%E6%80%A7"><span class="toc-text">单叶性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%90%E8%A7%92%E5%87%BD%E6%95%B0%E4%B8%8E%E8%BE%90%E8%A7%92%E6%94%B9%E5%8F%98%E9%87%8F"><span class="toc-text">辐角函数与辐角改变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%90%E8%A7%92%E7%9A%84%E5%8D%95%E5%80%BC%E8%BF%9E%E7%BB%AD%E5%88%86%E6%94%AF"><span class="toc-text">辐角的单值连续分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B9%E5%BC%8F%E5%87%BD%E6%95%B0"><span class="toc-text">根式函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E7%82%B9%E4%B8%8E%E6%94%AF%E5%89%B2%E7%BA%BF"><span class="toc-text">支点与支割线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%AF%B9%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-text">复对数函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#z-e-w-%E7%9A%84%E5%8F%98%E6%8D%A2%E6%80%A7%E8%B4%A8"><span class="toc-text">$z&#x3D;e^w$ 的变换性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%82%E5%87%BD%E6%95%B0%E4%B8%8E%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-text">幂函数与指数函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%82%E5%87%BD%E6%95%B0"><span class="toc-text">幂函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E6%95%B0%E5%87%BD%E6%95%B0"><span class="toc-text">指数函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E6%95%B0%E5%87%BD%E6%95%B0%E7%9A%84%E6%94%AF%E7%82%B9"><span class="toc-text">代数函数的支点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%BB%88%E5%80%BC%E9%97%AE%E9%A2%98"><span class="toc-text">计算终值问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E4%B8%8E%E5%8F%8D%E5%8F%8C%E6%9B%B2%E5%87%BD%E6%95%B0"><span class="toc-text">反三角函数与反双曲函数</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/05/2-3-%E5%88%9D%E7%AD%89%E5%A4%9A%E5%80%BC%E5%87%BD%E6%95%B0/" title="2.3_初等多值函数">2.3_初等多值函数</a><time datetime="2026-08-05T06:09:41.000Z" title="Created 2026-08-05 14:09:41">2026-08-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/05/2-2-%E5%88%9D%E7%AD%89%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/" title="2.2_初等解析函数">2.2_初等解析函数</a><time datetime="2026-08-05T06:03:56.000Z" title="Created 2026-08-05 14:03:56">2026-08-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/05/2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/" title="2.1_解析函数">2.1_解析函数</a><time datetime="2026-08-05T05:59:07.000Z" title="Created 2026-08-05 13:59:07">2026-08-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/03/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%A4%8D%E6%95%B0%E4%B8%8E%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/" title="第一章 复数与复变函数">第一章 复数与复变函数</a><time datetime="2026-08-03T10:03:59.000Z" title="Created 2026-08-03 18:03:59">2026-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/16/Qt%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%AE%B9%E5%99%A8%E7%B1%BB/" title="Qt对象模型与容器类">Qt对象模型与容器类</a><time datetime="2026-06-16T13:59:03.000Z" title="Created 2026-06-16 21:59:03">2026-06-16</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
