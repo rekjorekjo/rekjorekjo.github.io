@@ -1,0 +1,459 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2.1_解析函数 | Hexo</title><meta name="author" content="Rekjo"><meta name="copyright" content="Rekjo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#e0fccf"><meta name="description" content="2.1 解析函数[TOC] 导数 复变函数在点 $z_0$ 处的导数定义为  f&#39;(z_0)&#x3D;\lim_{\Delta z\to 0}\frac{f(z_0+\Delta z)-f(z_0)}{\Delta z} &#x3D;\lim_{z\to z_0}\frac{f(z)-f(z_0)}{z-z_0}要求 $z_0+\Delta z$ 沿连接 $z_0$ 的任意路径趋于点 $z_0$。  微分若 $\D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2.1_解析函数">
+<meta property="og:url" content="http://example.com/2026/08/05/2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2.1 解析函数[TOC] 导数 复变函数在点 $z_0$ 处的导数定义为  f&#39;(z_0)&#x3D;\lim_{\Delta z\to 0}\frac{f(z_0+\Delta z)-f(z_0)}{\Delta z} &#x3D;\lim_{z\to z_0}\frac{f(z)-f(z_0)}{z-z_0}要求 $z_0+\Delta z$ 沿连接 $z_0$ 的任意路径趋于点 $z_0$。  微分若 $\D">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/headimage.jpg">
+<meta property="article:published_time" content="2026-08-05T05:59:07.000Z">
+<meta property="article:modified_time" content="2026-08-05T06:01:01.150Z">
+<meta property="article:author" content="Rekjo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/headimage.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2.1_解析函数",
+  "url": "http://example.com/2026/08/05/2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/",
+  "image": "http://example.com/images/headimage.jpg",
+  "datePublished": "2026-08-05T05:59:07.000Z",
+  "dateModified": "2026-08-05T06:01:01.150Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Rekjo",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/08/05/2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#e0fccf')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2.1_解析函数',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/transpancy.css"><style>
+  @font-face {
+    font-family: 'LXGW WenKai';
+    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-display: swap;
+  }
+</style>
+<style>
+  body,
+  #article-container,
+  .post-content,
+  .layout_post,
+  #recent-posts .recent-post-item .post-entry,
+  #aside-content .card-widget,
+  #footer-wrap,
+  .category-list,
+  .tag-list,
+  .archive-list,
+  h1, h2, h3, h4, h5, h6,
+  .post-title {
+    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  }
+</style>
+<style>
+  i.fa, i.fas, i.far, i.fab,
+  span.fa, span.fas, span.far, span.fab,
+  i[class*="fa-"], span[class*="fa-"],
+  .author-info .author-button i,
+  .card-info .avatar-img i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  }
+</style>
+<meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-color: #e0fccf;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/headimage.jpg" alt="Logo"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">2.1_解析函数</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">2.1_解析函数</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-08-05T05:59:07.000Z" title="Created 2026-08-05 13:59:07">2026-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-08-05T06:01:01.150Z" title="Updated 2026-08-05 14:01:01">2026-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ComplexAnalysis/">ComplexAnalysis</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/ComplexAnalysis/Chapter2/">Chapter2</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>7mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="2-1-解析函数"><a href="#2-1-解析函数" class="headerlink" title="2.1 解析函数"></a>2.1 解析函数</h1><p>[TOC]</p>
+<h2 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h2><blockquote>
+<p>复变函数在点 $z_0$ 处的导数定义为</p>
+<script type="math/tex; mode=display">
+f'(z_0)=\lim_{\Delta z\to 0}\frac{f(z_0+\Delta z)-f(z_0)}{\Delta z}
+=\lim_{z\to z_0}\frac{f(z)-f(z_0)}{z-z_0}</script><p>要求 $z_0+\Delta z$ 沿连接 $z_0$ 的任意路径趋于点 $z_0$。</p>
+</blockquote>
+<h2 id="微分"><a href="#微分" class="headerlink" title="微分"></a>微分</h2><p>若 $\Delta w=f’(z_0)\Delta z+\varepsilon$，其中 $|\varepsilon|=|\eta|\,|\Delta z|$ 且 $\lim_{\Delta z\to0}\eta=0$，则 $f’(z_0)=\dfrac{dw}{dz}$。</p>
+<p>若函数在区域 $D$ 内处处可微，则称 $f(z)$ 在区域 $D$ 内可微。</p>
+<blockquote>
+<p><strong>例 2.1</strong>　证明 $f(z)=\overline z$ 在 $z$ 平面上处处不可微。</p>
+</blockquote>
+<p><strong>证明</strong>　虽然该函数在 $z$ 平面上处处连续，但</p>
+<script type="math/tex; mode=display">
+\frac{\Delta f}{\Delta z}
+=\frac{\overline{z+\Delta z}-\overline z}{\Delta z}
+=\frac{\Delta\overline z}{\Delta z},</script><p>而 $\displaystyle\lim_{\Delta z\to0}\frac{\Delta\overline z}{\Delta z}$ 不存在。</p>
+<h2 id="解析函数、解析点与奇点"><a href="#解析函数、解析点与奇点" class="headerlink" title="解析函数、解析点与奇点"></a>解析函数、解析点与奇点</h2><blockquote>
+<p><strong>定义：</strong>若函数 $w=f(z)$ 在区域 $D$ 内可微，则称 $f(z)$ 为 $D$ 内的<strong>解析函数</strong>，或称 $f(z)$ 在 $D$ 内解析；也称全纯函数、正则函数。</p>
+</blockquote>
+<ul>
+<li>某点解析 $\Rightarrow$ 存在该点的某个邻域 $N_\varepsilon(z_0)$，函数在其中解析。</li>
+<li>在闭域上解析 $\Rightarrow$ 函数应在包含该闭域的某个区域内解析。</li>
+</ul>
+<blockquote>
+<p><strong>定义：</strong>若 $f(z)$ 在 $z_0$ 点不解析，但在 $z_0$ 的任一邻域内总有 $f(z)$ 的解析点，则称 $z_0$ 为 $f(z)$ 的<strong>奇点</strong>。</p>
+</blockquote>
+<p><strong>注：</strong></p>
+<ul>
+<li><p>解析函数允许有奇点，但不包含处处不解析的函数（如 $f(z)=\overline z$ ）</p>
+</li>
+<li><p>若 $z(t)=x(t)+iy(t)$，则 $z’(t)=x’(t)+iy’(t)$</p>
+</li>
+<li><p>$u(x,y)$、$v(x,y)$ 的偏导数都存在不能推出 $w=f(z)$ 解析</p>
+</li>
+</ul>
+<h2 id="Cauchy-Riemann-Equation"><a href="#Cauchy-Riemann-Equation" class="headerlink" title="Cauchy-Riemann Equation"></a>Cauchy-Riemann Equation</h2><blockquote>
+<p>若 $f(z)=u(x,y)+iv(x,y)$，则 C.-R. 方程为</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+\dfrac{\partial u}{\partial x}=\dfrac{\partial v}{\partial y},\\[6pt]
+\dfrac{\partial u}{\partial y}=-\dfrac{\partial v}{\partial x}
+\end{cases}</script></blockquote>
+<h3 id="可微的必要条件"><a href="#可微的必要条件" class="headerlink" title="可微的必要条件"></a>可微的必要条件</h3><p>设 $f(z)=u(x,y)+iv(x,y)$ 在区域 $D$ 内有定义，且在 $D$ 内一点 $z=x+iy$ 可微，则在这一点：</p>
+<ol>
+<li>$\dfrac{\partial u}{\partial x}$、$\dfrac{\partial u}{\partial y}$、$\dfrac{\partial v}{\partial x}$、$\dfrac{\partial v}{\partial y}$ 存在；</li>
+<li>满足 $\dfrac{\partial u}{\partial x}=\dfrac{\partial v}{\partial y}$，$\dfrac{\partial u}{\partial y}=-\dfrac{\partial v}{\partial x}$。</li>
+</ol>
+<h3 id="可微-解析的充分条件"><a href="#可微-解析的充分条件" class="headerlink" title="可微/解析的充分条件"></a>可微/解析的充分条件</h3><ol>
+<li><p>$u(x,y)$、$v(x,y)$ 可微；</p>
+</li>
+<li><p>满足 C.-R. 方程。</p>
+</li>
+</ol>
+<h3 id="可微-解析的充分条件-1"><a href="#可微-解析的充分条件-1" class="headerlink" title="可微/解析的充分条件"></a>可微/解析的充分条件</h3><ol>
+<li>$\dfrac{\partial u}{\partial x}$、$\dfrac{\partial u}{\partial y}$、$\dfrac{\partial v}{\partial x}$、$\dfrac{\partial v}{\partial y}$ 连续；</li>
+<li>满足 C.-R. 方程。</li>
+</ol>
+<p>在满足上述条件时，导数可写为</p>
+<script type="math/tex; mode=display">
+\boxed{f'(z)=\frac{\partial u}{\partial x}+i\frac{\partial v}{\partial x}
+=\frac{\partial v}{\partial y}-i\frac{\partial u}{\partial y}}</script><blockquote>
+<p><strong>例 2.7</strong>　$f(z)=|z|^2$。</p>
+</blockquote>
+<p><strong>解</strong>　$u(x,y)=x^2+y^2$，$v(x,y)=0$，因此 $u_x=2x$，$u_y=2y$，$v_x=v_y=0$。</p>
+<p>只有当 $z=0$ 时，Cauchy-Riemann 方程成立，所以 $f(z)$ 仅在 $z=0$ 可微。</p>
+<p>因此，$f(z)$ 在 $z$ 平面上处处不解析。</p>
+<blockquote>
+<p><strong>例 2.8</strong>　$f(z)=x^2-iy$。</p>
+</blockquote>
+<p><strong>解</strong>　此时 $u(x,y)=x^2$，$v(x,y)=-y$，且 $u_x=2x$，$u_y=0$，$v_x=0$，$v_y=-1$。</p>
+<p>由 $u_x=v_y$ 得 $x=-\dfrac12$；另一个 Cauchy-Riemann 方程恒成立，且偏导数连续。</p>
+<p>所以 $f(z)$ 仅在直线 $x=-\dfrac12$ 上可微，但在 $z$ 平面上处处不解析。</p>
+<blockquote>
+<p><strong>例 2.10</strong>　证明 $f(z)=e^{x+iy}$ 在 $z$ 平面上解析，且 $f’(z)=f(z)$。</p>
+</blockquote>
+<p><strong>证明</strong>　$f(z)=e^x(\cos y+i\sin y)$，故 $u(x,y)=e^x\cos y$，$v(x,y)=e^x\sin y$，并且</p>
+<script type="math/tex; mode=display">
+u_x=e^x\cos y,\qquad u_y=-e^x\sin y
+v_x=e^x\sin y,\qquad v_y=e^x\cos y</script><p>在 $z$ 平面上处处连续，且满足 Cauchy-Riemann 方程，因此 $f(z)$ 在 $z$ 平面上处处解析。</p>
+<script type="math/tex; mode=display">
+f'(z)=u_x+iv_x=e^x\cos y+i e^x\sin y=e^{x+iy}=f(z)</script><blockquote>
+<p><strong>例 2.11</strong>　设 $f(z)=u(x,y)+iv(x,y)$ 在区域 $D$ 内解析，且 $v=u^2$，求 $f(z)$。</p>
+</blockquote>
+<p><strong>解</strong>　由 $v=u^2$，有 $v_x=2uu_x$，$v_y=2uu_y$。因为 $f(z)$ 在 $D$ 内解析，所以</p>
+<script type="math/tex; mode=display">
+u_x=v_y=2uu_y,\qquad u_y=-v_x=-2uu_x</script><p>因此 $u_x(4u^2+1)=0$，从而 $u_x=u_y=0$。故 $u=C$，$v=C^2$，其中 $C$ 为常数，于是</p>
+<script type="math/tex; mode=display">
+f(z)=C+iC^2</script><h2 id="极坐标形式的-C-R-方程"><a href="#极坐标形式的-C-R-方程" class="headerlink" title="极坐标形式的 C.-R. 方程"></a>极坐标形式的 C.-R. 方程</h2><blockquote>
+<p>设 $z=re^{i\theta}$，$w=u(r,\theta)+iv(r,\theta)$。若 $u(r,\theta)$、$v(r,\theta)$ 可微，且</p>
+<script type="math/tex; mode=display">
+\begin{cases}
+r\dfrac{\partial u}{\partial r}=\dfrac{\partial v}{\partial\theta},\\[6pt]
+r\dfrac{\partial v}{\partial r}=-\dfrac{\partial u}{\partial\theta},
+\end{cases}</script><p>则 $f(z)=f(r,\theta)$ 可微。称为<strong>指数形式的 C.-R. 方程</strong>。</p>
+</blockquote>
+<p><strong>证明</strong>　由链式法则，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+u_r&=u_x\cos\theta+u_y\sin\theta,&
+ u_\theta&=-r\sin\theta\,u_x+r\cos\theta\,u_y,\\
+v_r&=v_x\cos\theta+v_y\sin\theta,&
+ v_\theta&=-r\sin\theta\,v_x+r\cos\theta\,v_y
+\end{aligned}</script><p>由直角坐标形式的 C.-R. 方程可得 $ru_r=v_\theta$，$rv_r=-u_\theta$。</p>
+<h2 id="复函数的另一个视角"><a href="#复函数的另一个视角" class="headerlink" title="复函数的另一个视角"></a>复函数的另一个视角</h2><p>由 $z=x+iy$、$\overline z=x-iy$，可得 $x=\dfrac{z+\overline z}{2}$，$y=\dfrac{z-\overline z}{2i}$。</p>
+<p>又 $dz=dx+i\,dy$、$d\overline z=dx-i\,dy$，所以 $dx=\dfrac{dz+d\overline z}{2}$，$dy=\dfrac{dz-d\overline z}{2i}$。</p>
+<p>$f(z)=f(x+iy)$ 是关于 $x,y$ 的二元函数。若 $f(x+iy)$ 可微，则</p>
+<script type="math/tex; mode=display">
+df(z)=\frac{\partial f}{\partial x}\,dx+\frac{\partial f}{\partial y}\,dy</script><p>代入 $dx,dy$，有</p>
+<script type="math/tex; mode=display">
+df(z)=\frac12\left(f_x-if_y\right)dz
++\frac12\left(f_x+if_y\right)d\overline z</script><p>定义偏微分算子</p>
+<script type="math/tex; mode=display">
+\boxed{
+\frac{\partial}{\partial z}=\frac12\left(\frac{\partial}{\partial x}-i\frac{\partial}{\partial y}\right)
+\frac{\partial}{\partial\overline z}=\frac12\left(\frac{\partial}{\partial x}+i\frac{\partial}{\partial y}\right)}</script><p>于是 $\displaystyle df=\frac{\partial f}{\partial z}\,dz+\frac{\partial f}{\partial\overline z}\,d\overline z$。</p>
+<p>可知 $\dfrac{\partial z}{\partial z}=1$，$\dfrac{\partial\overline z}{\partial\overline z}=1$，$\dfrac{\partial z}{\partial\overline z}=0$，$\dfrac{\partial\overline z}{\partial z}=0$。</p>
+<h3 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h3><blockquote>
+<p>设 $u(x,y)$、$v(x,y)$ 在区域 $D$ 内有一阶连续偏导数，则 $f(z)=u(x,y)+iv(x,y)$ 在 $D$ 内解析的充要条件为</p>
+<script type="math/tex; mode=display">
+\boxed{\frac{\partial f(z)}{\partial\overline z}=0}</script></blockquote>
+<p><strong>证明</strong></p>
+<script type="math/tex; mode=display">
+\frac{\partial f}{\partial\overline z}
+=\frac12\left(\frac{\partial}{\partial x}+i\frac{\partial}{\partial y}\right)(u+iv)
+=\frac12(u_x-v_y)+\frac{i}{2}(u_y+v_x)</script><p>因此，Cauchy-Riemann 方程成立当且仅当 $\dfrac{\partial f(z)}{\partial\overline z}=0$。</p>
+<p><strong>含义：</strong>$f(z)$ 解析当且仅当 $f(z)$ 与 $\overline z$ 无关。</p>
+<ul>
+<li>注：在求导时，可以将 $z,\overline z$ 视作独立变量计算。</li>
+</ul>
+<blockquote>
+<p><strong>例</strong>　判断下列函数是否解析：$f(z)=z^2$，$f(z)=\overline z$，$f(z)=|z|^2$。</p>
+</blockquote>
+<p><strong>解</strong></p>
+<ol>
+<li>对 $f(z)=z^2$，有 $\dfrac{\partial f}{\partial\overline z}=0$，所以 $f(z)$ 解析。</li>
+<li>对 $f(z)=\overline z$，有 $\dfrac{\partial f}{\partial\overline z}=1$，所以 $f(z)$ 不解析。</li>
+<li>对 $f(z)=|z|^2=z\overline z$，有 $\dfrac{\partial f}{\partial\overline z}=z$，所以 $f(z)$ 不解析。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Rekjo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/08/05/2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/">http://example.com/2026/08/05/2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/images/headimage.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/08/03/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%A4%8D%E6%95%B0%E4%B8%8E%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/" title="第一章 复数与复变函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">第一章 复数与复变函数</div></div><div class="info-2"><div class="info-item-1">第一章 复数与复变函数[TOC] 1.1 复数复平面设 ， 称为  的实数对形式。  轴、 轴分别对应实轴、虚轴。 复平面 ：“数 = 点”。 模，。 因此  \begin{cases} -|z|\leq \operatorname{Re}z\leq |z|,\\ -|z|\leq \operatorname{Im}z\leq |z|. \end{cases}且  \begin{cases} |z_1+z_2+\cdots+z_n|\leq |z_1|+|z_2|+\cdots+|z_n|,\\ \bigl||z_1|-|z_2|\bigr|\leq |z_1-z_2|. \end{cases}辐角 \tan\theta=\frac{y}{x},\qquad \theta=\operatorname{Arg}z=\arg z+2k\pi,\quad k\in\mathbb Z.当  时，称为辐角主值。  时，辐角无定义。 当  时，  \arg z= \begin{cases} \arctan\dfrac{y}{x}, & x>0,\\[6pt] \dfrac{\pi}{2}, ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/headimage.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Rekjo</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/rekjorekjo"><i class="fab fa-github"></i><span>About Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">Welcome!This is Rekjo.Glad to see you.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0"><span class="toc-text">2.1 解析函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E6%95%B0"><span class="toc-text">导数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E5%88%86"><span class="toc-text">微分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0%E3%80%81%E8%A7%A3%E6%9E%90%E7%82%B9%E4%B8%8E%E5%A5%87%E7%82%B9"><span class="toc-text">解析函数、解析点与奇点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cauchy-Riemann-Equation"><span class="toc-text">Cauchy-Riemann Equation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="toc-text">可微的必要条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE-%E8%A7%A3%E6%9E%90%E7%9A%84%E5%85%85%E5%88%86%E6%9D%A1%E4%BB%B6"><span class="toc-text">可微&#x2F;解析的充分条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE-%E8%A7%A3%E6%9E%90%E7%9A%84%E5%85%85%E5%88%86%E6%9D%A1%E4%BB%B6-1"><span class="toc-text">可微&#x2F;解析的充分条件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%9D%90%E6%A0%87%E5%BD%A2%E5%BC%8F%E7%9A%84-C-R-%E6%96%B9%E7%A8%8B"><span class="toc-text">极坐标形式的 C.-R. 方程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E8%A7%86%E8%A7%92"><span class="toc-text">复函数的另一个视角</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E7%90%86"><span class="toc-text">定理</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/05/2-1-%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0/" title="2.1_解析函数">2.1_解析函数</a><time datetime="2026-08-05T05:59:07.000Z" title="Created 2026-08-05 13:59:07">2026-08-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/08/03/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%A4%8D%E6%95%B0%E4%B8%8E%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/" title="第一章 复数与复变函数">第一章 复数与复变函数</a><time datetime="2026-08-03T10:03:59.000Z" title="Created 2026-08-03 18:03:59">2026-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/16/Qt%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%AE%B9%E5%99%A8%E7%B1%BB/" title="Qt对象模型与容器类">Qt对象模型与容器类</a><time datetime="2026-06-16T13:59:03.000Z" title="Created 2026-06-16 21:59:03">2026-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/13/Qt-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="Qt 事件系统">Qt 事件系统</a><time datetime="2026-06-13T15:15:49.000Z" title="Created 2026-06-13 23:15:49">2026-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/06/03/Qt-%E5%B8%83%E5%B1%80%E7%AE%A1%E7%90%86/" title="Qt 布局管理">Qt 布局管理</a><time datetime="2026-06-03T11:17:46.000Z" title="Created 2026-06-03 19:17:46">2026-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Rekjo</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.0/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script></div><script src='https://cdn.jsdelivr.net/gh/hotoo/pinyin@2.10.2/dist/pinyin-min.js'></script><script>
+  (function() {
+    var startDate = new Date('2025/12/23');  // 格式：YYYY/MM/DD
+    
+    function updateRuntime() {
+      var now = new Date();
+      var diff = now - startDate;
+      
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      var runtimeText = '🍃 本站已运行 ' + days + ' 天 ' + hours + ' 小时 ' + minutes + ' 分 ' + seconds + ' 秒';
+      
+      var footer = document.querySelector('#footer, #footer-wrap, .footer, .copyright');
+      
+      if (footer) {
+        var runtimeEl = document.getElementById('runtime');
+        if (runtimeEl) {
+          runtimeEl.innerHTML = runtimeText;
+        } else {
+          var div = document.createElement('div');
+          div.id = 'runtime';
+          
+          // ✨ 白色字体，优雅半透明
+          div.style.color = '#000000';
+          div.style.opacity = '0.85';
+          div.style.textShadow = '0 1px 3px rgba(0,0,0,0.3)';
+          div.style.textAlign = 'center';
+          div.style.padding = '12px 0';
+          div.style.fontSize = '14px';
+          div.style.letterSpacing = '0.5px';
+          div.style.fontWeight = '400';
+          div.style.borderTop = '1px solid rgba(255,255,255,0.2)';
+          div.style.marginTop = '10px';
+          div.style.width = '100%';
+          div.style.boxSizing = 'border-box';
+          
+          div.innerHTML = runtimeText;
+          footer.appendChild(div);
+        }
+      }
+    }
+    
+    if (document.readyState === 'complete') {
+      updateRuntime();
+    } else {
+      window.addEventListener('load', updateRuntime);
+    }
+    setInterval(updateRuntime, 1000);
+  })();
+</script>
+<script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
