@@ -64,3 +64,18 @@ blockquote {
 #article-container blockquote {
   color: #2c3e50 !important;
 }
+
+/* ===== Writeup 章节间距 ===== */
+#article-container hr {
+  margin: 3.5rem 0 !important;
+  border: 0;
+  border-top: 1px solid rgba(73, 177, 245, 0.45);
+}
+
+#article-container h2 {
+  margin-top: 3.5rem !important;
+}
+
+#article-container h3 {
+  margin-top: 2.5rem !important;
+}
