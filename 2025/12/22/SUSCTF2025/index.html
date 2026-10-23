@@ -158,9 +158,19 @@
   pageType: 'post'
 }</script><link rel="stylesheet" href="/css/transpancy.css"><style>
   @font-face {
-    font-family: 'LXGW WenKai';
-    src: url('/fonts/LXGWWenKaiGBScreen.ttf') format('truetype');
+    font-family: 'Noto Sans SC Blog';
+    src: url('/fonts/NotoSansSC-Blog.woff2') format('woff2');
     font-display: swap;
+    font-style: normal;
+    font-weight: 100 900;
+  }
+
+  @font-face {
+    font-family: 'Liyu Xingkai Site Title';
+    src: url('/fonts/LiyuXingkai-SiteTitle.woff2') format('woff2');
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400;
   }
 </style>
 <style>
@@ -173,10 +183,25 @@
   #footer-wrap,
   .category-list,
   .tag-list,
-  .archive-list,
+  .archive-list {
+    font-family: "Noto Sans SC Blog", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
   h1, h2, h3, h4, h5, h6,
-  .post-title {
-    font-family: "LXGW WenKai", "Microsoft YaHei", "PingFang SC", sans-serif !important;
+  .post-title,
+  .article-title,
+  .article-sort-item-title {
+    font-family: "Noto Sans SC Blog", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+    font-weight: 650 !important;
+  }
+
+  .nav-site-title .site-name,
+  #site-info #site-title {
+    font-family: "Liyu Xingkai Site Title", "Noto Sans SC Blog", "Noto Sans SC", sans-serif !important;
+    font-weight: 400 !important;
   }
 </style>
 <style>
