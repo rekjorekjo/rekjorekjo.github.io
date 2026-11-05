@@ -1,0 +1,166 @@
+---
+import { withBase } from '../../lib/paths';
+import { primaryCategory, categoryUrl, categoryLabel, tagUrl } from '../../lib/taxonomy';
+import Base from '../../layouts/Base.astro';
+import { render } from 'astro:content';
+import { getPosts } from '../../lib/posts';
+import type { CollectionEntry } from 'astro:content';
+import 'katex/dist/katex.min.css';
+export async function getStaticPaths() { return (await getPosts()).map(post => ({ params: { id: post.id }, props: { post } })); }
+interface Props { post: CollectionEntry<'posts'>; }
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
+---
+<Base title={`${post.data.title} / Rekjo`} description={post.data.description} active="archive" noindex={post.data.draft}>
+  <div id="reading-progress" aria-hidden="true"></div>
+  <main id="main" class="shell article-page">
+    <a href={withBase('/archive/')} class="text-link back-link">← 所有记录</a>
+    <div class:list={['article-grid', { 'has-notices': post.data.draft || post.data.demo }]}>
+      <header class="article-header">
+        <div class="post-meta mono"><a class="category" href={categoryUrl(primaryCategory(post))}>{categoryLabel(primaryCategory(post))}</a><time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0,10)}</time><span>{post.data.minutes} min read</span></div>
+        <h1>{post.data.title}</h1>
+        <p>{post.data.description}</p>
+        <div class="tags">{post.data.tags.map(tag => <a href={tagUrl(tag)}>#{tag}</a>)}</div>
+      </header>
+      {(post.data.draft || post.data.demo) && <div class="article-notices">
+        {post.data.draft && <p class="draft-notice">草稿预览 · 仅开发环境可见</p>}
+        {post.data.demo && <p class="article-demo">排版演示 / 此文为新项目的示例内容，不代表真实比赛记录。</p>}
+      </div>}
+      <article class="prose" id="article-content"><Content /><div class="article-end"><span class="mono accent">// end of note</span><a href={withBase('/archive/')}>继续探索 →</a></div></article>
+      <aside class="toc"><div class="toc-inner"><button class="toc-toggle" aria-expanded="false" aria-controls="toc-links">文章目录 <span aria-hidden="true">⌄</span></button><div class="eyebrow mono toc-label">本文目录</div><nav id="toc-links" aria-label="文章目录">{toc.map(h => <a class:list={{sub: h.depth===3}} href={`#${h.slug}`}>{h.text}</a>)}</nav><a href="#main" class="text-link to-top">↑ 返回顶部</a></div></aside>
+    </div>
+  </main>
+  <dialog class="image-lightbox" id="image-lightbox" aria-label="图片放大查看">
+    <div class="image-lightbox-toolbar">
+      <span class="image-lightbox-title" id="lightbox-caption"></span>
+      <div class="image-lightbox-actions">
+        <button type="button" id="lightbox-zoom" aria-pressed="false">原始尺寸</button>
+        <button type="button" id="lightbox-close" aria-label="关闭图片">关闭 ×</button>
+      </div>
+    </div>
+    <div class="image-lightbox-stage" id="lightbox-stage">
+      <img id="lightbox-image" alt="" />
+    </div>
+  </dialog>
+  <script>
+    const toggle = document.querySelector<HTMLButtonElement>('.toc-toggle')!;
+    toggle.addEventListener('click', () => toggle.setAttribute('aria-expanded', String(toggle.getAttribute('aria-expanded') !== 'true')));
+    const prose = document.querySelector<HTMLElement>('#article-content')!;
+    const progress = document.querySelector<HTMLElement>('#reading-progress')!;
+    const updateProgress = () => { const end = prose.offsetTop + prose.offsetHeight - window.innerHeight; const start = prose.offsetTop - 100; progress.style.width = `${Math.max(0, Math.min(100,(scrollY - start) / Math.max(1,end-start)*100))}%`; };
+    addEventListener('scroll',updateProgress,{ passive: true }); addEventListener('resize', updateProgress); updateProgress();
+    document.querySelectorAll<HTMLPreElement>('.prose pre').forEach(pre => {
+      const wrapper = document.createElement('div'); wrapper.className = 'code-wrapper'; pre.before(wrapper); wrapper.append(pre);
+      const bar = document.createElement('div'); bar.className = 'code-toolbar'; const label = document.createElement('span'); label.textContent = pre.dataset.language ?? pre.querySelector('code')?.className.replace('language-','') ?? 'CODE';
+      const button = document.createElement('button'); button.textContent = '复制代码'; button.setAttribute('aria-label','复制代码');
+      button.addEventListener('click',async () => { try { await navigator.clipboard.writeText(pre.querySelector('code')?.textContent ?? ''); button.textContent = '已复制 ✓'; } catch { button.textContent = '复制失败，请手动选择'; } setTimeout(() => button.textContent = '复制代码',2000); });
+      bar.append(label,button); wrapper.prepend(bar);
+    });
+    // Article images can be viewed at large size without extra dependencies.
+    // <dialog> handles focus trapping and Escape; no lightbox is created on other pages.
+    const lightbox = document.querySelector<HTMLDialogElement>('#image-lightbox')!;
+    const lightboxImage = document.querySelector<HTMLImageElement>('#lightbox-image')!;
+    const lightboxCaption = document.querySelector<HTMLElement>('#lightbox-caption')!;
+    const lightboxZoom = document.querySelector<HTMLButtonElement>('#lightbox-zoom')!;
+    const lightboxStage = document.querySelector<HTMLElement>('#lightbox-stage')!;
+    let sourceFocus: HTMLElement | null = null;
+    const images = Array.from(prose.querySelectorAll<HTMLImageElement>('img')).filter(img => !img.closest('a,button'));
+    function setOriginalSize(original: boolean) {
+      lightboxStage.classList.toggle('is-original', original);
+      lightboxZoom.setAttribute('aria-pressed', String(original));
+      lightboxZoom.textContent = original ? '适应窗口' : '原始尺寸';
+      lightboxStage.scrollTop = 0;
+      lightboxStage.scrollLeft = 0;
+    }
+    function openImage(img: HTMLImageElement) {
+      sourceFocus = img;
+      const src = img.currentSrc || img.src;
+      if (!src) return;
+      lightboxImage.src = src;
+      lightboxImage.alt = img.alt || '文章配图';
+      lightboxCaption.textContent = img.alt || '文章配图';
+      setOriginalSize(false);
+      lightbox.showModal();
+    }
+    images.forEach(img => {
+      img.classList.add('is-zoomable');
+      img.setAttribute('role', 'button');
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('aria-label', img.alt ? `放大图片：${img.alt}` : '放大文章图片');
+      img.addEventListener('click', () => openImage(img));
+      img.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openImage(img);
+        }
+      });
+    });
+    document.querySelector<HTMLButtonElement>('#lightbox-close')!.addEventListener('click', () => lightbox.close());
+    lightboxZoom.addEventListener('click', () => setOriginalSize(!lightboxStage.classList.contains('is-original')));
+    // A click on the modal backdrop, but not on its content, closes it.
+    lightbox.addEventListener('click', event => { if (event.target === lightbox) lightbox.close(); });
+    lightbox.addEventListener('close', () => {
+      lightboxImage.removeAttribute('src');
+      sourceFocus?.focus({ preventScroll: true });
+      sourceFocus = null;
+    });
+
+    // Keep the reading position and the independently scrolling TOC in sync.
+    // Avoid Element.scrollIntoView(): it can also move the entire document.
+    const tocNav = document.querySelector<HTMLElement>('#toc-links')!;
+    const links = Array.from(tocNav.querySelectorAll<HTMLAnchorElement>('a'));
+    const headings = Array.from(prose.querySelectorAll<HTMLElement>('h2[id],h3[id]'));
+    const linkById = new Map(links.map(link => [decodeURIComponent(link.hash.slice(1)), link]));
+    const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    let activeId = '';
+    let frame = 0;
+    let userBrowsingUntil = 0;
+
+    // Do not yank the TOC back while the reader is inspecting it manually.
+    const suspendAutoScroll = () => { userBrowsingUntil = performance.now() + 2500; };
+    tocNav.addEventListener('wheel', suspendAutoScroll, { passive: true });
+    tocNav.addEventListener('touchstart', suspendAutoScroll, { passive: true });
+    tocNav.addEventListener('pointerdown', suspendAutoScroll, { passive: true });
+
+    function revealInToc(link: HTMLAnchorElement) {
+      if (matchMedia('(max-width: 760px)').matches || performance.now() < userBrowsingUntil) return;
+      const viewport = tocNav.getBoundingClientRect();
+      const target = link.getBoundingClientRect();
+      const margin = 20;
+      if (target.top >= viewport.top + margin && target.bottom <= viewport.bottom - margin) return;
+      // Scroll only the TOC pane, leaving the page's vertical position untouched.
+      const desired = tocNav.scrollTop + target.top - viewport.top - tocNav.clientHeight * 0.32;
+      tocNav.scrollTo({ top: desired, behavior: prefersReducedMotion.matches ? 'instant' : 'smooth' });
+    }
+
+    function updateActiveHeading() {
+      frame = 0;
+      if (!headings.length) return;
+      const boundary = Math.max(90, innerHeight * 0.18);
+      let current = headings[0];
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top > boundary) break;
+        current = heading;
+      }
+      if (current.id === activeId) return;
+      activeId = current.id;
+      links.forEach(link => {
+        const isActive = link === linkById.get(activeId);
+        link.classList.toggle('is-active', isActive);
+        if (isActive) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      const activeLink = linkById.get(activeId);
+      if (activeLink) revealInToc(activeLink);
+    }
+    function scheduleHeadingUpdate() {
+      if (!frame) frame = requestAnimationFrame(updateActiveHeading);
+    }
+    addEventListener('scroll', scheduleHeadingUpdate, { passive: true });
+    addEventListener('resize', scheduleHeadingUpdate);
+    addEventListener('hashchange', scheduleHeadingUpdate);
+    addEventListener('load', scheduleHeadingUpdate, { once: true });
+    scheduleHeadingUpdate();
+  </script>
+</Base>

@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { withBase, postUrl } from '../lib/paths';
+import { getPosts } from '../lib/posts';
+import { author, site } from '../config';
+const posts = await getPosts();
+const latestPost = posts[0];
+const avatar = author.avatar ? (/^https?:\/\//.test(author.avatar) ? author.avatar : withBase(author.avatar)) : '';
+const contacts = [
+  { label: '邮箱', value: author.email, href: author.email ? `mailto:${author.email}` : '' },
+  { label: 'GitHub', value: author.github ? author.github.replace(/^https?:\/\//, '').replace(/\/$/, '') : '', href: author.github },
+  { label: 'X', value: author.x ? author.x.replace(/^https?:\/\//, '').replace(/\/$/, '') : '', href: author.x },
+];
+---
+<Base title={`关于 / ${site.name}`} active="about">
+  <main id="main" class="shell about-page">
+    <h1>关于</h1>
+    <section class="profile-panel" aria-labelledby="profile-name">
+      <div class="profile-avatar">
+        {avatar ? <img src={avatar} alt={`${author.name} 的头像`} loading="eager" /> : <span aria-label="默认头像">{author.name.slice(0, 1)}</span>}
+      </div>
+      <div class="profile-identity">
+        <h2 id="profile-name">{author.name}</h2>
+        <p class="profile-signature">{author.signature}</p>
+        <p class="profile-bio">{author.bio}</p>
+        {author.interests.length > 0 && <div class="profile-interests" aria-label="兴趣方向">
+          {author.interests.map(interest => <span>{interest}</span>)}
+        </div>}
+      </div>
+    </section>
+
+    <section class="about-section" aria-labelledby="about-contact-title">
+      <h2 id="about-contact-title">联系方式</h2>
+      <dl class="profile-contacts">
+        {contacts.map(contact => <div class="profile-contact">
+          <dt>{contact.label}</dt>
+          <dd>{contact.href ? <a href={contact.href} target={contact.label === '邮箱' ? undefined : '_blank'} rel={contact.label === '邮箱' ? undefined : 'noopener noreferrer'}>{contact.value}<span aria-hidden="true"> ↗</span></a> : <span class="profile-contact-empty">暂未公开</span>}</dd>
+        </div>)}
+      </dl>
+    </section>
+
+    <section class="about-section" aria-labelledby="about-notes-title">
+      <h2 id="about-notes-title">关于这个博客</h2>
+      <p>这里用于记录 CTF Writeup、密码学推导、Python 与 SageMath 实验，以及值得留下的学习过程。</p>
+      <p>除了最终答案，也希望保留探索过程：假设如何产生，思路为何失败，最后又是怎样得到验证的。</p>
+      <div class="about-explore">
+        <a href={withBase('/archive/')}>文章归档 <span aria-hidden="true">↗</span></a>
+        <a href={withBase('/categories/')}>分类目录 <span aria-hidden="true">↗</span></a>
+        {latestPost && <a href={postUrl(latestPost.id)}>最近文章 <span aria-hidden="true">↗</span></a>}
+      </div>
+      {posts.length > 0 && posts.every(post => post.data.demo) && <p class="about-muted">当前内容仍包含排版演示文章。</p>}
+    </section>
+  </main>
+</Base>

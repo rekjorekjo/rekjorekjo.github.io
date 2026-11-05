@@ -1,0 +1,66 @@
+---
+// One fixed, repeatable sequence per trajectory. Copies reference the same glyphs,
+// so both their contents and their brightness agree at the motion loop boundary.
+const count = 32;
+const pitch = 24;
+const period = count * pitch;
+const tracks = Array.from({ length: 4 }, (_, track) =>
+  Array.from({ length: count }, (_, index) => ({
+    digit: ((index * 17 + track * 11 + (index * index >> 2)) % 7) < 3 ? '1' : '0',
+    opacity: 0.06 + ((index * 13 + track * 7) % 9) / 100,
+  })),
+);
+---
+<div class="binary-flow" aria-hidden="true" data-binary-flow>
+  {tracks.map((bits, track) => <div class="binary-trajectory" data-binary-track={track}>
+    <div class="binary-motion" style={`--binary-period: ${period}px; --binary-duration: ${period / 12}s; --binary-delay: ${-track * 13}s`}>
+      {[0, 1, 2].map(copy => <div class="binary-copy" data-binary-copy={copy}>
+        {bits.map((bit, index) => <span class="binary-bit" data-binary-key={track * count + index} style={`opacity: ${bit.opacity}`}>{bit.digit}</span>)}
+      </div>)}
+    </div>
+  </div>)}
+</div>
+<script>
+  import { initBinaryFlow } from '../scripts/binary-flow';
+  document.querySelectorAll<HTMLElement>('[data-binary-flow]').forEach(initBinaryFlow);
+</script>
+<style>
+  .binary-flow {
+    position: absolute;
+    inset: -24px -44px;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    mask-image: linear-gradient(transparent, black 8%, black 92%, transparent);
+  }
+  .binary-copy { display: flex; flex: 0 0 var(--binary-period); }
+  .binary-bit { display: block; flex: 0 0 24px; height: 24px; color: var(--accent); font: 11px / 24px var(--mono); }
+  .binary-trajectory { position: absolute; inset: 0 auto auto 0; transform-origin: 0 0; }
+
+  .binary-motion {
+    display: flex;
+    width: max-content;
+    animation: binary-drift var(--binary-duration) linear infinite;
+    animation-delay: var(--binary-delay);
+    will-change: transform;
+  }
+  .binary-flow[data-paused] .binary-motion { animation-play-state: paused; }
+  .binary-flow[data-reduced] .binary-motion { animation: none; will-change: auto; }
+  .binary-flow[data-reduced] .binary-bit { opacity: 0.05 !important; }
+  @keyframes binary-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-1 * var(--binary-period))); }
+  }
+  @media (max-width: 1050px) {
+    .binary-flow { inset-inline: -24px; }
+  }
+  @media (max-width: 760px) {
+    .binary-flow { inset: -20px -12px; }
+    .binary-bit { font-size: 10px; }
+    [data-binary-track='2'], [data-binary-track='3'] { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .binary-motion { animation: none; will-change: auto; }
+    .binary-bit { opacity: 0.05 !important; }
+  }
+</style>

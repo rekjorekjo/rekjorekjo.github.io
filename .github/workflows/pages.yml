@@ -1,0 +1,48 @@
+name: Deploy isolated Astro preview
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: astro-preview-pages
+  cancel-in-progress: false
+env:
+  SITE_URL: https://rekjorekjo.github.io
+  BASE_PATH: /astro-preview/
+  ASTRO_TELEMETRY_DISABLED: '1'
+jobs:
+  build:
+    if: github.repository == 'rekjorekjo/astro-preview'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chrome
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+      - run: node scripts/audit-preview.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+  deploy:
+    if: github.repository == 'rekjorekjo/astro-preview'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy preview
+        id: deployment
+        uses: actions/deploy-pages@v4

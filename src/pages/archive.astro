@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { getPosts } from '../lib/posts';
+import { withBase } from '../lib/paths';
+const posts = await getPosts();
+const groups: { year: string; months: { month: string; posts: typeof posts; startIndex: number }[] }[] = [];
+for (const [index, post] of posts.entries()) {
+  const date = post.data.date.toISOString();
+  const year = date.slice(0, 4);
+  const month = date.slice(5, 7);
+  let group = groups.find(value => value.year === year);
+  if (!group) { group = { year, months: [] }; groups.push(group); }
+  let period = group.months.find(value => value.month === month);
+  if (!period) { period = { month, posts: [], startIndex: index }; group.months.push(period); }
+  period.posts.push(post);
+}
+---
+<Base title="文章归档 / Rekjo" active="archive">
+  <main id="main" class="shell archive-page">
+    <span class="eyebrow mono">~/research / archive</span>
+    <h1>文章归档<span class="accent">。</span></h1>
+    <div class="archive-summary">
+      <span class="mono">{posts.length} 篇记录 · 按时间倒序</span>
+      <a href={withBase('/categories/')} class="text-link">浏览分类目录 ↗</a>
+    </div>
+    {posts.some(post => post.data.demo) && <p class="demo-notice">{posts.every(post => post.data.demo) ? '原型示例文章 · 非历史博客迁移内容' : '部分文章为排版示例，文章页已标注。'}</p>}
+    {groups.map(group => <section class="archive-year" aria-label={`${group.year} 年`}>
+      <h2>{group.year}<span class="archive-year-count mono">{group.months.reduce((sum, month) => sum + month.posts.length, 0)} posts</span></h2>
+      {group.months.map(period => <section class="archive-month" aria-label={`${group.year} 年 ${period.month} 月`}>
+        <h3 class="mono">{period.month} 月</h3>
+        <PostList posts={period.posts} startIndex={period.startIndex} />
+      </section>)}
+    </section>)}
+    {posts.length === 0 && <p class="page-intro">还没有发布的文章，新的笔记正在整理中。</p>}
+  </main>
+</Base>

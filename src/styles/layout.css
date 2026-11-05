@@ -1,0 +1,180 @@
+.shell {
+  max-width: 1160px;
+  width: calc(100% - 112px);
+  margin-inline: auto;
+}
+
+.site-header {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  gap: var(--space-4);
+}
+
+.brand {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -1px;
+}
+
+.brand-icon {
+  color: var(--accent);
+  margin-right: 9px;
+}
+
+.brand-slash {
+  color: #77847d;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 26px;
+  margin-left: auto;
+}
+
+.site-header nav a {
+  font-size: 14px;
+  color: #c1c9c3;
+}
+
+.site-header nav a[aria-current] {
+  color: var(--accent);
+}
+
+
+.archive-page,.about-page {
+  padding-top: 66px;
+  min-height: calc(100vh - 82px);
+  padding-bottom: 80px;
+}
+
+.archive-page>h1,.about-page>h1 {
+  font-size: 38px;
+  font-weight: 550;
+  letter-spacing: -1px;
+  margin: 18px 0 10px;
+}
+
+/* Static archive and Hexo-style hierarchical taxonomy: no search UI or client filtering. */
+.archive-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  margin: 26px 0 48px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.archive-summary .text-link { font-size: 12px; }
+.archive-year { margin-top: 46px; }
+.archive-year > h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0 0 20px;
+  font-size: 28px;
+  font-weight: 550;
+  color: var(--text);
+}
+.archive-year-count { font-size: 11px; color: var(--muted); font-weight: 400; }
+.archive-month { margin: 0 0 32px; }
+.archive-month > h3 {
+  color: #a4c5b0;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 4px;
+  letter-spacing: .6px;
+}
+.archive-month .post-row { border-color: #314038; }
+.taxonomy-page { max-width: 970px; }
+.taxonomy-page .page-intro { margin-top: 20px; }
+.category-tree { border-top: 1px solid #344b3d; max-width: 750px; margin: 32px 0 52px; }
+.category-entry {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 14px 12px 14px calc(12px + var(--depth) * 24px);
+  border-bottom: 1px solid #2b4034;
+  font-size: 15px;
+  color: #dbe7df;
+  transition: background 160ms ease, color 160ms ease;
+}
+.category-entry:hover { background: #111b15; }
+.category-indicator { color: #65b88d; font-size: 12px; min-width: 18px; }
+.category-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.category-total { font-size: 11px; color: #91ad9b; }
+.taxonomy-tags { border-top: 1px solid var(--line); padding-top: 24px; }
+.taxonomy-tags h2 { font-weight: 550; font-size: 17px; margin: 0 0 20px; }
+.taxonomy-tags .tags { gap: 12px 18px; }
+.taxonomy-tags .tags a { display: inline-flex; gap: 6px; }
+.tag-count { color: #7d9685; font-size: 10px; }
+.taxonomy-breadcrumbs { display: flex; gap: 12px; flex-wrap: wrap; color: #96b4a0; font-size: 12px; }
+.taxonomy-breadcrumbs [aria-current] { color: var(--accent); }
+.taxonomy-children { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 35px; }
+.taxonomy-children a { border: 1px solid #365947; border-radius: 3px; padding: 7px 13px; color: #aad3b8; font-size: 12px; }
+.taxonomy-children a:hover { border-color: var(--accent); }
+
+.archive-page .post-row {
+  padding-block: 31px;
+}
+
+.archive-page .post-row h3 {
+  font-size: 21px;
+}
+
+.about-page {
+  max-width: 850px;
+}
+
+
+/* Keep navigation as one consistent Chinese-language set on every page. */
+.site-header nav a { display: inline-flex; align-items: center; min-height: 40px; }
+
+/* About: profile first, then verifiable contact information and writing interests. */
+.about-page { max-width: 880px; }
+.about-page > h1 { margin: 0 0 32px; }
+.profile-panel {
+  display: grid;
+  grid-template-columns: 112px minmax(0,1fr);
+  gap: 30px;
+  align-items: start;
+  padding: 34px;
+  border: 1px solid #35493e;
+  border-radius: 5px;
+  background: #101714;
+}
+.profile-avatar { width: 112px; height: 112px; overflow: hidden; border: 1px solid #4b6f58; border-radius: 10px; background: #17261e; display: grid; place-items: center; }
+.profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profile-avatar span { font: 48px var(--mono); color: var(--accent); }
+.profile-identity h2 { margin: 0 0 8px; font-size: 27px; font-weight: 600; }
+.profile-signature { margin: 0 0 12px; font-size: 16px; color: #d1e0d5; }
+.profile-bio { margin: 0 0 20px; font-size: 14px; color: var(--muted); }
+.profile-interests { display: flex; gap: 8px; flex-wrap: wrap; }
+.profile-interests span { border: 1px solid #365647; border-radius: 3px; padding: 3px 10px; color: #a3cbb1; font: 11px var(--mono); }
+.about-section { margin-top: 42px; padding-top: 28px; border-top: 1px solid var(--line); }
+.about-section h2 { font-size: 20px; font-weight: 550; margin: 0 0 22px; }
+.about-section > p { max-width: 720px; line-height: 1.9; color: #bac8be; font-size: 15px; }
+.profile-contacts { margin: 0; display: grid; gap: 0; max-width: 750px; }
+.profile-contact { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.profile-contact dt { font-size: 13px; color: var(--muted); }
+.profile-contact dd { min-width: 0; margin: 0; font-size: 14px; overflow-wrap: anywhere; }
+.profile-contact a { color: #a9d4b9; }
+.profile-contact a:hover { color: var(--accent); }
+.profile-contact-empty { color: #81978a; }
+.about-muted { font-size: 13px !important; color: var(--muted) !important; }
+.about-muted code { font: .95em var(--mono); }
+.about-explore { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.about-explore a { border: 1px solid #3c604b; border-radius: 3px; padding: 8px 14px; font-size: 13px; color: #a7d4b8; }
+.about-explore a:hover { border-color: var(--accent); }
+@media (max-width: 760px) {
+  .profile-panel { grid-template-columns: 74px minmax(0, 1fr); gap: 18px; padding: 19px; }
+  .profile-avatar { width: 74px; height: 74px; border-radius: 7px; }
+  .profile-avatar span { font-size: 30px; }
+  .profile-identity h2 { font-size: 24px; }
+  .profile-signature { font-size: 14px; }
+  .profile-contacts { font-size: 13px; }
+  .profile-contact { grid-template-columns: 76px minmax(0,1fr); }
+}

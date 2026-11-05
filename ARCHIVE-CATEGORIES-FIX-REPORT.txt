@@ -1,0 +1,87 @@
+Astro Notebook 分类与标签路径修复报告
+
+基线与执行范围
+- 基线提交：1384d44。先保留干净工作区，在独立解压副本修复并通过所有检查，之后才替换源码。
+- 本地分支：fix/archive-categories-reviewed；原版本已保留源码备份，也可从 Git 基线恢复。
+- 未部署、未 push、未修改旧 Hexo 项目，未引入新依赖；package.json 与锁文件保持原样。
+
+修复 1：分类名称与最终路径
+- 根因：原实现直接拼接分类片段，斜杠可将单个名称变成多级路径；点段产生路径歧义，不同名称可能落在相同静态输出上。
+- 内容 Schema 和 URL 生成共用严格片段校验：拒绝 /、反斜杠、.、..、首尾空白、尾随点、控制字符、非法 Unicode、百分号、非允许标点和系统保留名称。
+- 允许 Unicode 文字/数字、内部空格和 ._-；保留旧 category、新 categories、多分类分支和任意层级的表达方式。
+- 汇总所有分类前缀后，以 Unicode NFC 和大小写归一化检查路径；不同名称冲突明确抛错，同一分类被多篇文章使用正常合并。
+- 单测包含 ASCII/Unicode 大小写、NFC、点段、分隔符、保留名称和多层级。生产构建也验证非法名称与冲突会失败，不允许“成功但丢页”。
+
+修复 2：特殊标签统一映射
+- 根因：原始标签直接作 Astro 动态参数，斜杠或百分号被路由/输出处理，可能失败或构建成功却缺页。
+- taxonomy-core.ts 为原始名称生成固定长度的 t- 加 32 位十六进制稳定标识；使用无依赖 FNV-1a 128，作为 URL 标识而非安全散列。
+- 静态路径、列表链接、文章页标签链接和分类目录均通过同一映射；标签展示名称、大小写与精确文章匹配保持原样。
+- 全量标签登记最终 URL，冲突显式报错。单测直接制造登记冲突以验证保护分支；测试未假装穷举所有散列输入。
+- Python/SageMath、100%、中文、空格、C#、C++、Python/python 等均有独立构建与浏览器访问验证。
+
+修复 3：测试与实际内容解耦
+- verify.mjs 动态发现文章、分类和标签；无文章时正确跳过只适用于文章的操作，不依赖 RSA slug 或固定示例名单。
+- regression.mjs 清空的仅是已经复制到临时目录中的文章树；用户文章不参与测试夹具、不被删除或修改。
+- tests/fixtures/ 与生成的 QA 文章覆盖旧字段、多分支、三级分类、未分类、特殊标签、默认 demo:false、显式 demo:true 和 draft:true。
+- 对所有夹具分类及全部标签断言完整文章 ID 集合；同时遍历目录与归档链接，验证目标真实返回 200、路径不冲突、数量一致。
+- 删除全部演示夹具与完全空集合时独立运行 verify.mjs；保留公式、高亮、复制、目录、长内容溢出及草稿泄露检查。
+
+已验证通过（实际执行）
+- 环境：Windows，Node v24.21.0、npm 12.1.0、本机 Chrome / Playwright。
+- 独立副本 npm run check：0 errors / 0 warnings / 0 hints。
+- 独立副本 npm run build：真实内容生成 23 个静态页面，19 张文章图片处理成功。
+- 独立副本 npm test：15/15 场景通过；含 8 组生产配置/内容场景、6 组预期失败构建、1 组开发草稿预览；另含分类/标签单测。
+- 根路径：未配置域名、独立域名、用户主页、无演示、空集合；子路径：/notebook/ 与 /ctf.notes/、无演示、空集合、非法分类和冲突构建。
+- 四组无演示/空集合场景还独立调用 verify.mjs，证明测试入口自身不依赖演示内容。
+- 真实文章 npm run verify：全部分类/标签页面、内部链接、代码复制、字号保存、目录目标和 360/390/768px 布局通过，浏览器脚本错误为 0。
+- verify-binary-flow.mjs：1440/768/390px、连续周期、独立亮度、遮挡、减少动画偏好及模拟页面隐藏通过。
+- 替换前逐文件校验与测试副本完全相同；替换后再次执行类型检查、生产构建、verify 及 Binary Flow 检查，均通过。
+- Git diff 检查无意外改动；所有文章正文、19 张图片、首页 Binary Flow 源文件及依赖清单均与基线一致。
+
+残余限制 / 未验证
+- 标签 URL 改用稳定标识；收到的未上线版本中 /tags/原名/ 不提供旧链接别名。标签改名会生成新 URL。
+- 分类名称若仅大小写或 Unicode 规范化形式不同，按跨平台可移植性原则拒绝；需要作者选择统一名称。
+- 未进行真实 GitHub Pages 部署、真实域名验证、Firefox/Safari 或实体手机测试；手机/平板为 Chrome 视口模拟。
+- 没有声称逐像素视觉一致；本次保留收到包内的无搜索框与分类 UI，未新增无关 UI 重构或文章动画。
+- Node 22 最低支持版本未独立复验；本轮运行环境为 Node 24。
+
+本地启动与复验
+  npm ci
+  npm run dev
+  npm run check
+  npm run build
+  npm test
+  npm run verify
+最后一项需要先启动开发服务；预览服务器可通过 PREVIEW_URL 指定。受限环境可设置 ASTRO_TELEMETRY_DISABLED=1。
+
+修改文件清单（相对 1384d44，含收到包内的分类/无搜索设计与本次修复；共 29 项）
+- ARCHIVE-CATEGORIES-CHANGES.md
+- ARCHIVE-CATEGORIES-FIX-REPORT.txt
+- README.md
+- scripts/check-taxonomy.mjs
+- scripts/regression.mjs
+- scripts/test-taxonomy.mjs
+- scripts/verify.mjs
+- src/components/NavIcon.astro
+- src/components/PostList.astro
+- src/content.config.ts
+- src/content/posts/modular-arithmetic.md
+- src/content/posts/rsa-small-exponent.md
+- src/layouts/Base.astro
+- src/lib/filter.ts
+- src/lib/taxonomy-core.ts
+- src/lib/taxonomy.ts
+- src/pages/about.astro
+- src/pages/archive.astro
+- src/pages/categories/[...path].astro
+- src/pages/categories/index.astro
+- src/pages/posts/[...id].astro
+- src/pages/tags/[tag].astro
+- src/styles/components.css
+- src/styles/home.css
+- src/styles/layout.css
+- src/styles/responsive.css
+- tests/fixtures/taxonomy-legacy.md
+- tests/fixtures/taxonomy-special.md
+- tests/fixtures/taxonomy-uncategorized.md
+其中两个演示 Markdown 仅接收原包中的分类 Front Matter 变更，正文保持不变；删除项仅 src/lib/filter.ts（搜索已移除）。

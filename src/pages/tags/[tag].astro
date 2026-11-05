@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts } from '../../lib/posts';
+import { allTags } from '../../lib/taxonomy';
+import { withBase } from '../../lib/paths';
+export async function getStaticPaths() {
+  const tags = allTags(await getPosts());
+  return tags.map(({name, slug}) => ({ params: { tag: slug }, props: { tag: name } }));
+}
+interface Props { tag: string; }
+const { tag } = Astro.props;
+const posts = (await getPosts()).filter(post => post.data.tags.includes(tag));
+---
+<Base title={`#${tag} / 标签 / Rekjo`} active="categories">
+  <main id="main" class="shell archive-page taxonomy-page">
+    <nav aria-label="标签路径" class="taxonomy-breadcrumbs mono"><a href={withBase('/categories/')}>分类目录</a><span aria-hidden="true">/</span><span>标签</span></nav>
+    <h1>#{tag}<span class="accent">。</span></h1>
+    <p class="page-intro">{posts.length} 篇带有此标签的文章。</p>
+    <PostList posts={posts} />
+  </main>
+</Base>

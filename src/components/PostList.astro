@@ -1,0 +1,16 @@
+---
+import { postUrl } from '../lib/paths';
+import { primaryCategory, categoryUrl, categoryLabel, tagUrl } from '../lib/taxonomy';
+import type { CollectionEntry } from 'astro:content';
+interface Props { posts: CollectionEntry<'posts'>[]; startIndex?: number; }
+const { posts, startIndex = 0 } = Astro.props;
+---
+<div class="post-list">
+  {posts.map((post, i) => <article class="post-row" data-post data-id={post.id} data-date={post.data.date.toISOString()} data-draft={post.data.draft}>
+    <span class="post-number mono">{String(startIndex + i + 1).padStart(2, '0')}</span>
+    <div class="post-main"><div class="post-meta mono"><a class="category" href={categoryUrl(primaryCategory(post))}>{categoryLabel(primaryCategory(post))}</a><time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0,10).replaceAll('-', '.')}</time><span>{post.data.minutes} min read</span></div>
+    <h3>{post.data.draft && <span class="draft-badge">草稿</span>}<a href={postUrl(post.id)}>{post.data.title}</a></h3><p>{post.data.description}</p>
+    <div class="tags">{post.data.tags.map(tag => <a href={tagUrl(tag)}>#{tag}</a>)}</div></div>
+    <a class="post-arrow" href={postUrl(post.id)} aria-label={`阅读 ${post.data.title}`}>↗</a>
+  </article>)}
+</div>

@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts } from '../../lib/posts';
+import { allCategoryPaths, categoryContains, categoryUrl, categoryLabel } from '../../lib/taxonomy';
+import { withBase } from '../../lib/paths';
+import type { CategoryPath } from '../../lib/taxonomy';
+export async function getStaticPaths() {
+  const paths = allCategoryPaths(await getPosts());
+  return paths.map(path => ({
+    params: { path: path.join('/') },
+    props: { categoryPath: path },
+  }));
+}
+interface Props { categoryPath: CategoryPath; }
+const { categoryPath } = Astro.props;
+const posts = (await getPosts()).filter(post => categoryContains(post, categoryPath));
+const subcategories = allCategoryPaths(await getPosts()).filter(path =>
+  path.length === categoryPath.length + 1 && categoryPath.every((segment, index) => path[index] === segment),
+);
+---
+<Base title={`${categoryLabel(categoryPath)} / 分类 / Rekjo`} active="categories">
+  <main id="main" class="shell archive-page taxonomy-page">
+    <nav aria-label="分类路径" class="taxonomy-breadcrumbs mono">
+      <a href={withBase('/categories/')}>分类目录</a>
+      {categoryPath.map((name, index) => <><span aria-hidden="true">/</span><a href={categoryUrl(categoryPath.slice(0, index+1))} aria-current={index === categoryPath.length-1 ? 'page' : undefined}>{name}</a></>)}
+    </nav>
+    <h1>{categoryPath[categoryPath.length-1]}<span class="accent">。</span></h1>
+    <p class="page-intro">{posts.length} 篇记录{categoryPath.length > 1 ? ` · ${categoryLabel(categoryPath)}` : ''}</p>
+    {subcategories.length > 0 && <nav class="taxonomy-children" aria-label="子分类">
+      {subcategories.map(path => <a href={categoryUrl(path)}>↳ {path[path.length-1]}</a>)}
+    </nav>}
+    <PostList posts={posts} />
+  </main>
+</Base>
