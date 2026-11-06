@@ -7,11 +7,11 @@ const period = count * pitch;
 const tracks = Array.from({ length: 4 }, (_, track) =>
   Array.from({ length: count }, (_, index) => ({
     digit: ((index * 17 + track * 11 + (index * index >> 2)) % 7) < 3 ? '1' : '0',
-    opacity: 0.15 + ((index * 13 + track * 7) % 9) / 100,
+    opacity: 0.25 + ((index * 13 + track * 7) % 9) / 100,
   })),
 );
 ---
-<div class="binary-flow" aria-hidden="true" data-binary-flow>
+<div class="binary-flow" aria-hidden="true" data-binary-flow data-flow-version="css-tracks-v2">
   {tracks.map((bits, track) => <div class="binary-trajectory" data-binary-track={track}>
     <div class="binary-motion" style={`--binary-period: ${period}px; --binary-duration: ${period / 12}s; --binary-delay: ${-track * 13}s`}>
       {[0, 1, 2].map(copy => <div class="binary-copy" data-binary-copy={copy}>
@@ -35,7 +35,18 @@ const tracks = Array.from({ length: 4 }, (_, track) =>
   }
   .binary-copy { display: flex; flex: 0 0 var(--binary-period); }
   .binary-bit { display: block; flex: 0 0 24px; height: 24px; color: var(--accent); font: 11px / 24px var(--mono); }
-  .binary-trajectory { position: absolute; inset: 0 auto auto 0; transform-origin: 0 0; }
+  /* Always position tracks in CSS. If the JS enhancement fails to load on Pages,
+     the continuous CSS-only animation must still remain visible. */
+  .binary-trajectory {
+    position: absolute;
+    left: -96px;
+    transform: rotate(-20deg);
+    transform-origin: 0 0;
+  }
+  [data-binary-track='0'] { top: 22%; }
+  [data-binary-track='1'] { top: 47%; }
+  [data-binary-track='2'] { top: 72%; }
+  [data-binary-track='3'] { top: 97%; }
 
   .binary-motion {
     display: flex;
@@ -57,7 +68,10 @@ const tracks = Array.from({ length: 4 }, (_, track) =>
   @media (max-width: 760px) {
     .binary-flow { inset: -20px -12px; }
     .binary-bit { font-size: 10px; }
-    [data-binary-track='2'], [data-binary-track='3'] { display: none; }
+    [data-binary-track='0'] { top: 20%; }
+    [data-binary-track='1'] { top: 53%; }
+    [data-binary-track='2'] { top: 84%; }
+    [data-binary-track='3'] { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .binary-motion { animation: none; will-change: auto; }

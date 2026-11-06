@@ -21,7 +21,7 @@ export async function checkHome(page) {
   }
   for (const row of await rows.all()) {
     const styles = await row.evaluate(el => ({ background: getComputedStyle(el).backgroundImage, opacity: getComputedStyle(el).opacity }));
-    assert(styles.background.includes('0.92') && styles.background.includes('0.88'));
+    assert(styles.background.includes('0.88') && styles.background.includes('0.76'));
     assert.equal(styles.opacity, '1', 'text must not inherit card background transparency');
     const box = await row.boundingBox();
     assert(await row.evaluate((el, { x, y }) => el.contains(document.elementFromPoint(x, y)), { x: box.x + box.width / 2, y: box.y + 10 }));

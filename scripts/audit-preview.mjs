@@ -19,6 +19,11 @@ async function walk(dir) {
   }
 }
 await walk(dist);
+const migration = JSON.parse(await fs.readFile(path.join(root, 'migration-manifest.json'), 'utf8').catch(() => 'null'));
+if (migration) {
+  const expected = migration.map(post => post.target.replace(/^\//, '') + 'index.html').sort();
+  assert.deepEqual(pages.filter(file => file.startsWith('posts/')).sort(), expected, 'build must contain exactly the migrated real articles');
+}
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://localhost');

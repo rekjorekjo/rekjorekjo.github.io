@@ -19,14 +19,14 @@
 .latest-heading h1 { margin: 0; font-size: 26px; font-weight: 550; }
 .latest-count { margin-left: 14px; color: var(--muted); font-size: 12px; vertical-align: middle; }
 .latest-list { position: relative; z-index: 1; }
-.latest-list .post-list { display: grid; gap: 20px; }
+.latest-list .post-list { display: grid; gap: 28px; }
 .latest-list .post-row {
   padding: 23px 28px;
   background: linear-gradient(
     to bottom,
-    rgb(9 12 12 / 92%),
-    rgb(9 12 12 / 88%) 48%,
-    rgb(9 12 12 / 92%)
+    rgb(9 12 12 / 88%),
+    rgb(9 12 12 / 76%) 48%,
+    rgb(9 12 12 / 88%)
   );
   border: 1px solid rgb(65 99 81 / 76%);
   border-radius: 3px;
@@ -43,7 +43,7 @@
   .latest-heading { padding-bottom: 18px; margin-bottom: 18px; }
   .latest-heading h1 { font-size: 23px; }
   .latest-heading .text-link { font-size: 12px; }
-  .latest-list .post-list { gap: 16px; }
+  .latest-list .post-list { gap: 24px; }
   .latest-list .post-row { padding: 20px 17px; gap: 12px; }
   .latest-list .post-row h3 { font-size: 19px; }
   .latest-list .post-number { display: none; }

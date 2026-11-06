@@ -8,6 +8,8 @@ const legacyFile = new URL('./legacy-redirects.json', import.meta.url);
 const legacyRedirects = existsSync(legacyFile) ? JSON.parse(readFileSync(legacyFile, 'utf8')) : {};
 
 export default defineConfig({
+  // Keep real and regression content stores isolated when dependencies are shared.
+  cacheDir: './.astro/cache/',
   ...deployment(),
   redirects: legacyRedirects,
   trailingSlash: 'always',

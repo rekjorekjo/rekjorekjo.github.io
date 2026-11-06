@@ -68,7 +68,7 @@ try {
       return { changedChannels: changed, maxChannelDelta: maximum };
     }, [before.toString('base64'), without.toString('base64')]);
     assert(transmission.changedChannels > 0, 'a faint trace of the background should pass through');
-    assert(transmission.maxChannelDelta <= 12, 'transmitted pattern must remain much dimmer than article text');
+    assert(transmission.maxChannelDelta <= 36, 'transmitted pattern must remain much dimmer than article text');
     await page.locator('.binary-flow').evaluate(el => { el.style.visibility = ''; });
     await card.evaluate(el => [...el.children].forEach(child => { child.style.visibility = ''; }));
   }
@@ -118,16 +118,49 @@ try {
     await page.setViewportSize({ width, height });
     await checkHome(page);
     const visibleTracks = await page.locator('[data-binary-track]').evaluateAll(els => els.filter(el => getComputedStyle(el).display !== 'none').length);
-    assert.equal(visibleTracks, width < 760 ? 2 : 4);
+    assert.equal(visibleTracks, width < 760 ? 3 : 4);
+    // CSS provides visible positions even when the JS enhancement fails.
+    const tracksInViewport = await page.locator('[data-binary-track]').evaluateAll(els => els.filter(el => {
+      if (getComputedStyle(el).display === 'none') return false;
+      const rect = el.getBoundingClientRect();
+      return rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
+    }).length);
+    assert(tracksInViewport >= (width < 760 ? 2 : 3), `${name}: fewer than expected visible tracks`);
+    assert.equal(await page.locator('[data-binary-flow]').getAttribute('data-flow-version'), 'css-tracks-v2');
     await page.screenshot({ path: path.join(output, `binary-flow-${name}.png`), fullPage: true });
   }
+  // No-JavaScript fallback is essential: if an Astro script bundle is blocked,
+  // the CSS animation must still be positioned and visible on the homepage.
+  const cssOnly = await browser.newPage({viewport: {width: 390, height: 844}, reducedMotion: 'no-preference'});
+  try {
+    await cssOnly.route(/\.js(?:\?|$)/, route => route.abort());
+    await cssOnly.goto(url, {waitUntil: 'domcontentloaded'});
+    const baseline = await cssOnly.locator('.binary-motion').first().evaluate(el => ({
+      state: getComputedStyle(el).animationPlayState,
+      transform: getComputedStyle(el).transform,
+    }));
+    assert.equal(baseline.state, 'running', 'CSS-only fallback must play without JS');
+    const unobscuredGlyphs = await cssOnly.locator('.binary-bit').evaluateAll(els => els.filter(el => {
+      if (getComputedStyle(el).display === 'none') return false;
+      const r = el.getBoundingClientRect();
+      const x = (r.left + r.right) / 2, y = (r.top + r.bottom) / 2;
+      return x > 0 && x < innerWidth && y > 0 && y < innerHeight &&
+        !document.elementFromPoint(x, y)?.closest('[data-post], .latest-heading, .site-header');
+    }).length);
+    assert(unobscuredGlyphs >= 3, `mobile first viewport has too few exposed digits: ${unobscuredGlyphs}`);
+    await cssOnly.screenshot({ path: path.join(output, 'binary-flow-css-only-mobile.png') });
+    await cssOnly.waitForTimeout(600);
+    assert.notEqual(await cssOnly.locator('.binary-motion').first().evaluate(el => getComputedStyle(el).transform), baseline.transform,
+      'no-JS CSS animation must move, not just render static digits');
+  } finally { await cssOnly.close(); }
+
   const session = await page.context().newCDPSession(page);
   await session.send('Performance.enable');
   const metric = async () => (await session.send('Performance.getMetrics')).metrics.find(m => m.name === 'TaskDuration').value;
   const start = await metric();
   await page.waitForTimeout(3000);
   const taskMilliseconds = Math.round(((await metric()) - start) * 1000);
-  const report = { result: 'passed', periodic, brightnessDurationRangeSeconds: [Math.min(...durations), Math.max(...durations)], cardOcclusion: 'soft transmission checked: background channel difference is nonzero and no greater than 12/255 (text hidden)', viewports: [1440, 768, 390], visibilityLifecycle: 'false hidden state cannot hard-pause visible animation', reducedMotion: 'passed', mainThreadTaskMillisecondsOver3Seconds: taskMilliseconds };
+  const report = { result: 'passed', periodic, brightnessDurationRangeSeconds: [Math.min(...durations), Math.max(...durations)], cardOcclusion: 'soft transmission checked: background channel difference is nonzero and no greater than 36/255 (text hidden)', viewports: [1440, 768, 390], cssOnlyFallback: 'passed', viewportPause: 'passed', visibilityLifecycle: 'false hidden state cannot hard-pause visible animation', reducedMotion: 'passed', mainThreadTaskMillisecondsOver3Seconds: taskMilliseconds };
   await fs.writeFile(path.join(output, 'binary-flow-verification.json'), JSON.stringify(report, null, 2));
   console.log(report);
 } finally { await browser.close(); }
