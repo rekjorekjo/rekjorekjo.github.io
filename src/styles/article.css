@@ -427,23 +427,21 @@
   .mobile-toc-trigger {
     position: fixed;
     z-index: 105;
-    right: 18px;
-    bottom: max(20px, env(safe-area-inset-bottom));
-    min-width: 70px;
-    min-height: 48px;
+    right: calc(16px + env(safe-area-inset-right));
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
-    padding: 0 14px;
+    padding: 0;
     color: #def6e9;
     border: 1px solid #538a68;
-    border-radius: 25px;
+    border-radius: 50%;
     background: #15251d;
     box-shadow: 0 6px 24px rgb(0 0 0 / 48%);
-    font-size: 13px;
   }
-  .mobile-toc-trigger span:first-child { font-size: 19px; line-height: 1; }
+  .mobile-toc-trigger .mobile-toc-icon { display: block; flex: none; }
   .mobile-toc-backdrop:not([hidden]) {
     position: fixed;
     z-index: 105;

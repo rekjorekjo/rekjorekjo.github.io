@@ -82,22 +82,32 @@ try {
   assert(durations.every(value => value >= 1.5 && value <= 3));
   assert(new Set(durations).size > 1);
 
-  // Simulate the native visibility lifecycle and verify both animation channels stop.
+  // A false hidden state must not hard-pause the animation. A browser can report
+  // a page as hidden while an embedded preview is still being viewed.
   await page.evaluate(() => {
     Object.defineProperty(document, 'hidden', { configurable: true, value: true });
     document.dispatchEvent(new Event('visibilitychange'));
   });
-  assert.equal(await motion.evaluate(el => getComputedStyle(el).animationPlayState), 'paused');
-  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-  const paused = await motion.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
-  const brightness = await page.locator('.binary-bit').evaluateAll(els => els.map(el => el.style.opacity));
+  assert.equal(await motion.evaluate(el => getComputedStyle(el).animationPlayState), 'running');
+  assert.equal(await page.locator('[data-binary-flow]').getAttribute('data-paused'), null);
+  const beforeHiddenState = await motion.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
   await page.waitForTimeout(500);
-  assert(Math.abs((await motion.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41)) - paused) < 0.01);
-  assert.deepEqual(await page.locator('.binary-bit').evaluateAll(els => els.map(el => el.style.opacity)), brightness);
+  assert.notEqual(await motion.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41), beforeHiddenState);
+  await page.evaluate(() => { delete document.hidden; });
+
+  // Preserve the viewport pause even though document.hidden no longer controls it.
   await page.evaluate(() => {
-    delete document.hidden;
-    document.dispatchEvent(new Event('visibilitychange'));
+    const spacer = document.createElement('div');
+    spacer.id = 'qa-binary-offscreen-spacer';
+    spacer.style.height = `${innerHeight * 3}px`;
+    document.body.append(spacer);
+    scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' });
   });
+  await page.waitForFunction(() => document.querySelector('[data-binary-flow]').hasAttribute('data-paused'));
+  assert.equal(await motion.evaluate(el => getComputedStyle(el).animationPlayState), 'paused');
+  await page.evaluate(() => { document.getElementById('qa-binary-offscreen-spacer').remove(); scrollTo({ top: 0, behavior: 'instant' }); });
+  await page.waitForFunction(() => !document.querySelector('[data-binary-flow]').hasAttribute('data-paused'));
+  assert.equal(await motion.evaluate(el => getComputedStyle(el).animationPlayState), 'running');
 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.waitForFunction(() => document.querySelector('[data-binary-flow]').hasAttribute('data-reduced'));
@@ -117,7 +127,7 @@ try {
   const start = await metric();
   await page.waitForTimeout(3000);
   const taskMilliseconds = Math.round(((await metric()) - start) * 1000);
-  const report = { result: 'passed', periodic, brightnessDurationRangeSeconds: [Math.min(...durations), Math.max(...durations)], cardOcclusion: 'soft transmission checked: background channel difference is nonzero and no greater than 12/255 (text hidden)', viewports: [1440, 768, 390], visibilityLifecycle: 'simulated and passed', reducedMotion: 'passed', mainThreadTaskMillisecondsOver3Seconds: taskMilliseconds };
+  const report = { result: 'passed', periodic, brightnessDurationRangeSeconds: [Math.min(...durations), Math.max(...durations)], cardOcclusion: 'soft transmission checked: background channel difference is nonzero and no greater than 12/255 (text hidden)', viewports: [1440, 768, 390], visibilityLifecycle: 'false hidden state cannot hard-pause visible animation', reducedMotion: 'passed', mainThreadTaskMillisecondsOver3Seconds: taskMilliseconds };
   await fs.writeFile(path.join(output, 'binary-flow-verification.json'), JSON.stringify(report, null, 2));
   console.log(report);
 } finally { await browser.close(); }

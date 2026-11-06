@@ -17,7 +17,11 @@ export function initBinaryFlow(root: HTMLElement) {
   }
 
   function sync() {
-    const paused = document.hidden || !visible;
+    // Only viewport intersection pauses motion. Some embedded/preview browsers
+    // report document.hidden even while their page is displayed; CSS must not
+    // become permanently stuck in that state. Background tabs are throttled
+    // natively by browsers.
+    const paused = !visible;
     root.toggleAttribute('data-paused', paused);
     root.toggleAttribute('data-reduced', reduced.matches);
     if (timer !== undefined) clearInterval(timer);
@@ -34,7 +38,7 @@ export function initBinaryFlow(root: HTMLElement) {
         if (now < phases[index].next) return;
         const duration = 1500 + Math.random() * 1500;
         const peak = Math.random() < 0.06;
-        const opacity = peak ? 0.25 + Math.random() * 0.05 : 0.025 + Math.random() * 0.12;
+        const opacity = peak ? 0.30 + Math.random() * 0.08 : 0.13 + Math.random() * 0.14;
         copies.forEach(bit => {
           bit.style.transition = `opacity ${duration}ms ease-in-out`;
           bit.style.opacity = String(opacity);
@@ -50,7 +54,6 @@ export function initBinaryFlow(root: HTMLElement) {
   });
   observer.observe(root);
   new ResizeObserver(position).observe(root);
-  document.addEventListener('visibilitychange', sync);
   reduced.addEventListener('change', sync);
   mobile.addEventListener('change', () => { position(); sync(); });
   position();

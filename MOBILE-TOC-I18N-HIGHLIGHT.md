@@ -64,3 +64,4 @@ If `git apply --check` fails, do **not** force apply: inspect changes against th
 - Active-heading tracking uses exactly the headings represented by the TOC, excluding empty or unsupported headings.
 - Regression coverage includes output aliases, Tab/Shift+Tab cycling, Escape, backdrop dismissal, persisted language and no-JavaScript mobile navigation.
 - After Pages file synchronization exceeded its default 10-minute deadline, the deployment wait was extended to 30 minutes. The deployment address, content and access settings are unchanged.
+- Follow-up binary/mobile patch: increase glyph brightness, rely on viewport intersection rather than potentially false document visibility to pause the flow, preserve reduced-motion behavior, and use a 48px icon-only mobile TOC trigger with its translated accessible label. Browser-native background throttling is retained; viewport pause/resume and the touch target are tested.

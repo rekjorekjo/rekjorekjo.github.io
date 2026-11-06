@@ -7,7 +7,7 @@ const period = count * pitch;
 const tracks = Array.from({ length: 4 }, (_, track) =>
   Array.from({ length: count }, (_, index) => ({
     digit: ((index * 17 + track * 11 + (index * index >> 2)) % 7) < 3 ? '1' : '0',
-    opacity: 0.06 + ((index * 13 + track * 7) % 9) / 100,
+    opacity: 0.15 + ((index * 13 + track * 7) % 9) / 100,
   })),
 );
 ---

@@ -252,6 +252,10 @@ try {
                 assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
                 if (width < 760) {
                     assert(await page.locator('#mobile-toc-trigger').isVisible());
+                    assert.equal(await page.locator('#mobile-toc-trigger svg').count(), 1, 'compact TOC button has a single icon');
+                    assert.equal((await page.locator('#mobile-toc-trigger').innerText()).trim(), '', 'TOC button has no visible text');
+                    const triggerSize = await page.locator('#mobile-toc-trigger').boundingBox();
+                    assert(triggerSize.width >= 44 && triggerSize.height >= 44, 'touch target must be at least 44px');
                     await page.locator('.toc nav').waitFor({ state: 'hidden' });
                     await page.locator('#mobile-toc-trigger').click();
                     await page.locator('.toc nav').waitFor({ state: 'visible' });
