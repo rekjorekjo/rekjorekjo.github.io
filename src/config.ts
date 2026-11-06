@@ -9,9 +9,9 @@ export const author = {
   name: site.name,
   bio: site.description,
   signature: '在代码与数学之间，保留好奇心。',
-  avatar: '', // Optional: e.g. '/avatar.jpg' in public/ or a complete image URL
+  avatar: '/images/headimage.jpg',
   interests: ['CTF', 'Cryptography', 'Python / SageMath'],
-  email: '',
-  github: '', // Full URL, e.g. 'https://github.com/yourname'
+  email: '3563654423@qq.com',
+  github: 'https://github.com/rekjorekjo',
   x: '', // Full URL, e.g. 'https://x.com/yourname'
 };

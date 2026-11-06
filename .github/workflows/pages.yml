@@ -1,4 +1,4 @@
-name: Deploy isolated Astro preview
+name: Deploy Astro main blog
 on:
   push:
     branches: [main]
@@ -6,15 +6,15 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: astro-preview-pages
+  group: astro-main-pages
   cancel-in-progress: false
 env:
   SITE_URL: https://rekjorekjo.github.io
-  BASE_PATH: /astro-preview/
+  BASE_PATH: /
   ASTRO_TELEMETRY_DISABLED: '1'
 jobs:
   build:
-    if: github.repository == 'rekjorekjo/astro-preview'
+    if: github.repository == 'rekjorekjo/rekjorekjo.github.io'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -33,7 +33,7 @@ jobs:
         with:
           path: dist
   deploy:
-    if: github.repository == 'rekjorekjo/astro-preview'
+    if: github.repository == 'rekjorekjo/rekjorekjo.github.io'
     needs: build
     runs-on: ubuntu-latest
     permissions:

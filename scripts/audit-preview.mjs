@@ -7,7 +7,8 @@ import { chromium } from '@playwright/test';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = path.join(root, 'dist');
-const base = '/astro-preview/';
+const base = process.env.BASE_PATH ?? '/';
+const redirects = JSON.parse(await fs.readFile(path.join(root, 'legacy-redirects.json'), 'utf8').catch(() => '{}'));
 const pages = [];
 async function walk(dir) {
   for (const entry of await fs.readdir(dir, {withFileTypes: true})) {
@@ -26,7 +27,7 @@ const server = createServer(async (req, res) => {
     const file = path.resolve(dist, relative);
     assert(file.startsWith(dist + path.sep));
     const body = await fs.readFile(file);
-    const types = {'.html':'text/html; charset=utf-8', '.css':'text/css', '.js':'text/javascript', '.svg':'image/svg+xml', '.webp':'image/webp', '.png':'image/png', '.woff2':'font/woff2'};
+    const types = {'.html':'text/html; charset=utf-8', '.css':'text/css', '.js':'text/javascript', '.svg':'image/svg+xml', '.webp':'image/webp', '.png':'image/png', '.woff2':'font/woff2', '.pdf':'application/pdf'};
     res.setHeader('Content-Type', types[path.extname(file)] ?? 'application/octet-stream');
     res.end(body);
   } catch { res.writeHead(404).end(); }
@@ -40,10 +41,23 @@ try {
   const page = await browser.newPage();
   page.on('pageerror', error => failures.push(error.message));
   page.on('response', response => { if (response.url().startsWith(origin) && response.status() >= 400) failures.push(`${response.status()} ${response.url()}`); });
-  page.on('requestfailed', request => failures.push(`${request.url()}: ${request.failure()?.errorText}`));
+  page.on('requestfailed', request => {
+    if (!request.url().startsWith('http')) return;
+    // Chrome's built-in PDF viewer can hand off an iframe request with ERR_ABORTED.
+    // Every local PDF URL is also fetched and required to return HTTP 200 below.
+    if (request.failure()?.errorText === 'net::ERR_ABORTED' && new URL(request.url()).pathname.endsWith('.pdf')) return;
+    failures.push(`${request.url()}: ${request.failure()?.errorText}`);
+  });
   for (const file of pages) {
     const route = file.replace(/index\.html$/, '');
+    if (redirects['/' + route]) continue;
     await page.goto(origin + base + route, {waitUntil:'networkidle'});
+    if (route.startsWith('posts/')) {
+      await page.setViewportSize({width:360,height:844});
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${file}: mobile overflow`);
+      await page.setViewportSize({width:1280,height:720});
+    }
+    assert.equal(await page.locator('.katex-error').count(), 0, `${file}: math rendering error`);
     const canonical = await page.locator('link[rel=canonical]').getAttribute('href').catch(() => null);
     if (canonical) assert.equal(canonical, new URL(base + route, 'https://rekjorekjo.github.io').href);
     for (const value of await page.locator('[href],[src]').evaluateAll(els => els.flatMap(el => [el.getAttribute('href'),el.getAttribute('src')]).filter(v => v?.startsWith('/')))) {
@@ -66,6 +80,16 @@ try {
     }
   }
   for (const link of links) assert.equal((await page.request.get(origin + link)).status(), 200, link);
+  for (const [from, to] of Object.entries(redirects)) {
+    const response = await page.request.get(origin + from);
+    assert.equal(response.status(), 200, from);
+    assert((await response.text()).includes(`content="0;url=${to}"`), `${from}: missing redirect to ${to}`);
+    assert.equal((await page.request.get(origin + to)).status(), 200, from);
+  }
+  for (const [from, to] of Object.entries(redirects).slice(0, 2)) {
+    await page.goto(origin + from);
+    await page.waitForURL(origin + to);
+  }
   assert.deepEqual(failures, []);
-  console.log(JSON.stringify({result:'passed', pages:pages.length, internalUrls:links.size, images, articlesWithLightbox:lightboxes, failures}, null, 2));
+  console.log(JSON.stringify({result:'passed', pages:pages.length, legacyRedirects:Object.keys(redirects).length, internalUrls:links.size, images, articlesWithLightbox:lightboxes, failures}, null, 2));
 } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }

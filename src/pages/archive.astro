@@ -3,10 +3,11 @@ import Base from '../layouts/Base.astro';
 import PostList from '../components/PostList.astro';
 import { getPosts } from '../lib/posts';
 import { withBase } from '../lib/paths';
+import { publicationDay } from '../lib/dates';
 const posts = await getPosts();
 const groups: { year: string; months: { month: string; posts: typeof posts; startIndex: number }[] }[] = [];
 for (const [index, post] of posts.entries()) {
-  const date = post.data.date.toISOString();
+  const date = publicationDay(post.data.date);
   const year = date.slice(0, 4);
   const month = date.slice(5, 7);
   let group = groups.find(value => value.year === year);

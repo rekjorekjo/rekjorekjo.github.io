@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../../lib/paths';
+import { publicationDay } from '../../lib/dates';
 import { primaryCategory, categoryUrl, categoryLabel, tagUrl } from '../../lib/taxonomy';
 import Base from '../../layouts/Base.astro';
 import { render } from 'astro:content';
@@ -10,7 +11,7 @@ export async function getStaticPaths() { return (await getPosts()).map(post => (
 interface Props { post: CollectionEntry<'posts'>; }
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
-const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
+const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h.text.trim());
 ---
 <Base title={`${post.data.title} / Rekjo`} description={post.data.description} active="archive" noindex={post.data.draft}>
   <div id="reading-progress" aria-hidden="true"></div>
@@ -18,7 +19,7 @@ const toc = headings.filter(h => h.depth === 2 || h.depth === 3);
     <a href={withBase('/archive/')} class="text-link back-link">← 所有记录</a>
     <div class:list={['article-grid', { 'has-notices': post.data.draft || post.data.demo }]}>
       <header class="article-header">
-        <div class="post-meta mono"><a class="category" href={categoryUrl(primaryCategory(post))}>{categoryLabel(primaryCategory(post))}</a><time datetime={post.data.date.toISOString()}>{post.data.date.toISOString().slice(0,10)}</time><span>{post.data.minutes} min read</span></div>
+        <div class="post-meta mono"><a class="category" href={categoryUrl(primaryCategory(post))}>{categoryLabel(primaryCategory(post))}</a><time datetime={post.data.date.toISOString()}>{publicationDay(post.data.date)}</time><span>{post.data.minutes} min read</span></div>
         <h1>{post.data.title}</h1>
         <p>{post.data.description}</p>
         <div class="tags">{post.data.tags.map(tag => <a href={tagUrl(tag)}>#{tag}</a>)}</div>
