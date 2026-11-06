@@ -1,7 +1,6 @@
 ---
 title: 3.4_解析函数与调和函数
-description: 在上一节已经证明：在区域 D 内解析的函数有任意阶导数。 由 C.-R. 方程 begincases dfracpartial
-  upartial x=dfracpartial vpartial y,6pt dfracpartial upartial y=-dfracpartial
+description: 在上一节已经证明：在区域 D 内解析的函数有任意阶导数。
 date: 2026-09-24T03:56:02.000Z
 categories:
   - - ComplexAnalysis

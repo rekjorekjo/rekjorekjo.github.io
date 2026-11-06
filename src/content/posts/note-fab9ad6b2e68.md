@@ -1,8 +1,6 @@
 ---
 title: shctf_2026
 description: 翻翻wp的时候偶然看到了shctf，原来当时写的并不少，遂打算发出来
-  其实感觉质量还不错的，只是说crypto的md5碰撞...这种题个人感觉没有太大意义，纯比拼谁的电脑性能好（？）
-  反正我当时没爆出来...hashclash至今找不到编译好的版本也是没绷住。 misc Evan
 date: 2026-03-20T04:37:06.000Z
 categories:
   - Practice

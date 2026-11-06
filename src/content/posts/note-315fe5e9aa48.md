@@ -1,8 +1,6 @@
 ---
 title: LilacCTF_2026
-description: Summary 第一次参加xctf联赛，和xiangrongyu师傅一起组建了一支临时战队rx，没想到战绩喜人
-  作为rx的首战还是打出了气势，各位师傅都辛苦了~可惜这次crypto没怎么做，ai忘用了，不然说不定能冲前30 继续努力喵！ 以下是本人题解： Misc
-  Welcome
+description: 第一次参加xctf联赛，和xiangrongyu师傅一起组建了一支临时战队rx，没想到战绩喜人
 date: 2026-02-01T02:06:30.000Z
 categories:
   - competitions

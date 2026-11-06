@@ -1,8 +1,6 @@
 ---
 title: adworld_misc_6
-description: Steganography 7-2 答辩 regexpire 没啥意思 Mysterious-GIF 有一些诡异，
-  不过binwalk从gif分离出zip是没想到的 随波逐流不知道为啥分不出 流量分析 arrdeepee 没有见过的流量...不会喵 看看官wp吧
-  HITB4451
+description: 不过binwalk从gif分离出zip是没想到的
 date: 2026-01-21T10:23:30.000Z
 categories:
   - Practice

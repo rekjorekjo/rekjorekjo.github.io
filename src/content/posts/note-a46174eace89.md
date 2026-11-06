@@ -1,8 +1,6 @@
 ---
 title: 3.1_复积分的引入
-description: 今后提到的曲线，一般是光滑曲线或逐段光滑曲线，因而是可求长的。 逐段光滑的简单闭曲线称作周线。 定义 设有向曲线
-  C：z=z(t)（alphale tlebeta），以a=z(alpha)为起点，b=z(beta)为终点，f(z) 沿 C 有定义。顺着 C 从 a 到
-  b 的方向
+description: 今后提到的曲线，一般是光滑曲线或逐段光滑曲线，因而是可求长的。
 date: 2026-08-20T02:31:57.000Z
 categories:
   - - ComplexAnalysis

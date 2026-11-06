@@ -1,8 +1,6 @@
 ---
 title: adworld_misc_3
-description: Steganography Py-Py-Py 这题没啥意思
-  参考https://blog.csdn.net/2402_87950092/article/details/155359489 肥宅快乐题 同上 4-1
-  ^附件:94bcfe60a3d3409bb77823c70a4c0
+description: ^附件:94bcfe60a3d3409bb77823c70a4c0245.zip
 date: 2026-01-12T16:42:00.000Z
 categories:
   - Practice

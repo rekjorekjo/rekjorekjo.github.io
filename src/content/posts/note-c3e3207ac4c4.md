@@ -1,8 +1,6 @@
 ---
 title: adworld_misc_2
-description: Steganography low ^附件:15a04eedcabe43978bb692c21a0f1b52.rar
-  low，很明显是LSB隐写，但是是bmp，这题很有意思 解答一：https://georgeom.net/StegOnline/upload 梭哈
-  解答二：ste
+description: ^附件:15a04eedcabe43978bb692c21a0f1b52.rar
 date: 2026-01-12T09:06:48.000Z
 categories:
   - Practice

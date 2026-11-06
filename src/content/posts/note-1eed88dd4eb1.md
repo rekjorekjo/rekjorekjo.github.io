@@ -1,7 +1,6 @@
 ---
 title: 0xGame2026-week2-wp
-description: "Misc 小伊卡...不胖...不胖...（已黑化） 通过 PNG 的 IDAT 解压长度推导可能的宽高，再利用未被修改的 IHDR
-  CRC32 精确匹配原始宽高 Zip医生 一开始想碰碰运气打 py，盲猜一手 !/usr/bin/env python3 没想到运气不好 只能打 "
+description: 通过 PNG 的 IDAT 解压长度推导可能的宽高，再利用未被修改的 IHDR CRC32 精确匹配原始宽高
 date: 2026-10-21T13:09:49.000Z
 categories:
   - competitons

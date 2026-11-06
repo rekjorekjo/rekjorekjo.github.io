@@ -1,7 +1,6 @@
 ---
 title: UniCTF_2026
-description: Summary 新神赛，我真不知道设置新生赛道何意味 全是老登，幸好队友带飞，不然寄了 成绩还没出，能不能吃KFC看天意了
-  目前团队总榜第26，新生赛道第12，个人榜第49 Misc Welcome UniCTFHe110_Uni 工厂应急流量分析 任务 1：谁把阀门打开了？ 2
+description: 目前团队总榜第26，新生赛道第12，个人榜第49
 date: 2026-01-31T14:36:55.000Z
 categories:
   - competitions

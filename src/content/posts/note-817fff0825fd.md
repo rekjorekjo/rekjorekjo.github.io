@@ -1,7 +1,6 @@
 ---
 title: moectf_2025_misc
-description: 从此开始 签到 moectfWelcome_to_MoeCTF_2025 misc Steganography Misc入门指北
-  欢迎来到misc的世界^_^ 想要的flag就藏在入门指北里面，快去找找看吧~ ^附件:miscru_men_zhi_bei.pdf pdf最下方，发
+description: moectfWelcome_to_MoeCTF_2025
 date: 2026-01-22T15:22:05.000Z
 categories:
   - Practice

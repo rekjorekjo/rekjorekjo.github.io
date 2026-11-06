@@ -1,7 +1,7 @@
 ---
 title: Qt 窗口部件
-description: 1 基础窗口部件QWidget QWidget类是所有用户界面对象的基类，即基础窗口部件。 QWidget 继承自 QObject 和
-  QPaintDevice。 QObject 提供 Qt 对象模型、信号槽、父子对象等机制； QPaintDevice 表示该对象可以作为绘图设备
+description: QWidget类是所有用户界面对象的基类，即基础窗口部件。 QWidget 继承自 QObject 和 QPaintDevice。
+  QObject 提供 Qt 对象模型、信号槽、父子对象等机制； QP
 date: 2026-05-27T11:58:05.000Z
 categories:
   - Qt

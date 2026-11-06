@@ -1,8 +1,6 @@
 ---
 title: CISCN_19th
-description: reverse Eternum 打开ida发现函数巨少，怀疑加壳，exeinfope打开检测到UPX
-  执行后发现体积增加一倍，大概率成功了。ida正常打开 搜索函数发现找不到main.main函数，这里可以使用工具恢复符号表，注意是go语言
-  下载GoReSym 先生成syms.j
+description: 打开ida发现函数巨少，怀疑加壳，exeinfope打开检测到UPX
 date: 2026-01-27T14:50:46.000Z
 categories:
   - competitions

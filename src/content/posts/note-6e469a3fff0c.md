@@ -1,7 +1,6 @@
 ---
 title: adworld_misc_5
-description: Steganography 4433 答辩 pyHAHA 难度爆炸，看wp吧 flagH4pPy_pY_C0dlng 传感器2
-  题目重复 Russian-zips ^附件:c0716ce42b364edd8e0801180ae52705.zip zip是伪加密，改掉就行 剩下的没
+description: ^附件:c0716ce42b364edd8e0801180ae52705.zip
 date: 2026-01-21T06:55:57.000Z
 categories:
   - Practice

@@ -1,8 +1,7 @@
 ---
 title: SUSCTF2026-newcomers-writeup
-description: <div class="post-spacer" aria-hidden="true"</div <div
-  class="post-spacer" aria-hidden="true"</div
-  第一次参与CTF正式赛事的出题工作，非常感谢群主大大的信任和支持，以及各位师傅的包容
+description: 第一次参与CTF正式赛事的出题工作，非常感谢群主大大的信任和支持，以及各位师傅的包容 molmol 这份 Writeup
+  是从出题人视角写的，里面附了一些有趣的切片和出题人的碎碎念😀 大家可以当个乐
 date: 2026-10-09T08:33:28.000Z
 categories:
   - competitions

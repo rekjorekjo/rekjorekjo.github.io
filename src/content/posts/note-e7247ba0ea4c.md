@@ -1,7 +1,6 @@
 ---
 title: AbstractAlgebra_0
-description: 0 引言 这是一本personal learning diary，主要基于《近世代数（第二版）》--韩士安 林磊 著 教材
-  pdf下载：https://gitee.com/consthall/Algebraic-Structure/repository/archive/main.
+description: 这是一本personal learning diary，主要基于《近世代数（第二版）》--韩士安 林磊 著 教材
 date: 2026-02-11T09:46:12.000Z
 categories:
   - - AbstractAlgebra
