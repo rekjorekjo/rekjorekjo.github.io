@@ -17,16 +17,18 @@ const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.sit
     <title>{title}</title>
   </head>
   <body>
-    <a class="skip-link" href="#main">跳到内容</a>
+    <a class="skip-link" href="#main" data-i18n="skip">跳到内容</a>
     <header class="site-header shell">
-      <a class="brand" href={withBase('/')} aria-label="Rekjo 首页"><span class="brand-icon">&gt;_</span> {site.name}<span class="brand-slash"> /</span></a>
-      <nav aria-label="主导航">
-        <a href={withBase('/')} aria-current={active === 'home' ? 'page' : undefined}>首页</a>
-        <a href={withBase('/archive/')} aria-current={active === 'archive' ? 'page' : undefined}>归档</a>
-        <a href={withBase('/categories/')} aria-current={active === 'categories' ? 'page' : undefined}>分类</a>
-        <a href={withBase('/about/')} aria-current={active === 'about' ? 'page' : undefined}>关于</a>
+      <a class="brand" href={withBase('/')} aria-label="Rekjo 首页" data-i18n-aria="brandHome"><span class="brand-icon">&gt;_</span> {site.name}<span class="brand-slash"> /</span></a>
+      <nav aria-label="主导航" data-i18n-aria="navigation">
+        <a href={withBase('/')} aria-current={active === 'home' ? 'page' : undefined} data-i18n="home">首页</a>
+        <a href={withBase('/archive/')} aria-current={active === 'archive' ? 'page' : undefined} data-i18n="archive">归档</a>
+        <a href={withBase('/categories/')} aria-current={active === 'categories' ? 'page' : undefined} data-i18n="categories">分类</a>
+        <a href={withBase('/about/')} aria-current={active === 'about' ? 'page' : undefined} data-i18n="about">关于</a>
       </nav>
+      <button class="language-switch mono" type="button" data-language-switch aria-label="Switch interface to English" title="Switch interface to English">EN</button>
     </header>
     <slot />
+    <script>import '../scripts/site-language';</script>
   </body>
 </html>

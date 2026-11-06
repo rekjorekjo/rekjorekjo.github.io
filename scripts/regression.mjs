@@ -65,7 +65,9 @@ try {
     await fs.writeFile(path.join(content, 'assets', 'qa-lightbox.png'), Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAFElEQVR4nGM0ygtgwA2Y8MiNYGkALgMBBMh1O8wAAAAASUVORK5CYII=', 'base64'));
     for (let i = 0; i < 8; i++)
         await fs.writeFile(path.join(content, `qa-${i}.md`), `---\ntitle: 'QA ${i}'\ndescription: searchable\ndate: 2099-01-01\n${i === 0 ? 'categories: [Notes, Number Theory]' : 'category: Notes'}\ntags: [${i % 2 ? 'Python3' : 'Python'}, QA]\nminutes: 1\n${i === 1 ? 'demo: true\n' : ''}---\n## Proof\n\n| Wide | Table |\n| --- | --- |\n| xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx | value |\n\n$x^2$\n\n$$\\sum_{i=1}^{n}i=\\frac{n(n+1)}2$$\n\n\`\`\`python\nprint("proofxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")\n\`\`\`\n\n\`\`\`sage\nInteger(3)^2\n\`\`\`\n\n\`\`\`sagemath\nInteger(4)^2\n\`\`\`\n`);
-    await fs.appendFile(path.join(content, 'qa-0.md'), '\n![QA image](./assets/qa-lightbox.png)\n');
+    await fs.appendFile(path.join(content, 'qa-0.md'), '\n![QA image](./assets/qa-lightbox.png)\n\n```text\n[+] Sample output 200 OK\n```\n\n```bash\npython3 solve.py\n```\n');
+    await fs.appendFile(path.join(content, 'qa-0.md'), Array.from({length: 26}, (_, i) => `\n## QA heading ${i + 1}\n\nLong chapter filler content.\n`).join('') + '\n' + 'More notes after the final heading.\n\n'.repeat(20));
+    for (const kind of ['plaintext', 'output', 'log', 'ansi']) await fs.appendFile(path.join(content, 'qa-0.md'), `\n\n\`\`\`${kind}\n[+] Terminal output 200 OK\n\`\`\`\n`);
     const noDescriptionFile = path.join(content, 'qa-2.md');
     await fs.writeFile(noDescriptionFile, (await fs.readFile(noDescriptionFile, 'utf8')).replace('description: searchable\n', ''));
     await fs.writeFile(path.join(content, 'qa-private.md'), `---\ntitle: PRIVATE_DRAFT_SENTINEL\ndescription: PRIVATE_DRAFT_SENTINEL\ndate: 2100-01-01\ncategory: CTF\ntags: [PRIVATE_DRAFT_SENTINEL]\nminutes: 1\ndraft: true\n---\nPRIVATE_DRAFT_BODY_SENTINEL`);
@@ -172,6 +174,14 @@ try {
             assert.equal(await page.locator('#about-notes-title').count(), optional ? 1 : 0);
             assert.equal(await page.getByText('暂未公开', {exact: true}).count(), 0);
             assert.deepEqual(await page.locator('.site-header nav a').allTextContents(), ['首页', '归档', '分类', '关于']);
+            await page.locator('[data-language-switch]').click();
+            assert.deepEqual(await page.locator('.site-header nav a').allTextContents(), ['Home', 'Archive', 'Categories', 'About']);
+            assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+            await page.reload();
+            await page.waitForFunction(() => document.documentElement.lang === 'en');
+            assert.equal(await page.locator('html').getAttribute('lang'), 'en', 'interface language should persist');
+            await page.locator('[data-language-switch]').click();
+            assert.equal(await page.locator('html').getAttribute('lang'), 'zh-CN');
             await page.goto(origin + base + 'categories/');
             assert(await page.locator('.category-entry').count() > 0);
             assert.equal(await page.locator('#search').count(), 0);
@@ -219,9 +229,18 @@ try {
                 assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'), site + base + 'posts/qa-0/');
             assert(await page.locator('.katex').count() >= 2);
             assert.equal(await page.locator('.katex-error').count(), 0);
-            for (const pre of await page.locator('.prose pre').all())
-                assert(await pre.locator('span[style]').count() > 0);
-            assert.equal(await page.locator('.code-wrapper').count(), 3);
+            for (const pre of await page.locator('.prose pre').all()) {
+                const kind = await pre.locator('xpath=..').getAttribute('data-code-kind');
+                if (kind !== 'output') assert(await pre.locator('span[style]').count() > 0);
+            }
+            assert.equal(await page.locator('.code-wrapper').count(), 9);
+            assert.equal(await page.locator('.code-wrapper[data-code-kind="output"]').count(), 5);
+            assert.equal(await page.locator('.code-wrapper[data-code-kind="output"] .code-toolbar > span').first().textContent(), '输出');
+            assert.equal(await page.locator('.code-wrapper[data-code-kind="output"] pre span').evaluateAll(els => new Set(els.map(el => getComputedStyle(el).color)).size), 1, 'output tokens remain neutral');
+            await page.locator('[data-language-switch]').click();
+            assert.equal(await page.locator('.code-wrapper[data-code-kind="output"] .code-toolbar > span').first().textContent(), 'Output');
+            assert.equal(await page.locator('.code-toolbar button').first().textContent(), 'Copy code');
+            await page.locator('[data-language-switch]').click();
             const code = await page.locator('.prose pre code').first().textContent();
             await page.locator('.code-toolbar button').first().click();
             assert.equal((await page.evaluate(() => navigator.clipboard.readText())).replaceAll('\r\n', '\n'), code);
@@ -232,12 +251,44 @@ try {
                 await page.setViewportSize({ width, height: 844 });
                 assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
                 if (width < 760) {
-                    assert(!(await page.locator('.toc nav').isVisible()));
-                    await page.locator('.toc-toggle').focus();
-                    await page.keyboard.press('Enter');
-                    assert(await page.locator('.toc nav').isVisible());
-                    await page.keyboard.press('Enter');
+                    assert(await page.locator('#mobile-toc-trigger').isVisible());
+                    await page.locator('.toc nav').waitFor({ state: 'hidden' });
+                    await page.locator('#mobile-toc-trigger').click();
+                    await page.locator('.toc nav').waitFor({ state: 'visible' });
+                    assert.equal(await page.locator('#mobile-toc-trigger').getAttribute('aria-expanded'), 'true');
+                    assert.equal(await page.locator('#article-toc').getAttribute('aria-modal'), 'true');
+                    await page.keyboard.press('Shift+Tab');
+                    assert(await page.locator('.toc .to-top').evaluate(el => el === document.activeElement));
+                    await page.keyboard.press('Tab');
+                    assert(await page.locator('.toc-toggle').evaluate(el => el === document.activeElement));
+                    await page.keyboard.press('Escape');
+                    await page.locator('.toc nav').waitFor({ state: 'hidden' });
+                    assert(await page.locator('#mobile-toc-trigger').evaluate(el => el === document.activeElement));
+                    await page.locator('#mobile-toc-trigger').click();
+                    await page.locator('.toc nav').waitFor({ state: 'visible' });
+                    await page.locator('#mobile-toc-backdrop').click({position:{x:5,y:5}});
+                    await page.locator('.toc nav').waitFor({ state:'hidden' });
+                    await page.locator('#mobile-toc-trigger').click();
+                    await page.locator('.toc nav').waitFor({ state: 'visible' });
+                    await page.locator('.toc nav a').last().click();
+                    await page.locator('.toc nav').waitFor({ state: 'hidden' });
+                    await page.waitForFunction(() => Math.abs(document.querySelector('#qa-heading-26').getBoundingClientRect().top) < 120);
+                    await page.locator('#mobile-toc-trigger').click();
+                    await page.locator('.toc nav').waitFor({state:'visible'});
+                    assert(await page.locator('.toc nav .is-active').count() === 1, 'current chapter should be highlighted');
+                    await page.locator('.toc-toggle').click();
+                    await page.locator('.toc nav').waitFor({state:'hidden'});
                 }
+            }
+            if (scenario === 'project-pages') {
+              const noJs = await browser.newContext({javaScriptEnabled:false, viewport:{width:360,height:844}});
+              try {
+                const staticPage = await noJs.newPage();
+                await staticPage.goto(origin + base + 'posts/qa-0/');
+                assert(await staticPage.locator('.toc nav').isVisible(), 'no-JS mobile TOC remains available');
+                assert(!(await staticPage.locator('#mobile-toc-trigger').isVisible()));
+                assert(!(await staticPage.locator('[data-language-switch]').isVisible()));
+              } finally { await noJs.close(); }
             }
             for (const route of ['', 'archive/', 'categories/', 'categories/Notes/', 'categories/Notes/Number%20Theory/', `tags/${tagSlug('Python')}/`, 'about/', 'posts/qa-0/']) {
                 await page.goto(origin + base + route);

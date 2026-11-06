@@ -1,0 +1,51 @@
+/** Client-only UI labels. Post bodies, titles and user-supplied profile fields are not auto-translated. */
+export const labels = {
+  zh: {
+    skip: '跳到内容', home: '首页', archive: '归档', categories: '分类', about: '关于',
+    navigation: '主导航', brandHome: 'Rekjo 首页', languageToggle: 'Switch interface to English',
+    latest: '最新文章', allPosts: '所有文章', homeEmpty: '还没有发布的文章，新的笔记正在整理中。',
+    archiveTitle: '文章归档', browseCategories: '浏览分类目录', timeOrder: '按时间倒序', postsUnit: '篇记录', postsUnitShort: '篇记录',
+    categoryTitle: '分类目录', categoryIntro: '按主题探索，子分类中的文章也会计入其父分类。', categoryNav: '文章分类',
+    noCategories: '暂无分类。', tags: '标签', categoryPath: '分类路径', childCategories: '子分类', tagPath: '标签路径',
+    tagArticleSuffix: '篇带有此标签的文章。', noPosts: '还没有发布的文章，新的笔记正在整理中。',
+    aboutTitle: '关于', contacts: '联系方式', email: '邮箱', blogInfo: '关于这个博客',
+    back: '← 所有记录', toc: '本文目录', tocOpen: '目录', tocOpenAria: '打开文章目录', tocClose: '关闭目录',
+    toTop: '↑ 返回顶部', continue: '继续探索 →', draft: '草稿', draftNotice: '草稿预览 · 仅开发环境可见',
+    demoNotice: '排版演示 / 此文为新项目的示例内容，不代表真实比赛记录。',
+    copy: '复制代码', copied: '已复制 ✓', copyFailed: '复制失败，请手动选择', output: '输出',
+    lightbox: '图片放大查看', imageFallback: '文章配图', zoomImage: '放大文章图片',
+    zoomOriginal: '原始尺寸', zoomFit: '适应窗口', close: '关闭 ×', closeImage: '关闭图片',
+    readPost: '阅读', minRead: 'min read',
+    articleCount: '篇记录', archivePosts: 'posts', month: '月', year: '年',
+    categoryCount: '篇记录', notesDemo: '原型示例文章 · 非历史博客迁移内容',
+    notesPartial: '部分文章为排版示例，文章页已标注。',
+    pageMissingTitle: '这条线索暂时中断了。', pageMissingInfo: '你可以回到首页，或在归档里寻找其他笔记。', seeArchive: '查看归档 →',
+    writingArchive: '文章归档', writingCategories: '分类目录',
+  },
+  en: {
+    skip: 'Skip to content', home: 'Home', archive: 'Archive', categories: 'Categories', about: 'About',
+    navigation: 'Main navigation', brandHome: 'Rekjo homepage', languageToggle: '切换为中文界面',
+    latest: 'Latest posts', allPosts: 'All posts', homeEmpty: 'No published posts yet.',
+    archiveTitle: 'Article archive', browseCategories: 'Browse categories', timeOrder: 'Newest first', postsUnit: 'posts', postsUnitShort: 'posts',
+    categoryTitle: 'Categories', categoryIntro: 'Explore by topic. Subcategory posts are included in their parent category.', categoryNav: 'Article categories',
+    noCategories: 'No categories yet.', tags: 'Tags', categoryPath: 'Category path', childCategories: 'Subcategories', tagPath: 'Tag path',
+    tagArticleSuffix: 'posts with this tag.', noPosts: 'No published posts yet.',
+    aboutTitle: 'About', contacts: 'Contact', email: 'Email', blogInfo: 'About this blog',
+    back: '← All posts', toc: 'On this page', tocOpen: 'Contents', tocOpenAria: 'Open table of contents', tocClose: 'Close contents',
+    toTop: '↑ Back to top', continue: 'More posts →', draft: 'Draft', draftNotice: 'Draft preview · only available in development',
+    demoNotice: 'Layout demo / This is a sample post, not a real competition writeup.',
+    copy: 'Copy code', copied: 'Copied ✓', copyFailed: 'Copy failed; please select manually', output: 'Output',
+    lightbox: 'Enlarge image', imageFallback: 'Article image', zoomImage: 'Enlarge article image',
+    zoomOriginal: 'Actual size', zoomFit: 'Fit window', close: 'Close ×', closeImage: 'Close image',
+    readPost: 'Read', minRead: 'min read',
+    articleCount: 'posts', archivePosts: 'posts', month: '', year: '',
+    categoryCount: 'posts', notesDemo: 'Prototype sample posts, not migrated content',
+    notesPartial: 'Some posts are layout demos and marked as such.',
+    pageMissingTitle: 'This trail ends here.', pageMissingInfo: 'Return home or browse the archive to find another note.', seeArchive: 'View archive →',
+    writingArchive: 'Article archive', writingCategories: 'Categories',
+  },
+} as const;
+export type Locale = keyof typeof labels;
+export type I18nKey = keyof typeof labels.zh;
+export function translate(key: I18nKey, locale: Locale = 'zh'): string { return labels[locale][key] ?? labels.zh[key]; }
+export function language(): Locale { return document.documentElement.lang === 'en' ? 'en' : 'zh'; }

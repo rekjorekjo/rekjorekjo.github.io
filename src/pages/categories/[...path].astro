@@ -22,11 +22,11 @@ const subcategories = allCategoryPaths(await getPosts()).filter(path =>
 <Base title={`${categoryLabel(categoryPath)} / 分类 / Rekjo`} active="categories">
   <main id="main" class="shell archive-page taxonomy-page">
     <nav aria-label="分类路径" class="taxonomy-breadcrumbs mono">
-      <a href={withBase('/categories/')}>分类目录</a>
+      <a href={withBase('/categories/')} data-i18n="categoryTitle">分类目录</a>
       {categoryPath.map((name, index) => <><span aria-hidden="true">/</span><a href={categoryUrl(categoryPath.slice(0, index+1))} aria-current={index === categoryPath.length-1 ? 'page' : undefined}>{name}</a></>)}
     </nav>
     <h1>{categoryPath[categoryPath.length-1]}<span class="accent">。</span></h1>
-    <p class="page-intro">{posts.length} 篇记录{categoryPath.length > 1 ? ` · ${categoryLabel(categoryPath)}` : ''}</p>
+    <p class="page-intro"><span data-i18n-count={posts.length}>{posts.length} 篇记录</span>{categoryPath.length > 1 ? ` · ${categoryLabel(categoryPath)}` : ''}</p>
     {subcategories.length > 0 && <nav class="taxonomy-children" aria-label="子分类">
       {subcategories.map(path => <a href={categoryUrl(path)}>↳ {path[path.length-1]}</a>)}
     </nav>}

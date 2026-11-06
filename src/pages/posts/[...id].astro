@@ -17,28 +17,29 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
 <Base title={`${post.data.title} / Rekjo`} description={post.data.description} active="archive" noindex={post.data.draft}>
   <div id="reading-progress" aria-hidden="true"></div>
   <main id="main" class="shell article-page">
-    <a href={withBase('/archive/')} class="text-link back-link">← 所有记录</a>
+    <a href={withBase('/archive/')} class="text-link back-link" data-i18n="back">← 所有记录</a>
     <div class:list={['article-grid', { 'has-notices': post.data.draft || post.data.demo }]}>
       <header class="article-header">
-        <div class="post-meta mono"><a class="category" href={categoryUrl(primaryCategory(post))}>{categoryLabel(primaryCategory(post))}</a><time datetime={post.data.date.toISOString()}>{publicationDay(post.data.date)}</time><span>{post.data.minutes} min read</span></div>
+        <div class="post-meta mono"><a class="category" href={categoryUrl(primaryCategory(post))}>{categoryLabel(primaryCategory(post))}</a><time datetime={post.data.date.toISOString()}>{publicationDay(post.data.date)}</time><span data-i18n-minute={post.data.minutes}>{post.data.minutes} min read</span></div>
         <h1>{post.data.title}</h1>
         {postDisplay.showDescriptions && post.data.description && <p>{post.data.description}</p>}
         <div class="tags">{post.data.tags.map(tag => <a href={tagUrl(tag)}>#{tag}</a>)}</div>
       </header>
       {(post.data.draft || post.data.demo) && <div class="article-notices">
-        {post.data.draft && <p class="draft-notice">草稿预览 · 仅开发环境可见</p>}
-        {post.data.demo && <p class="article-demo">排版演示 / 此文为新项目的示例内容，不代表真实比赛记录。</p>}
+        {post.data.draft && <p class="draft-notice" data-i18n="draftNotice">草稿预览 · 仅开发环境可见</p>}
+        {post.data.demo && <p class="article-demo" data-i18n="demoNotice">排版演示 / 此文为新项目的示例内容，不代表真实比赛记录。</p>}
       </div>}
-      <article class="prose" id="article-content"><Content /><div class="article-end"><span class="mono accent">// end of note</span><a href={withBase('/archive/')}>继续探索 →</a></div></article>
-      <aside class="toc"><div class="toc-inner"><button class="toc-toggle" aria-expanded="false" aria-controls="toc-links">文章目录 <span aria-hidden="true">⌄</span></button><div class="eyebrow mono toc-label">本文目录</div><nav id="toc-links" aria-label="文章目录">{toc.map(h => <a class:list={{sub: h.depth===3}} href={`#${h.slug}`}>{h.text}</a>)}</nav><a href="#main" class="text-link to-top">↑ 返回顶部</a></div></aside>
+      <article class="prose" id="article-content"><Content /><div class="article-end"><span class="mono accent">// end of note</span><a href={withBase('/archive/')} data-i18n="continue">继续探索 →</a></div></article>
+      {toc.length > 0 && <aside class="toc" id="article-toc" aria-label="文章目录" data-i18n-aria="toc"><div class="toc-inner"><button class="toc-toggle" type="button" aria-label="关闭目录" data-i18n-aria="tocClose"><span data-i18n="toc">文章目录</span> <span aria-hidden="true">×</span></button><div class="eyebrow mono toc-label" data-i18n="toc">本文目录</div><nav id="toc-links" aria-label="文章目录" data-i18n-aria="toc">{toc.map(h => <a class:list={{sub: h.depth===3}} href={`#${h.slug}`}>{h.text}</a>)}</nav><a href="#main" class="text-link to-top" data-i18n="toTop">↑ 返回顶部</a></div></aside>}
     </div>
   </main>
-  <dialog class="image-lightbox" id="image-lightbox" aria-label="图片放大查看">
+  {toc.length > 0 && <><div class="mobile-toc-backdrop" id="mobile-toc-backdrop" hidden></div><button class="mobile-toc-trigger" id="mobile-toc-trigger" type="button" aria-expanded="false" aria-controls="article-toc" aria-label="打开文章目录" data-i18n-aria="tocOpenAria"><span aria-hidden="true">☷</span><span data-i18n="tocOpen">目录</span></button></>}
+  <dialog class="image-lightbox" id="image-lightbox" aria-label="图片放大查看" data-i18n-aria="lightbox">
     <div class="image-lightbox-toolbar">
       <span class="image-lightbox-title" id="lightbox-caption"></span>
       <div class="image-lightbox-actions">
-        <button type="button" id="lightbox-zoom" aria-pressed="false">原始尺寸</button>
-        <button type="button" id="lightbox-close" aria-label="关闭图片">关闭 ×</button>
+        <button type="button" id="lightbox-zoom" aria-pressed="false" data-i18n="zoomOriginal">原始尺寸</button>
+        <button type="button" id="lightbox-close" aria-label="关闭图片" data-i18n-aria="closeImage" data-i18n="close">关闭 ×</button>
       </div>
     </div>
     <div class="image-lightbox-stage" id="lightbox-stage">
@@ -46,18 +47,116 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
     </div>
   </dialog>
   <script>
-    const toggle = document.querySelector<HTMLButtonElement>('.toc-toggle')!;
-    toggle.addEventListener('click', () => toggle.setAttribute('aria-expanded', String(toggle.getAttribute('aria-expanded') !== 'true')));
+    import { language, translate } from '../../lib/i18n';
+    const mobileToc = document.querySelector<HTMLElement>('#article-toc');
+    const mobileTrigger = document.querySelector<HTMLButtonElement>('#mobile-toc-trigger');
+    const mobileBackdrop = document.querySelector<HTMLElement>('#mobile-toc-backdrop');
+    const mobileClose = mobileToc?.querySelector<HTMLButtonElement>('.toc-toggle');
+    const smallScreen = matchMedia('(max-width: 760px)');
+    let priorOverflow = '';
+    function setTocOpen(open: boolean, restoreFocus = false) {
+      if (!mobileToc || !mobileTrigger || !mobileBackdrop) return;
+      const next = open && smallScreen.matches;
+      const wasOpen = mobileToc.classList.contains('is-open');
+      mobileToc.classList.toggle('is-open', next);
+      if (next) {
+        mobileToc.setAttribute('role', 'dialog');
+        mobileToc.setAttribute('aria-modal', 'true');
+      } else {
+        mobileToc.removeAttribute('role');
+        mobileToc.removeAttribute('aria-modal');
+      }
+      mobileBackdrop.hidden = !next;
+      mobileTrigger.setAttribute('aria-expanded', String(next));
+      mobileTrigger.setAttribute('aria-label', translate(next ? 'tocClose' : 'tocOpenAria', language()));
+      if (next && !wasOpen) {
+        priorOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        mobileClose?.focus({ preventScroll: true });
+      } else if (!next && wasOpen) {
+        document.body.style.overflow = priorOverflow;
+        if (restoreFocus) mobileTrigger.focus({ preventScroll: true });
+      }
+      if (next) {
+        const selected = mobileToc.querySelector<HTMLAnchorElement>('#toc-links .is-active');
+        if (selected) requestAnimationFrame(() => revealInToc(selected, true));
+      }
+    }
+    mobileTrigger?.addEventListener('click', () => setTocOpen(true));
+    mobileClose?.addEventListener('click', () => setTocOpen(false, true));
+    mobileBackdrop?.addEventListener('click', () => setTocOpen(false, true));
+    mobileToc?.querySelectorAll<HTMLAnchorElement>('#toc-links a, .to-top').forEach(link => link.addEventListener('click', event => {
+      if (!smallScreen.matches) return;
+      event.preventDefault();
+      setTocOpen(false);
+      const id = decodeURIComponent(link.hash.slice(1));
+      const target = id ? document.getElementById(id) : null;
+      history.pushState(null, '', link.hash);
+      requestAnimationFrame(() => {
+        target?.scrollIntoView({ block: 'start', behavior: 'instant' });
+        if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); }
+        scheduleHeadingUpdate();
+      });
+    }));
+    document.addEventListener('keydown', event => {
+      if (!mobileToc?.classList.contains('is-open')) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setTocOpen(false, true);
+      } else if (event.key === 'Tab') {
+        const stops = Array.from(mobileToc.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], [tabindex="0"]'));
+        const first = stops[0], last = stops[stops.length - 1];
+        if (!mobileToc.contains(document.activeElement) || (event.shiftKey && document.activeElement === first)) {
+          event.preventDefault();
+          (event.shiftKey ? last : first)?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault(); first?.focus();
+        }
+      }
+    });
+    document.addEventListener('site:languagechange', () => {
+      mobileTrigger?.setAttribute('aria-label', translate(mobileToc?.classList.contains('is-open') ? 'tocClose' : 'tocOpenAria', language()));
+    });
+    smallScreen.addEventListener('change', () => setTocOpen(false));
     const prose = document.querySelector<HTMLElement>('#article-content')!;
     const progress = document.querySelector<HTMLElement>('#reading-progress')!;
     const updateProgress = () => { const end = prose.offsetTop + prose.offsetHeight - window.innerHeight; const start = prose.offsetTop - 100; progress.style.width = `${Math.max(0, Math.min(100,(scrollY - start) / Math.max(1,end-start)*100))}%`; };
     addEventListener('scroll',updateProgress,{ passive: true }); addEventListener('resize', updateProgress); updateProgress();
+    // Shiki performs syntax highlighting per language. The toolbar labels pure
+    // output explicitly instead of pretending that a program log is source code.
     document.querySelectorAll<HTMLPreElement>('.prose pre').forEach(pre => {
-      const wrapper = document.createElement('div'); wrapper.className = 'code-wrapper'; pre.before(wrapper); wrapper.append(pre);
-      const bar = document.createElement('div'); bar.className = 'code-toolbar'; const label = document.createElement('span'); label.textContent = pre.dataset.language ?? pre.querySelector('code')?.className.replace('language-','') ?? 'CODE';
-      const button = document.createElement('button'); button.textContent = '复制代码'; button.setAttribute('aria-label','复制代码');
-      button.addEventListener('click',async () => { try { await navigator.clipboard.writeText(pre.querySelector('code')?.textContent ?? ''); button.textContent = '已复制 ✓'; } catch { button.textContent = '复制失败，请手动选择'; } setTimeout(() => button.textContent = '复制代码',2000); });
-      bar.append(label,button); wrapper.prepend(bar);
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-wrapper';
+      pre.before(wrapper);
+      wrapper.append(pre);
+      const detected = (pre.dataset.language || pre.querySelector('code')?.className.match(/language-([\w+-]+)/)?.[1] || 'text').toLowerCase();
+      const kind = /^(text|plaintext|output|log|ansi)$/.test(detected) ? 'output' : 'code';
+      wrapper.dataset.codeKind = kind;
+      const bar = document.createElement('div');
+      bar.className = 'code-toolbar';
+      const label = document.createElement('span');
+      label.textContent = kind === 'output' ? translate('output', language()) : detected.toUpperCase();
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.copyState = 'copy';
+      const refreshCopy = () => {
+        const state = button.dataset.copyState as 'copy' | 'copied' | 'copyFailed';
+        button.textContent = translate(state, language());
+        button.setAttribute('aria-label', translate(state, language()));
+        if (kind === 'output') label.textContent = translate('output', language());
+      };
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(pre.querySelector('code')?.textContent ?? '');
+          button.dataset.copyState = 'copied';
+        } catch { button.dataset.copyState = 'copyFailed'; }
+        refreshCopy();
+        setTimeout(() => { button.dataset.copyState = 'copy'; refreshCopy(); }, 2000);
+      });
+      document.addEventListener('site:languagechange', refreshCopy);
+      refreshCopy();
+      bar.append(label, button);
+      wrapper.prepend(bar);
     });
     // Article images can be viewed at large size without extra dependencies.
     // <dialog> handles focus trapping and Escape; no lightbox is created on other pages.
@@ -71,7 +170,7 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
     function setOriginalSize(original: boolean) {
       lightboxStage.classList.toggle('is-original', original);
       lightboxZoom.setAttribute('aria-pressed', String(original));
-      lightboxZoom.textContent = original ? '适应窗口' : '原始尺寸';
+      lightboxZoom.textContent = translate(original ? 'zoomFit' : 'zoomOriginal', language());
       lightboxStage.scrollTop = 0;
       lightboxStage.scrollLeft = 0;
     }
@@ -80,8 +179,8 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
       const src = img.currentSrc || img.src;
       if (!src) return;
       lightboxImage.src = src;
-      lightboxImage.alt = img.alt || '文章配图';
-      lightboxCaption.textContent = img.alt || '文章配图';
+      lightboxImage.alt = img.alt || translate('imageFallback', language());
+      lightboxCaption.textContent = img.alt || translate('imageFallback', language());
       setOriginalSize(false);
       lightbox.showModal();
     }
@@ -89,7 +188,9 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
       img.classList.add('is-zoomable');
       img.setAttribute('role', 'button');
       img.setAttribute('tabindex', '0');
-      img.setAttribute('aria-label', img.alt ? `放大图片：${img.alt}` : '放大文章图片');
+      const updateAria = () => img.setAttribute('aria-label', img.alt ? `${translate('zoomImage', language())}: ${img.alt}` : translate('zoomImage', language()));
+      updateAria();
+      document.addEventListener('site:languagechange', updateAria);
       img.addEventListener('click', () => openImage(img));
       img.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -102,6 +203,9 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
     lightboxZoom.addEventListener('click', () => setOriginalSize(!lightboxStage.classList.contains('is-original')));
     // A click on the modal backdrop, but not on its content, closes it.
     lightbox.addEventListener('click', event => { if (event.target === lightbox) lightbox.close(); });
+    document.addEventListener('site:languagechange', () => {
+      lightboxZoom.textContent = translate(lightboxStage.classList.contains('is-original') ? 'zoomFit' : 'zoomOriginal', language());
+    });
     lightbox.addEventListener('close', () => {
       lightboxImage.removeAttribute('src');
       sourceFocus?.focus({ preventScroll: true });
@@ -110,10 +214,10 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
 
     // Keep the reading position and the independently scrolling TOC in sync.
     // Avoid Element.scrollIntoView(): it can also move the entire document.
-    const tocNav = document.querySelector<HTMLElement>('#toc-links')!;
-    const links = Array.from(tocNav.querySelectorAll<HTMLAnchorElement>('a'));
-    const headings = Array.from(prose.querySelectorAll<HTMLElement>('h2[id],h3[id]'));
+    const tocNav = document.querySelector<HTMLElement>('#toc-links');
+    const links = Array.from(tocNav?.querySelectorAll<HTMLAnchorElement>('a') ?? []);
     const linkById = new Map(links.map(link => [decodeURIComponent(link.hash.slice(1)), link]));
+    const headings = Array.from(prose.querySelectorAll<HTMLElement>('h2[id],h3[id]')).filter(heading => linkById.has(heading.id));
     const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
     let activeId = '';
     let frame = 0;
@@ -121,12 +225,13 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
 
     // Do not yank the TOC back while the reader is inspecting it manually.
     const suspendAutoScroll = () => { userBrowsingUntil = performance.now() + 2500; };
-    tocNav.addEventListener('wheel', suspendAutoScroll, { passive: true });
-    tocNav.addEventListener('touchstart', suspendAutoScroll, { passive: true });
-    tocNav.addEventListener('pointerdown', suspendAutoScroll, { passive: true });
+    tocNav?.addEventListener('wheel', suspendAutoScroll, { passive: true });
+    tocNav?.addEventListener('touchstart', suspendAutoScroll, { passive: true });
+    tocNav?.addEventListener('pointerdown', suspendAutoScroll, { passive: true });
 
-    function revealInToc(link: HTMLAnchorElement) {
-      if (matchMedia('(max-width: 760px)').matches || performance.now() < userBrowsingUntil) return;
+    function revealInToc(link: HTMLAnchorElement, force = false) {
+      if (!tocNav || (!force && performance.now() < userBrowsingUntil)) return;
+      if (smallScreen.matches && !mobileToc?.classList.contains('is-open')) return;
       const viewport = tocNav.getBoundingClientRect();
       const target = link.getBoundingClientRect();
       const margin = 20;

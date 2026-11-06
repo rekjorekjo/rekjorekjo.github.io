@@ -179,3 +179,37 @@
   .profile-contacts { font-size: 13px; }
   .profile-contact { grid-template-columns: 76px minmax(0,1fr); }
 }
+
+/* Small interface language switch; this changes UI chrome, not article content. */
+.language-switch {
+  flex: 0 0 auto;
+  min-width: 42px;
+  min-height: 38px;
+  padding: 5px 9px;
+  border: 1px solid #42614d;
+  border-radius: 4px;
+  background: #111a15;
+  color: #abd8bd;
+  font-size: 12px;
+  line-height: 1;
+}
+.language-switch:hover { color: var(--accent); border-color: var(--accent); }
+html:not(.js-ready) .language-switch { display: none; }
+@media (max-width: 760px) {
+  .site-header { gap: 10px; }
+  .site-header nav { gap: clamp(6px, 2.1vw, 13px); }
+  .site-header nav a { font-size: clamp(11px, 3vw, 13px); }
+  .language-switch { min-width: 36px; min-height: 36px; padding: 5px 6px; font-size: 11px; }
+}
+@media (max-width: 365px) {
+  .site-header { gap: 6px; }
+  .brand-slash { display: none; }
+  .brand-icon { margin-right: 3px; }
+  .site-header nav { gap: 5px; }
+}
+
+@media (max-width: 500px) {
+  .site-header { height: auto; min-height: 78px; flex-wrap: wrap; padding-block: 12px; row-gap: 6px; }
+  .site-header nav { order: 3; width: 100%; margin: 0; justify-content: space-between; gap: 10px; }
+  .language-switch { margin-left: auto; }
+}

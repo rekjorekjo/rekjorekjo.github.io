@@ -14,9 +14,9 @@ const posts = (await getPosts()).filter(post => post.data.tags.includes(tag));
 ---
 <Base title={`#${tag} / 标签 / Rekjo`} active="categories">
   <main id="main" class="shell archive-page taxonomy-page">
-    <nav aria-label="标签路径" class="taxonomy-breadcrumbs mono"><a href={withBase('/categories/')}>分类目录</a><span aria-hidden="true">/</span><span>标签</span></nav>
+    <nav aria-label="标签路径" class="taxonomy-breadcrumbs mono"><a href={withBase('/categories/')} data-i18n="categoryTitle">分类目录</a><span aria-hidden="true">/</span><span data-i18n="tags">标签</span></nav>
     <h1>#{tag}<span class="accent">。</span></h1>
-    <p class="page-intro">{posts.length} 篇带有此标签的文章。</p>
+    <p class="page-intro" data-i18n-tag-count={posts.length}>{posts.length} 篇带有此标签的文章。</p>
     <PostList posts={posts} />
   </main>
 </Base>

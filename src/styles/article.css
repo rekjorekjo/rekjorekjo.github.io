@@ -420,3 +420,61 @@
   .image-lightbox-title { max-width: 32vw; }
   .image-lightbox-stage { padding: 8px; }
 }
+
+/* Article-only floating TOC: the existing TOC pane becomes an off-canvas drawer. */
+.mobile-toc-trigger, .mobile-toc-backdrop { display: none; }
+@media (max-width: 760px) {
+  .mobile-toc-trigger {
+    position: fixed;
+    z-index: 105;
+    right: 18px;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    min-width: 70px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 14px;
+    color: #def6e9;
+    border: 1px solid #538a68;
+    border-radius: 25px;
+    background: #15251d;
+    box-shadow: 0 6px 24px rgb(0 0 0 / 48%);
+    font-size: 13px;
+  }
+  .mobile-toc-trigger span:first-child { font-size: 19px; line-height: 1; }
+  .mobile-toc-backdrop:not([hidden]) {
+    position: fixed;
+    z-index: 105;
+    display: block;
+    inset: 0;
+    background: rgb(0 0 0 / 65%);
+  }
+  .toc nav a { min-height: 29px; }
+}
+
+/* Plain terminal output remains neutral; Shiki still owns syntax tokens. */
+.code-wrapper[data-code-kind="output"] { --code-toolbar: #151d19; --code-surface: #101511; }
+.code-wrapper[data-code-kind="output"] .code-toolbar > span { color: #97afa1; }
+.code-wrapper[data-code-kind="output"] pre,
+.code-wrapper[data-code-kind="output"] pre span { color: #b0bdb5 !important; }
+
+/* Without JS the mobile reader retains its inline TOC as a fallback. */
+@media (max-width: 760px) {
+  html:not(.js-ready) .mobile-toc-trigger { display: none; }
+  html:not(.js-ready) .toc-toggle { display: none; }
+  html:not(.js-ready) .toc-label { display: block; }
+  html:not(.js-ready) .toc {
+    position: static;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    box-shadow: none;
+    border: 1px solid var(--line);
+    padding: 20px;
+    order: 2;
+  }
+}

@@ -9,18 +9,18 @@ const tags = allTags(posts);
 <Base title="分类目录 / Rekjo" active="categories">
   <main id="main" class="shell archive-page taxonomy-page">
     <span class="eyebrow mono">~/research / categories</span>
-    <h1>分类目录<span class="accent">。</span></h1>
-    <p class="page-intro">按主题探索，子分类中的文章也会计入其父分类。</p>
-    <nav aria-label="文章分类" class="category-tree">
+    <h1><span data-i18n="categoryTitle">分类目录</span><span class="accent">。</span></h1>
+    <p class="page-intro" data-i18n="categoryIntro">按主题探索，子分类中的文章也会计入其父分类。</p>
+    <nav aria-label="文章分类" data-i18n-aria="categoryNav" class="category-tree">
       {paths.map(path => <a class="category-entry" aria-label={`分类：${path.join(' / ')}`} style={`--depth: ${path.length-1}`} href={categoryUrl(path)}>
         <span class="category-indicator mono">{path.length > 1 ? '└─' : '▸'}</span>
         <span class="category-name">{path[path.length-1]}</span>
         <span class="category-total mono">{posts.filter(post => categoryContains(post, path)).length}</span>
       </a>)}
-      {paths.length === 0 && <p class="page-intro">暂无分类。</p>}
+      {paths.length === 0 && <p class="page-intro" data-i18n="noCategories">暂无分类。</p>}
     </nav>
     {tags.length > 0 && <section class="taxonomy-tags" aria-label="标签">
-      <h2>标签</h2>
+      <h2 data-i18n="tags">标签</h2>
       <div class="tags">{tags.map(tag => <a href={tagUrl(tag.name)}>#{tag.name}<span class="tag-count">{tag.count}</span></a>)}</div>
     </section>}
   </main>

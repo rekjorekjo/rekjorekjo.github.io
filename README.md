@@ -24,6 +24,8 @@ migration-manifest.json 记录原文件、原文件哈希、旧网址和新文�
 
 ## 更新文章
 
+手机文章页使用右侧目录抽屉；桌面保持侧栏目录。右上角 EN / 中 切换界面标签并保存偏好，文章标题、正文及分类名称保留原语言。程序代码明确标记语言，日志、输出与密文使用 text / output / log，SageMath 沿用 Python 语法高亮。详见 MOBILE-TOC-I18N-HIGHLIGHT.md。
+
 编辑 src/content/posts 下的 Markdown 及 public/images 中的资源。新文章可使用有意义的文件名；已有迁移文章 ID 应保持稳定。写作支持分类路径、扁平标签、KaTeX、代码复制、图片放大与 TOC。草稿设置 draft: true，生产环境不会发布。
 
 主站旧发布版本已保存，回滚指引见 F 盘备份中的 RESTORE.txt。不要使用原 Hexo 的部署命令更新 Astro 站点。

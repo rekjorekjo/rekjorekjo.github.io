@@ -18,6 +18,6 @@ export default defineConfig({
       remarkPlugins: [remarkMath],
       rehypePlugins: [[rehypeKatex, { strict: 'warn', throwOnError: true }]],
     }),
-    shikiConfig: { theme: 'vesper', langAlias: { sage: 'python', sagemath: 'python', Solidity: 'solidity' }, wrap: false },
+    shikiConfig: { theme: 'vesper', langAlias: { sage: 'python', sagemath: 'python', plaintext: 'text', output: 'text', log: 'text', shell: 'bash', Solidity: 'solidity' }, wrap: false },
   },
 });
