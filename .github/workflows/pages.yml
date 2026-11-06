@@ -36,6 +36,7 @@ jobs:
     if: github.repository == 'rekjorekjo/rekjorekjo.github.io'
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     permissions:
       pages: write
       id-token: write
@@ -43,6 +44,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy preview
+      - name: Deploy main site
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 1800000
