@@ -224,6 +224,15 @@
   color: #dbe4dc;
 }
 
+/* Some imported notes contain matrices inside inline math delimiters. */
+.prose :not(.katex-display) > .katex {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: middle;
+}
+
 .prose table {
   display: block;
   overflow-x: auto;
