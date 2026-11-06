@@ -3,7 +3,13 @@
 主站：https://rekjorekjo.github.io/
 仓库：rekjorekjo/rekjorekjo.github.io
 
-以验收过的 Astro Notebook 为界面基线，迁入原 Hexo 的全部 46 篇正式文章、303 个图片文件及附件、字体，移除三篇演示文章。头像沿用 /images/headimage.jpg，GitHub 链接沿用原站资料，邮箱 3563654423@qq.com 来自原主站发布提交的作者信息。
+以验收过的 Astro Notebook 为界面基线，迁入原 Hexo 的全部 46 篇正式文章、303 个图片文件及附件、字体，移除三篇演示文章。头像沿用 /images/headimage.jpg。个人资料与联系方式均为可选，未填写的项目不显示占位文字。
+
+## 可选资料与摘要
+
+src/config.ts 中 postDisplay.showDescriptions 默认 false，列表及文章标题区隐藏摘要，已有摘要继续用于 SEO。文章 description 可以省略，此时 SEO 回退到站点说明。
+
+About 默认仅显示头像、姓名与 ID。签名、简介、标签、邮箱与社交链接默认为空。填写联系方式后需设置 author.showContacts=true；填写 blogParagraphs 后需设置 author.showBlogInfo=true 才显示博客介绍。详见 OPTIONAL-PROFILE-CHANGES.md。
 
 ## 构建与发布
 

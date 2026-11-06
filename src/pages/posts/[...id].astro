@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../../lib/paths';
+import { postDisplay } from '../../config';
 import { publicationDay } from '../../lib/dates';
 import { primaryCategory, categoryUrl, categoryLabel, tagUrl } from '../../lib/taxonomy';
 import Base from '../../layouts/Base.astro';
@@ -21,7 +22,7 @@ const toc = headings.filter(h => (h.depth === 2 || h.depth === 3) && h.slug && h
       <header class="article-header">
         <div class="post-meta mono"><a class="category" href={categoryUrl(primaryCategory(post))}>{categoryLabel(primaryCategory(post))}</a><time datetime={post.data.date.toISOString()}>{publicationDay(post.data.date)}</time><span>{post.data.minutes} min read</span></div>
         <h1>{post.data.title}</h1>
-        <p>{post.data.description}</p>
+        {postDisplay.showDescriptions && post.data.description && <p>{post.data.description}</p>}
         <div class="tags">{post.data.tags.map(tag => <a href={tagUrl(tag)}>#{tag}</a>)}</div>
       </header>
       {(post.data.draft || post.data.demo) && <div class="article-notices">

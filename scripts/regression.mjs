@@ -9,6 +9,7 @@ import { checkHome } from './check-home.mjs';
 import { checkTaxonomy } from './check-taxonomy.mjs';
 import { tagSlug } from '../src/lib/taxonomy-core.ts';
 import { deployment, validateRepositoryName } from '../deployment.mjs';
+import { author, postDisplay, site as siteConfig } from '../src/config.ts';
 
 for (const name of ['ctf.notes', 'ctf_notes', 'ctf-notes', 'CTF42']) assert.equal(validateRepositoryName(name), name);
 for (const name of ['', '.', '..', 'a/b', 'a\\b', '../a', 'a/../b', '%2e%2e', 'a?b', ' a', 'a#b']) assert.throws(() => validateRepositoryName(name));
@@ -65,6 +66,8 @@ try {
     for (let i = 0; i < 8; i++)
         await fs.writeFile(path.join(content, `qa-${i}.md`), `---\ntitle: 'QA ${i}'\ndescription: searchable\ndate: 2099-01-01\n${i === 0 ? 'categories: [Notes, Number Theory]' : 'category: Notes'}\ntags: [${i % 2 ? 'Python3' : 'Python'}, QA]\nminutes: 1\n${i === 1 ? 'demo: true\n' : ''}---\n## Proof\n\n| Wide | Table |\n| --- | --- |\n| xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx | value |\n\n$x^2$\n\n$$\\sum_{i=1}^{n}i=\\frac{n(n+1)}2$$\n\n\`\`\`python\nprint("proofxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")\n\`\`\`\n\n\`\`\`sage\nInteger(3)^2\n\`\`\`\n\n\`\`\`sagemath\nInteger(4)^2\n\`\`\`\n`);
     await fs.appendFile(path.join(content, 'qa-0.md'), '\n![QA image](./assets/qa-lightbox.png)\n');
+    const noDescriptionFile = path.join(content, 'qa-2.md');
+    await fs.writeFile(noDescriptionFile, (await fs.readFile(noDescriptionFile, 'utf8')).replace('description: searchable\n', ''));
     await fs.writeFile(path.join(content, 'qa-private.md'), `---\ntitle: PRIVATE_DRAFT_SENTINEL\ndescription: PRIVATE_DRAFT_SENTINEL\ndate: 2100-01-01\ncategory: CTF\ntags: [PRIVATE_DRAFT_SENTINEL]\nminutes: 1\ndraft: true\n---\nPRIVATE_DRAFT_BODY_SENTINEL`);
     for (const name of await fs.readdir(path.join(root, 'tests/fixtures'))) await fs.copyFile(path.join(root, 'tests/fixtures', name), path.join(content, name));
     async function verifyBrowserScenario(origin, base) {
@@ -75,14 +78,16 @@ try {
     }
     const originals = new Map();
     for (const name of await fs.readdir(content)) if (name.endsWith('.md')) originals.set(name, await fs.readFile(path.join(content, name), 'utf8'));
-    for (const [scenario, site, base, mode] of [
+    for (const [scenario, site, base, mode, optional = false] of [
       ['unconfigured', '', '/'], ['custom', 'https://review.invalid', '/'],
-      ['user-pages', 'https://reviewer.github.io', '/'], ['project-pages', 'https://reviewer.github.io', '/notebook/'],
+      ['user-pages', 'https://reviewer.github.io', '/'], ['project-pages', 'https://reviewer.github.io', '/notebook/', undefined, true],
       ['without-demos-root', 'https://review.invalid', '/', 'real-only'],
       ['without-demos-dotted', 'https://reviewer.github.io', '/ctf.notes/', 'real-only'],
       ['empty-root', 'https://review.invalid', '/', 'empty'],
       ['empty-dotted', 'https://reviewer.github.io', '/ctf.notes/', 'empty']
     ]) {
+        const profile = optional ? { ...author, signature: 'QA signature', bio: 'QA bio', tags: ['QA'], showContacts: true, email: 'qa@example.invalid', github: 'https://github.com/rekjorekjo', showBlogInfo: true, blogParagraphs: ['QA introduction'] } : author;
+        await fs.writeFile(path.join(temp, 'src/config.ts'), `export const site = ${JSON.stringify(siteConfig)};\nexport const author = ${JSON.stringify(profile)};\nexport const postDisplay = ${JSON.stringify({...postDisplay, showDescriptions: optional})};\n`);
         if (mode) for (const name of await fs.readdir(content)) {
           if (!name.endsWith('.md')) continue;
           const body = await fs.readFile(path.join(content, name), 'utf8');
@@ -125,6 +130,7 @@ try {
             page.on('pageerror', e => errors.push(e.message));
             await page.goto(origin + base);
             const homeIds = await checkHome(page);
+            assert.equal(await page.locator('main [data-post] .post-main > p').count(), optional ? homeIds.length - (homeIds.includes('qa-2') ? 1 : 0) : 0, 'card descriptions follow the setting and omit absent descriptions');
             if (mode === 'empty') {
                 assert.equal(homeIds.length, 0);
                 assert.equal(await page.locator('.demo-notice').count(), 0);
@@ -158,6 +164,13 @@ try {
             await page.goto(origin + base + 'about/');
             assert.equal(await page.locator('.profile-panel').count(), 1);
             assert.equal(await page.locator('.profile-avatar').count(), 1);
+            assert.equal(await page.locator('.profile-id').textContent(), '@rekjorekjo');
+            assert.equal(await page.locator('.profile-signature').count(), optional ? 1 : 0);
+            assert.equal(await page.locator('.profile-bio').count(), optional ? 1 : 0);
+            assert.equal(await page.locator('.profile-interests span').count(), optional ? 1 : 0);
+            assert.equal(await page.locator('.profile-contact').count(), optional ? 2 : 0);
+            assert.equal(await page.locator('#about-notes-title').count(), optional ? 1 : 0);
+            assert.equal(await page.getByText('暂未公开', {exact: true}).count(), 0);
             assert.deepEqual(await page.locator('.site-header nav a').allTextContents(), ['首页', '归档', '分类', '关于']);
             await page.goto(origin + base + 'categories/');
             assert(await page.locator('.category-entry').count() > 0);
@@ -193,7 +206,11 @@ try {
               assert.deepEqual((await page.locator('[data-post]').evaluateAll(els=>els.map(el=>el.dataset.id))).sort(), ids.sort(),route);
             }
             if (mode === 'real-only') await verifyBrowserScenario(origin, base);
+            await page.goto(origin + base + 'posts/qa-2/');
+            assert.equal(await page.locator('.article-header > p').count(), 0, 'missing descriptions do not create empty paragraphs');
+            assert.equal(await page.locator('meta[name=description]').getAttribute('content'), siteConfig.description, 'missing description uses the site SEO fallback');
             await page.goto(origin + base + 'posts/qa-0/?q=ignore');
+            assert.equal(await page.locator('.article-header > p').count(), optional ? 1 : 0);
             assert.equal(await page.title(), 'QA 0 / Rekjo');
             assert.equal(await page.locator('.article-demo').count(), 0, 'omitted demo defaults to false');
             await assertArticleSpacing(page, { demo: false });

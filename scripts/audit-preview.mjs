@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'node:http';
 import { chromium } from '@playwright/test';
+import { author, postDisplay } from '../src/config.ts';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = path.join(root, 'dist');
@@ -52,6 +53,12 @@ try {
     const route = file.replace(/index\.html$/, '');
     if (redirects['/' + route]) continue;
     await page.goto(origin + base + route, {waitUntil:'networkidle'});
+    if (!postDisplay.showDescriptions) assert.equal(await page.locator('[data-post] .post-main > p, .article-header > p').count(), 0, `${file}: visible description`);
+    if (route === 'about/') {
+      assert.equal(await page.locator('.profile-contact').count(), author.showContacts ? [author.email, author.github, author.x].filter(Boolean).length : 0);
+      assert.equal(await page.locator('#about-notes-title').count(), author.showBlogInfo && author.blogParagraphs.some(p => p.trim()) ? 1 : 0);
+      assert.equal(await page.getByText('暂未公开', {exact:true}).count(), 0);
+    }
     await page.setViewportSize({width:360,height:844});
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${file}: mobile overflow`);
     await page.setViewportSize({width:1280,height:720});

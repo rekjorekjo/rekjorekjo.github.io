@@ -13,7 +13,7 @@ const tagName = z.string().superRefine((name, ctx) => {
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
   schema: z.object({
-    title: z.string(), description: z.string(), date: z.coerce.date(),
+    title: z.string(), description: z.string().optional(), date: z.coerce.date(),
     // A single ordered path works like Hexo: [CTF, Crypto] means CTF -> Crypto.
     // Multiple paths are possible with [[CTF, Crypto], [Notes, Security]].
     category: categoryName.optional(), // legacy posts
