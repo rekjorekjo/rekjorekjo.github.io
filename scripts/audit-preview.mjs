@@ -52,11 +52,9 @@ try {
     const route = file.replace(/index\.html$/, '');
     if (redirects['/' + route]) continue;
     await page.goto(origin + base + route, {waitUntil:'networkidle'});
-    if (route.startsWith('posts/')) {
-      await page.setViewportSize({width:360,height:844});
-      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${file}: mobile overflow`);
-      await page.setViewportSize({width:1280,height:720});
-    }
+    await page.setViewportSize({width:360,height:844});
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${file}: mobile overflow`);
+    await page.setViewportSize({width:1280,height:720});
     assert.equal(await page.locator('.katex-error').count(), 0, `${file}: math rendering error`);
     const canonical = await page.locator('link[rel=canonical]').getAttribute('href').catch(() => null);
     if (canonical) assert.equal(canonical, new URL(base + route, 'https://rekjorekjo.github.io').href);
